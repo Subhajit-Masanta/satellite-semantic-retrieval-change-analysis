@@ -1,0 +1,40 @@
+{
+  "site": "ayodhya_up",
+  "name": "Ayodhya airport area, Uttar Pradesh",
+  "lon": 82.15,
+  "lat": 26.75,
+  "bbox_lonlat": [
+    82.11500000000001,
+    26.715,
+    82.185,
+    26.785
+  ],
+  "crs": "EPSG:32644",
+  "bounds_utm": [
+    610840,
+    2955350,
+    617870,
+    2963170
+  ],
+  "height": 782,
+  "width": 703,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_44RPQ_20190330_1_L2A",
+    "date": "2019-03-30",
+    "cloud_pct": 0.000169
+  },
+  "t2": {
+    "scene": "S2B_44RPQ_20250308_0_L2A",
+    "date": "2025-03-08",
+    "cloud_pct": 0.00058
+  }
+}

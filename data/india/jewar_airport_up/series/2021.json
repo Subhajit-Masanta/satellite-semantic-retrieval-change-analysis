@@ -1,0 +1,23 @@
+[
+  {
+    "scene": "S2A_43RGM_20210320_1_L2A",
+    "date": "2021-03-20",
+    "cloud_pct": 3.3e-05,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2A_43RGM_20210208_1_L2A",
+    "date": "2021-02-08",
+    "cloud_pct": 9.3e-05,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2B_43RGM_20210404_1_L2A",
+    "date": "2021-04-04",
+    "cloud_pct": 0.000163,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  }
+]

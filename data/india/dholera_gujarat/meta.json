@@ -1,0 +1,40 @@
+{
+  "site": "dholera_gujarat",
+  "name": "Dholera Special Investment Region, Gujarat",
+  "lon": 72.19,
+  "lat": 22.25,
+  "bbox_lonlat": [
+    72.155,
+    22.215,
+    72.225,
+    22.285
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    206690,
+    2459250,
+    214060,
+    2467130
+  ],
+  "height": 788,
+  "width": 737,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43QBE_20190329_1_L2A",
+    "date": "2019-03-29",
+    "cloud_pct": 0.011619
+  },
+  "t2": {
+    "scene": "S2B_43QBE_20250205_0_L2A",
+    "date": "2025-02-05",
+    "cloud_pct": 0.002439
+  }
+}

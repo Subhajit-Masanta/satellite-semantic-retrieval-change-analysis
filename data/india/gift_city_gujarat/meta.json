@@ -1,0 +1,40 @@
+{
+  "site": "gift_city_gujarat",
+  "name": "GIFT City, Gandhinagar, Gujarat",
+  "lon": 72.68,
+  "lat": 23.16,
+  "bbox_lonlat": [
+    72.64500000000001,
+    23.125,
+    72.715,
+    23.195
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    258830,
+    2559190,
+    266120,
+    2567060
+  ],
+  "height": 787,
+  "width": 729,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43QBF_20190329_1_L2A",
+    "date": "2019-03-29",
+    "cloud_pct": 0
+  },
+  "t2": {
+    "scene": "S2C_43QBF_20250312_0_L2A",
+    "date": "2025-03-12",
+    "cloud_pct": 0
+  }
+}

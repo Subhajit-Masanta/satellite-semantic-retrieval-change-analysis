@@ -1,0 +1,40 @@
+{
+  "site": "jewar_airport_up",
+  "name": "Noida International Airport, Jewar, Uttar Pradesh",
+  "lon": 77.61,
+  "lat": 28.17,
+  "bbox_lonlat": [
+    77.575,
+    28.135,
+    77.645,
+    28.205000000000002
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    752750,
+    3114840,
+    759790,
+    3122750
+  ],
+  "height": 791,
+  "width": 704,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43RGM_20190306_1_L2A",
+    "date": "2019-03-06",
+    "cloud_pct": 0.04423
+  },
+  "t2": {
+    "scene": "S2B_43RGM_20250324_0_L2A",
+    "date": "2025-03-24",
+    "cloud_pct": 9.3e-05
+  }
+}

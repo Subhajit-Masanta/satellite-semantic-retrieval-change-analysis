@@ -1,0 +1,40 @@
+{
+  "site": "vellore_city",
+  "name": "Vellore city and fort, Tamil Nadu",
+  "lon": 79.1325,
+  "lat": 12.9165,
+  "bbox_lonlat": [
+    79.0975,
+    12.881499999999999,
+    79.16749999999999,
+    12.9515
+  ],
+  "crs": "EPSG:32644",
+  "bounds_utm": [
+    293560,
+    1424740,
+    301210,
+    1432540
+  ],
+  "height": 780,
+  "width": 765,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_44PKV_20190330_2_L2A",
+    "date": "2019-03-30",
+    "cloud_pct": 0
+  },
+  "t2": {
+    "scene": "S2B_44PKV_20250308_0_L2A",
+    "date": "2025-03-08",
+    "cloud_pct": 0.000143
+  }
+}

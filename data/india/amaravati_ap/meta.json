@@ -1,0 +1,40 @@
+{
+  "site": "amaravati_ap",
+  "name": "Amaravati capital region, Andhra Pradesh",
+  "lon": 80.51,
+  "lat": 16.51,
+  "bbox_lonlat": [
+    80.47500000000001,
+    16.475,
+    80.545,
+    16.545
+  ],
+  "crs": "EPSG:32644",
+  "bounds_utm": [
+    443960,
+    1821530,
+    451450,
+    1829290
+  ],
+  "height": 776,
+  "width": 749,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2A_44QMD_20190210_0_L2A",
+    "date": "2019-02-10",
+    "cloud_pct": 0.072326
+  },
+  "t2": {
+    "scene": "S2C_44QMD_20250208_0_L2A",
+    "date": "2025-02-08",
+    "cloud_pct": 0.012349
+  }
+}

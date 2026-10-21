@@ -1,0 +1,40 @@
+{
+  "site": "navi_mumbai_airport",
+  "name": "Navi Mumbai International Airport, Maharashtra",
+  "lon": 73.07,
+  "lat": 18.99,
+  "bbox_lonlat": [
+    73.035,
+    18.955,
+    73.10499999999999,
+    19.025
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    293100,
+    2096920,
+    300550,
+    2104750
+  ],
+  "height": 783,
+  "width": 745,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43QBB_20190329_1_L2A",
+    "date": "2019-03-29",
+    "cloud_pct": 0.001894
+  },
+  "t2": {
+    "scene": "S2B_43QBB_20250307_0_L2A",
+    "date": "2025-03-07",
+    "cloud_pct": 0.000654
+  }
+}

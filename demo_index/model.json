@@ -1,0 +1,9 @@
+{
+  "model": "OpenCLIP ViT-B-32 (laion2b_s34b_b79k)",
+  "licence": "MIT",
+  "source": "https://github.com/mlfoundations/open_clip",
+  "tile_px": 64,
+  "levir_tile_px": 256,
+  "n_vectors": 7366,
+  "n_sites": 48
+}

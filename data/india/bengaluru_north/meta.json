@@ -1,0 +1,40 @@
+{
+  "site": "bengaluru_north",
+  "name": "Bengaluru north (Devanahalli), Karnataka",
+  "lon": 77.68,
+  "lat": 13.22,
+  "bbox_lonlat": [
+    77.64500000000001,
+    13.185,
+    77.715,
+    13.255
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    786620,
+    1459100,
+    794300,
+    1466930
+  ],
+  "height": 783,
+  "width": 768,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43PGQ_20190330_1_L2A",
+    "date": "2019-03-30",
+    "cloud_pct": 4.7e-05
+  },
+  "t2": {
+    "scene": "S2B_43PGQ_20250206_0_L2A",
+    "date": "2025-02-06",
+    "cloud_pct": 9.8e-05
+  }
+}

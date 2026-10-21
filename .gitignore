@@ -20,3 +20,6 @@ results/cache/
 # course sheet with other teams, scratch files
 Project titles*.xlsx
 temp_*.txt
+
+# files prepared for sharing
+share/

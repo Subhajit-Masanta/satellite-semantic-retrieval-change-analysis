@@ -1,0 +1,40 @@
+{
+  "site": "hyderabad_west",
+  "name": "Hyderabad west (Kokapet / Financial District), Telangana",
+  "lon": 78.33,
+  "lat": 17.4,
+  "bbox_lonlat": [
+    78.295,
+    17.365,
+    78.365,
+    17.435
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    850070,
+    1922940,
+    857650,
+    1930830
+  ],
+  "height": 789,
+  "width": 758,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43QHV_20190330_1_L2A",
+    "date": "2019-03-30",
+    "cloud_pct": 0.000293
+  },
+  "t2": {
+    "scene": "S2B_43QHV_20250328_0_L2A",
+    "date": "2025-03-28",
+    "cloud_pct": 0.000894
+  }
+}
