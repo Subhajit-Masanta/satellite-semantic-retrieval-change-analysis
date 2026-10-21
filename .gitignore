@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+data/
+outputs/
+index/
+*.npy
+*.pkl
+.ipynb_checkpoints/
+env/
+demo_index/
+results/*.npy
+results/*.npz
+results/cache/
+*.zip
+*.tif
+*.tiff
+.env
+*.log
+
+# course sheet with other teams, scratch files
+Project titles*.xlsx
+temp_*.txt

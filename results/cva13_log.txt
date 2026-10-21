@@ -1,0 +1,7 @@
+[E] CVA style (per-image percentile) with more bands, with and without brightness matching
+   3 bands, no matching             top 3% (picked on train)  TEST P=0.414 R=0.240 F1=0.304 IoU=0.179 FPR=1.85%  (train F1=0.282)
+   3 bands, brightness matched      top 3% (picked on train)  TEST P=0.426 R=0.248 F1=0.313 IoU=0.186 FPR=1.81%  (train F1=0.306)
+   4 bands, no matching             top 3% (picked on train)  TEST P=0.425 R=0.247 F1=0.312 IoU=0.185 FPR=1.82%  (train F1=0.283)
+   4 bands, brightness matched      top 3% (picked on train)  TEST P=0.440 R=0.255 F1=0.323 IoU=0.193 FPR=1.77%  (train F1=0.308)
+   13 bands, no matching            top 2% (picked on train)  TEST P=0.462 R=0.179 F1=0.258 IoU=0.148 FPR=1.14%  (train F1=0.288)
+   13 bands, brightness matched     top 3% (picked on train)  TEST P=0.460 R=0.267 F1=0.338 IoU=0.203 FPR=1.71%  (train F1=0.334)

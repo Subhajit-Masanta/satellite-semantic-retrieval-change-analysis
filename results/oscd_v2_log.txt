@@ -1,0 +1,64 @@
+======================================================================
+OSCD ROUND 2
+======================================================================
+device: cuda (NVIDIA GeForce GTX 1650 Ti)
+
+[A] Pixel comparison with more bands
+   3 bands (B02,B03,B04)      thr=1.2  TEST P=0.280 R=0.211 F1=0.240 IoU=0.137 FPR=2.95%   (train F1=0.284, 3s)
+   4 bands (+B08 infrared)    thr=1.2  TEST P=0.264 R=0.231 F1=0.246 IoU=0.141 FPR=3.52%   (train F1=0.262, 3s)
+   10 bands (no 60 m bands)   thr=1.5  TEST P=0.280 R=0.198 F1=0.232 IoU=0.131 FPR=2.78%   (train F1=0.239, 7s)
+   13 bands (all)             thr=1.5  TEST P=0.262 R=0.186 F1=0.218 IoU=0.122 FPR=2.86%   (train F1=0.230, 7s)
+   best on TRAIN: 3 bands (B02,B03,B04)  (for reference CVA on 3 bands had test F1 0.353)
+
+[B] Patch-level features
+   2139 tile pairs; changed: 375 (train 181, test 194)
+   CLIP ViT-B/32        patch grid 7x7, 100s
+      whole-tile embedding     AUC train=0.594 test=0.564 all=0.580
+      patch mean               AUC train=0.637 test=0.608 all=0.608
+      patch max                AUC train=0.642 test=0.661 all=0.644
+      patch top-10%            AUC train=0.681 test=0.696 all=0.679  <- picked on train
+      centred patch mean       AUC train=0.581 test=0.592 all=0.561
+      centred patch max        AUC train=0.504 test=0.624 all=0.538
+      centred patch top-10%    AUC train=0.548 test=0.680 all=0.587
+   RemoteCLIP ViT-B/32  patch grid 7x7, 98s
+      whole-tile embedding     AUC train=0.520 test=0.553 all=0.534
+      patch mean               AUC train=0.594 test=0.603 all=0.586
+      patch max                AUC train=0.652 test=0.665 all=0.653
+      patch top-10%            AUC train=0.678 test=0.678 all=0.673  <- picked on train
+      centred patch mean       AUC train=0.544 test=0.608 all=0.552
+      centred patch max        AUC train=0.589 test=0.696 all=0.627
+      centred patch top-10%    AUC train=0.609 test=0.707 all=0.641
+   CLIP ViT-B/16        patch grid 14x14, 700s
+      whole-tile embedding     AUC train=0.584 test=0.606 all=0.590
+      patch mean               AUC train=0.633 test=0.591 all=0.594  <- picked on train
+      patch max                AUC train=0.502 test=0.514 all=0.510
+      patch top-10%            AUC train=0.572 test=0.601 all=0.564
+      centred patch mean       AUC train=0.588 test=0.569 all=0.546
+      centred patch max        AUC train=0.449 test=0.547 all=0.476
+      centred patch top-10%    AUC train=0.493 test=0.617 all=0.514
+   DINOv2 ViT-S/14      patch grid 16x16, 179s
+      whole-tile embedding     AUC train=0.548 test=0.595 all=0.553
+      patch mean               AUC train=0.587 test=0.630 all=0.583
+      patch max                AUC train=0.589 test=0.702 all=0.633
+      patch top-10%            AUC train=0.644 test=0.737 all=0.675  <- picked on train
+      centred patch mean       AUC train=0.575 test=0.612 all=0.559
+      centred patch max        AUC train=0.486 test=0.644 all=0.549
+      centred patch top-10%    AUC train=0.585 test=0.708 all=0.625
+   DINOv2 ViT-B/14      patch grid 16x16, 656s
+      whole-tile embedding     AUC train=0.544 test=0.606 all=0.559
+      patch mean               AUC train=0.595 test=0.648 all=0.595
+      patch max                AUC train=0.619 test=0.629 all=0.621
+      patch top-10%            AUC train=0.633 test=0.734 all=0.664  <- picked on train
+      centred patch mean       AUC train=0.569 test=0.608 all=0.552
+      centred patch max        AUC train=0.461 test=0.606 all=0.510
+      centred patch top-10%    AUC train=0.549 test=0.685 all=0.590
+   reference: pixel difference (raw)                 AUC train=0.622 test=0.579 all=0.626
+   reference: pixel difference (brightness matched)  AUC train=0.685 test=0.640 all=0.650
+   reference: 13-band difference (tile mean)         AUC train=0.698 test=0.576 all=0.615
+
+[C] Patch heat map used to clean the pixel change map
+   model picked on TRAIN: CLIP ViT-B/32 (patch top-10%)
+   heat map alone              TEST P=0.185 R=0.195 F1=0.190 FPR=4.67%
+   13 bands AND heat (q=0.5)    TEST P=0.305 R=0.163 F1=0.212 FPR=2.02%
+
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\oscd_v2_results.json

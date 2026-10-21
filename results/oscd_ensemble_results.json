@@ -1,0 +1,77 @@
+{
+  "methodology": {
+    "protocol": "All ensemble model choices and weights selected strictly on 14 TRAIN cities; reported on 10 TEST cities.",
+    "tile_grid": "64x64 px",
+    "threshold_changed_frac": 0.05,
+    "n_train_tiles": 1476,
+    "n_test_tiles": 663
+  },
+  "baseline_pixel_diff": {
+    "train_auc": 0.622,
+    "test_auc": 0.579,
+    "test_ap": 0.3083
+  },
+  "individual_models": {
+    "CLIP ViT-B/32": {
+      "train_auc": 0.6808,
+      "test_auc": 0.6964,
+      "all_auc": 0.6787
+    },
+    "RemoteCLIP ViT-B/32": {
+      "train_auc": 0.6778,
+      "test_auc": 0.678,
+      "all_auc": 0.6733
+    },
+    "DINOv2 ViT-S/14": {
+      "train_auc": 0.6438,
+      "test_auc": 0.7366,
+      "all_auc": 0.675
+    }
+  },
+  "winning_ensemble": {
+    "name": "CLIP ViT-B/32 (0.6) + RemoteCLIP ViT-B/32 (0.4)",
+    "train_auc": 0.7005,
+    "test_auc": 0.7056,
+    "test_ap": 0.4133,
+    "delta_over_clip": 0.0092,
+    "delta_over_remoteclip": 0.0276,
+    "delta_over_dinov2": -0.031
+  },
+  "all_candidates": {
+    "CLIP ViT-B/32 + RemoteCLIP ViT-B/32 (50/50)": {
+      "train_auc": 0.7003,
+      "test_auc": 0.7046,
+      "test_ap": 0.4075
+    },
+    "CLIP ViT-B/32 + DINOv2 ViT-S/14 (50/50)": {
+      "train_auc": 0.6762,
+      "test_auc": 0.7326,
+      "test_ap": 0.4483
+    },
+    "RemoteCLIP ViT-B/32 + DINOv2 ViT-S/14 (50/50)": {
+      "train_auc": 0.6727,
+      "test_auc": 0.7232,
+      "test_ap": 0.432
+    },
+    "CLIP ViT-B/32 (0.6) + RemoteCLIP ViT-B/32 (0.4)": {
+      "train_auc": 0.7005,
+      "test_auc": 0.7056,
+      "test_ap": 0.4133
+    },
+    "CLIP ViT-B/32 (0.8) + DINOv2 ViT-S/14 (0.2)": {
+      "train_auc": 0.6836,
+      "test_auc": 0.7141,
+      "test_ap": 0.4331
+    },
+    "RemoteCLIP ViT-B/32 (0.8) + DINOv2 ViT-S/14 (0.2)": {
+      "train_auc": 0.6809,
+      "test_auc": 0.6989,
+      "test_ap": 0.3954
+    },
+    "All 3 Models (equal average)": {
+      "train_auc": 0.6921,
+      "test_auc": 0.7279,
+      "test_ap": 0.4351
+    }
+  }
+}

@@ -1,0 +1,26 @@
+======================================================================
+MULTI-YEAR CHANGE, INDIAN SITES
+======================================================================
+amaravati_ap           two-date 18.30%  lasting  1.32%  two-date alarms dropped  93.2%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 29.6, 'vegetation lost': 9.6, 'vegetation gained': 19.4, 'water gained': 4.2, 'water lost': 0.0}
+ayodhya_up             two-date 31.97%  lasting  2.88%  two-date alarms dropped  91.1%  most common first year 2022
+                       area (ha): {'built-up or bare ground gained': 72.3, 'vegetation lost': 34.2, 'vegetation gained': 25.7, 'water gained': 0.3, 'water lost': 0.5}
+bengaluru_north        two-date 33.24%  lasting  5.33%  two-date alarms dropped  84.0%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 31.9, 'vegetation lost': 61.9, 'vegetation gained': 25.8, 'water gained': 19.9, 'water lost': 0.0}
+dholera_gujarat        two-date 30.46%  lasting  3.55%  two-date alarms dropped  88.4%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 8.6, 'vegetation lost': 3.1, 'vegetation gained': 0.0, 'water gained': 161.3, 'water lost': 0.1}
+gift_city_gujarat      two-date 23.64%  lasting  3.92%  two-date alarms dropped  84.0%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 75.6, 'vegetation lost': 45.8, 'vegetation gained': 34.6, 'water gained': 1.0, 'water lost': 0.0}
+hyderabad_west         two-date 43.34%  lasting  3.14%  two-date alarms dropped  92.8%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 8.1, 'vegetation lost': 20.2, 'vegetation gained': 3.1, 'water gained': 114.5, 'water lost': 0.1}
+jewar_airport_up       two-date 19.82%  lasting  4.22%  two-date alarms dropped  81.1%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 202.4, 'vegetation lost': 17.3, 'vegetation gained': 8.1, 'water gained': 0.0, 'water lost': 0.0}
+navi_mumbai_airport    two-date 22.63%  lasting  3.73%  two-date alarms dropped  84.0%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 29.4, 'vegetation lost': 27.9, 'vegetation gained': 2.7, 'water gained': 6.4, 'water lost': 8.4}
+vellore_city           two-date 28.55%  lasting  4.99%  two-date alarms dropped  82.5%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 36.8, 'vegetation lost': 55.2, 'vegetation gained': 67.2, 'water gained': 47.2, 'water lost': 0.0}
+vit_vellore            two-date 27.54%  lasting  3.36%  two-date alarms dropped  88.0%  most common first year 2021
+                       area (ha): {'built-up or bare ground gained': 48.5, 'vegetation lost': 32.8, 'vegetation gained': 26.9, 'water gained': 15.0, 'water lost': 0.3}
+
+across 10 sites: on average 86.9% of the two-date alarms do not last (range 81.1 to 93.2%) and are dropped by the multi-year test
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\series_results.json

@@ -1,0 +1,418 @@
+{
+  "methodology": {
+    "protocol": "50/50 balanced split per class by filename. Candidates evaluated on TUNE only; reported on REPORT.",
+    "n_tune": 13500,
+    "n_report": 13500,
+    "n_total": 27000
+  },
+  "prompts_v1": {
+    "AnnualCrop": "a satellite image of annual crop land",
+    "Forest": "a satellite image of a forest",
+    "HerbaceousVegetation": "a satellite image of herbaceous vegetation",
+    "Highway": "a satellite image of a highway or road",
+    "Industrial": "a satellite image of industrial buildings",
+    "Pasture": "a satellite image of pasture land",
+    "PermanentCrop": "a satellite image of permanent crop land",
+    "Residential": "a satellite image of residential buildings",
+    "River": "a satellite image of a river",
+    "SeaLake": "a satellite image of a sea or lake"
+  },
+  "prompts_v2": {
+    "AnnualCrop": "a satellite image of annual crop land",
+    "Forest": "a satellite image of a forest",
+    "HerbaceousVegetation": "a satellite image of scrubland and grass",
+    "Highway": "a satellite image of a highway or road",
+    "Industrial": "a satellite image of industrial buildings",
+    "Pasture": "a satellite image of pasture land",
+    "PermanentCrop": "a satellite image of permanent crop land",
+    "Residential": "a satellite image of residential buildings",
+    "River": "a satellite image of a river",
+    "SeaLake": "a satellite image of deep blue water, sea or lake"
+  },
+  "tune_selection": {
+    "HerbaceousVegetation": {
+      "all_candidates": [
+        {
+          "prompt": "a satellite image of herbaceous vegetation",
+          "tune_ap": 0.2099
+        },
+        {
+          "prompt": "a satellite image of grassland or meadow",
+          "tune_ap": 0.132
+        },
+        {
+          "prompt": "a satellite image of open grass fields",
+          "tune_ap": 0.121
+        },
+        {
+          "prompt": "a satellite image of low green vegetation or grassland",
+          "tune_ap": 0.1549
+        },
+        {
+          "prompt": "a satellite image of scrubland and grass",
+          "tune_ap": 0.2109
+        },
+        {
+          "prompt": "a satellite image of wild grasses and meadow",
+          "tune_ap": 0.1797
+        },
+        {
+          "prompt": "a satellite image of natural grassland or herbaceous meadow",
+          "tune_ap": 0.115
+        },
+        {
+          "prompt": "a satellite image of green herbaceous vegetation and grass",
+          "tune_ap": 0.1292
+        },
+        {
+          "prompt": "a satellite image of pastures, meadows and herbaceous vegetation",
+          "tune_ap": 0.1323
+        }
+      ],
+      "best_prompt": "a satellite image of scrubland and grass",
+      "orig_tune_ap": 0.2099,
+      "best_tune_ap": 0.2109,
+      "tune_delta": 0.001
+    },
+    "SeaLake": {
+      "all_candidates": [
+        {
+          "prompt": "a satellite image of a sea or lake",
+          "tune_ap": 0.0771
+        },
+        {
+          "prompt": "a satellite image of open ocean or inland lake water",
+          "tune_ap": 0.0866
+        },
+        {
+          "prompt": "a satellite image of a large body of water",
+          "tune_ap": 0.0855
+        },
+        {
+          "prompt": "a satellite photo of sea water or a lake surface",
+          "tune_ap": 0.0845
+        },
+        {
+          "prompt": "a remote sensing image of ocean or lake",
+          "tune_ap": 0.0938
+        },
+        {
+          "prompt": "a satellite image of water: sea, lake or reservoir",
+          "tune_ap": 0.0784
+        },
+        {
+          "prompt": "a satellite photo of an ocean, sea, or lake",
+          "tune_ap": 0.0909
+        },
+        {
+          "prompt": "a satellite image of sea or lake water body",
+          "tune_ap": 0.0752
+        },
+        {
+          "prompt": "a satellite image of deep blue water, sea or lake",
+          "tune_ap": 0.1395
+        },
+        {
+          "prompt": "a satellite image of open sea or fresh water lake",
+          "tune_ap": 0.0765
+        }
+      ],
+      "best_prompt": "a satellite image of deep blue water, sea or lake",
+      "orig_tune_ap": 0.0771,
+      "best_tune_ap": 0.1395,
+      "tune_delta": 0.0624
+    }
+  },
+  "openclip": {
+    "report_split": {
+      "v1_baseline": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.3716,
+            "p10": 0.6
+          },
+          "Forest": {
+            "ap": 0.3422,
+            "p10": 0.8
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.2039,
+            "p10": 0.0
+          },
+          "Highway": {
+            "ap": 0.7163,
+            "p10": 1.0
+          },
+          "Industrial": {
+            "ap": 0.9139,
+            "p10": 1.0
+          },
+          "Pasture": {
+            "ap": 0.3285,
+            "p10": 0.7
+          },
+          "PermanentCrop": {
+            "ap": 0.418,
+            "p10": 0.7
+          },
+          "Residential": {
+            "ap": 0.5585,
+            "p10": 0.9
+          },
+          "River": {
+            "ap": 0.4496,
+            "p10": 1.0
+          },
+          "SeaLake": {
+            "ap": 0.0757,
+            "p10": 0.1
+          }
+        },
+        "mAP": 0.4378,
+        "mean_p10": 0.68,
+        "zero_shot_acc": 0.479
+      },
+      "v2_tuned": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.3716,
+            "p10": 0.6
+          },
+          "Forest": {
+            "ap": 0.3422,
+            "p10": 0.8
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.203,
+            "p10": 0.0
+          },
+          "Highway": {
+            "ap": 0.7163,
+            "p10": 1.0
+          },
+          "Industrial": {
+            "ap": 0.9139,
+            "p10": 1.0
+          },
+          "Pasture": {
+            "ap": 0.3285,
+            "p10": 0.7
+          },
+          "PermanentCrop": {
+            "ap": 0.418,
+            "p10": 0.7
+          },
+          "Residential": {
+            "ap": 0.5585,
+            "p10": 0.9
+          },
+          "River": {
+            "ap": 0.4496,
+            "p10": 1.0
+          },
+          "SeaLake": {
+            "ap": 0.141,
+            "p10": 0.1
+          }
+        },
+        "mAP": 0.4443,
+        "mean_p10": 0.68,
+        "zero_shot_acc": 0.5428
+      }
+    },
+    "full_dataset": {
+      "v1_baseline": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.3636,
+            "p10": 0.5
+          },
+          "Forest": {
+            "ap": 0.3351,
+            "p10": 1.0
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.2067,
+            "p10": 0.0
+          },
+          "Highway": {
+            "ap": 0.7202,
+            "p10": 1.0
+          },
+          "Industrial": {
+            "ap": 0.9123,
+            "p10": 1.0
+          },
+          "Pasture": {
+            "ap": 0.3238,
+            "p10": 0.7
+          },
+          "PermanentCrop": {
+            "ap": 0.4217,
+            "p10": 0.7
+          },
+          "Residential": {
+            "ap": 0.5744,
+            "p10": 0.9
+          },
+          "River": {
+            "ap": 0.4279,
+            "p10": 0.9
+          },
+          "SeaLake": {
+            "ap": 0.0763,
+            "p10": 0.2
+          }
+        },
+        "mAP": 0.4362,
+        "mean_p10": 0.69,
+        "zero_shot_acc": 0.477
+      },
+      "v2_tuned": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.3636,
+            "p10": 0.5
+          },
+          "Forest": {
+            "ap": 0.3351,
+            "p10": 1.0
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.2067,
+            "p10": 0.0
+          },
+          "Highway": {
+            "ap": 0.7202,
+            "p10": 1.0
+          },
+          "Industrial": {
+            "ap": 0.9123,
+            "p10": 1.0
+          },
+          "Pasture": {
+            "ap": 0.3238,
+            "p10": 0.7
+          },
+          "PermanentCrop": {
+            "ap": 0.4217,
+            "p10": 0.7
+          },
+          "Residential": {
+            "ap": 0.5744,
+            "p10": 0.9
+          },
+          "River": {
+            "ap": 0.4279,
+            "p10": 0.9
+          },
+          "SeaLake": {
+            "ap": 0.1401,
+            "p10": 0.0
+          }
+        },
+        "mAP": 0.4426,
+        "mean_p10": 0.67,
+        "zero_shot_acc": 0.5414
+      }
+    }
+  },
+  "remoteclip": {
+    "report_split": {
+      "v1_baseline": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.244,
+            "p10": 0.0
+          },
+          "Forest": {
+            "ap": 0.0675,
+            "p10": 0.0
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.1271,
+            "p10": 0.1
+          },
+          "Highway": {
+            "ap": 0.2008,
+            "p10": 0.5
+          },
+          "Industrial": {
+            "ap": 0.5711,
+            "p10": 0.8
+          },
+          "Pasture": {
+            "ap": 0.2589,
+            "p10": 0.8
+          },
+          "PermanentCrop": {
+            "ap": 0.3151,
+            "p10": 0.9
+          },
+          "Residential": {
+            "ap": 0.4874,
+            "p10": 0.1
+          },
+          "River": {
+            "ap": 0.6615,
+            "p10": 1.0
+          },
+          "SeaLake": {
+            "ap": 0.1215,
+            "p10": 0.2
+          }
+        },
+        "mAP": 0.3055,
+        "mean_p10": 0.44,
+        "zero_shot_acc": 0.3398
+      },
+      "v2_tuned": {
+        "per_class": {
+          "AnnualCrop": {
+            "ap": 0.244,
+            "p10": 0.0
+          },
+          "Forest": {
+            "ap": 0.0675,
+            "p10": 0.0
+          },
+          "HerbaceousVegetation": {
+            "ap": 0.2084,
+            "p10": 0.2
+          },
+          "Highway": {
+            "ap": 0.2008,
+            "p10": 0.5
+          },
+          "Industrial": {
+            "ap": 0.5711,
+            "p10": 0.8
+          },
+          "Pasture": {
+            "ap": 0.2589,
+            "p10": 0.8
+          },
+          "PermanentCrop": {
+            "ap": 0.3151,
+            "p10": 0.9
+          },
+          "Residential": {
+            "ap": 0.4874,
+            "p10": 0.1
+          },
+          "River": {
+            "ap": 0.6615,
+            "p10": 1.0
+          },
+          "SeaLake": {
+            "ap": 0.3459,
+            "p10": 0.5
+          }
+        },
+        "mAP": 0.3361,
+        "mean_p10": 0.48,
+        "zero_shot_acc": 0.3717
+      }
+    }
+  }
+}

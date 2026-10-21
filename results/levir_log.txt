@@ -1,0 +1,64 @@
+======================================================================
+LEVIR-CD EXPERIMENT RUN
+======================================================================
+device: cuda
+   val: 64 pairs of 1024x1024 px, 4.20% of pixels changed
+   test: 128 pairs of 1024x1024 px, 5.09% of pixels changed
+   tiles of 256 px: val 1024 (240 changed), test 2048 (575 changed)
+
+[1] Tile-level change signal (AUC; pick on VAL, report on TEST)
+   CLIP ViT-B/32        grid 7x7  (153s)  same place found first: 13.4% of 2048
+      whole-tile embedding     AUC val=0.865 test=0.835
+      patch mean               AUC val=0.889 test=0.878
+      patch max                AUC val=0.814 test=0.815
+      patch top-10%            AUC val=0.902 test=0.899  <- picked on val
+      centred patch mean       AUC val=0.835 test=0.811
+      centred patch max        AUC val=0.501 test=0.512
+      centred patch top-10%    AUC val=0.628 test=0.645
+   RemoteCLIP ViT-B/32  grid 7x7  (150s)  same place found first: 12.5% of 2048
+      whole-tile embedding     AUC val=0.869 test=0.823
+      patch mean               AUC val=0.939 test=0.923
+      patch max                AUC val=0.870 test=0.827
+      patch top-10%            AUC val=0.940 test=0.924  <- picked on val
+      centred patch mean       AUC val=0.839 test=0.814
+      centred patch max        AUC val=0.561 test=0.530
+      centred patch top-10%    AUC val=0.685 test=0.670
+   CLIP ViT-B/16        grid 14x14  (573s)  same place found first: 13.8% of 2048
+      whole-tile embedding     AUC val=0.862 test=0.833
+      patch mean               AUC val=0.879 test=0.863  <- picked on val
+      patch max                AUC val=0.605 test=0.675
+      patch top-10%            AUC val=0.774 test=0.792
+      centred patch mean       AUC val=0.826 test=0.797
+      centred patch max        AUC val=0.367 test=0.352
+      centred patch top-10%    AUC val=0.461 test=0.468
+   DINOv2 ViT-S/14      grid 16x16  (203s)  same place found first: 19.5% of 2048
+      whole-tile embedding     AUC val=0.740 test=0.727
+      patch mean               AUC val=0.836 test=0.824
+      patch max                AUC val=0.822 test=0.812
+      patch top-10%            AUC val=0.881 test=0.871  <- picked on val
+      centred patch mean       AUC val=0.875 test=0.857
+      centred patch max        AUC val=0.538 test=0.544
+      centred patch top-10%    AUC val=0.760 test=0.776
+   DINOv2 ViT-B/14      grid 16x16  (742s)  same place found first: 20.9% of 2048
+      whole-tile embedding     AUC val=0.764 test=0.759
+      patch mean               AUC val=0.835 test=0.833
+      patch max                AUC val=0.808 test=0.804
+      patch top-10%            AUC val=0.896 test=0.879  <- picked on val
+      centred patch mean       AUC val=0.860 test=0.843
+      centred patch max        AUC val=0.520 test=0.509
+      centred patch top-10%    AUC val=0.731 test=0.736
+   reference: pixel difference (raw)                 AUC val=0.746 test=0.698
+   reference: pixel difference (brightness matched)  AUC val=0.736 test=0.687
+
+[2] Pixel-level change maps (thresholds picked on VAL)
+   Pixel difference + Otsu                  P=0.057 R=0.366 F1=0.099 IoU=0.052 FPR=32.43%
+   Change Vector Analysis                   P=0.079 R=0.078 F1=0.078 IoU=0.041 FPR=4.85%
+   SSIM differencing                        P=0.053 R=0.990 F1=0.100 IoU=0.053 FPR=95.35%
+   Ours, brightness matching (thr 80)       P=0.134 R=0.202 F1=0.161 IoU=0.088 FPR=6.98%
+   Ours, all three removal steps (thr 60)   P=0.145 R=0.249 F1=0.184 IoU=0.101 FPR=7.86%
+   patch heat map from: RemoteCLIP ViT-B/32 (patch top-10%)
+   Patch heat map alone (top 10%)           P=0.264 R=0.604 F1=0.368 IoU=0.225 FPR=9.03%
+   Ours, brightness + patch heat (q 0.8)    P=0.226 R=0.170 F1=0.194 IoU=0.107 FPR=3.11%
+
+Total runtime: 2030.7 s
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\levir_results.json

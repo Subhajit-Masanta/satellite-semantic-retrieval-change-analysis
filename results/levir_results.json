@@ -1,0 +1,284 @@
+{
+  "tile_px": 256,
+  "device": "cuda",
+  "n_val": 64,
+  "changed_pct_val": 4.197,
+  "n_test": 128,
+  "changed_pct_test": 5.094,
+  "tiles": {
+    "val": 1024,
+    "test": 2048,
+    "val_changed": 240,
+    "test_changed": 575
+  },
+  "tile": {
+    "CLIP ViT-B/32": {
+      "grid": 7,
+      "variants": {
+        "whole-tile embedding": {
+          "val": 0.8645,
+          "test": 0.8347
+        },
+        "patch mean": {
+          "val": 0.8892,
+          "test": 0.8785
+        },
+        "patch max": {
+          "val": 0.8142,
+          "test": 0.8151
+        },
+        "patch top-10%": {
+          "val": 0.9021,
+          "test": 0.8991
+        },
+        "centred patch mean": {
+          "val": 0.8354,
+          "test": 0.8112
+        },
+        "centred patch max": {
+          "val": 0.5011,
+          "test": 0.5122
+        },
+        "centred patch top-10%": {
+          "val": 0.6284,
+          "test": 0.6451
+        }
+      },
+      "picked_on_val": "patch top-10%",
+      "same_place_recall@1": 0.1343,
+      "same_place_recall@5": 0.2524,
+      "seconds": 152.9
+    },
+    "RemoteCLIP ViT-B/32": {
+      "grid": 7,
+      "variants": {
+        "whole-tile embedding": {
+          "val": 0.8691,
+          "test": 0.8229
+        },
+        "patch mean": {
+          "val": 0.939,
+          "test": 0.9227
+        },
+        "patch max": {
+          "val": 0.8698,
+          "test": 0.8272
+        },
+        "patch top-10%": {
+          "val": 0.9402,
+          "test": 0.9244
+        },
+        "centred patch mean": {
+          "val": 0.8394,
+          "test": 0.814
+        },
+        "centred patch max": {
+          "val": 0.5611,
+          "test": 0.5302
+        },
+        "centred patch top-10%": {
+          "val": 0.6846,
+          "test": 0.6704
+        }
+      },
+      "picked_on_val": "patch top-10%",
+      "same_place_recall@1": 0.125,
+      "same_place_recall@5": 0.2207,
+      "seconds": 149.9
+    },
+    "CLIP ViT-B/16": {
+      "grid": 14,
+      "variants": {
+        "whole-tile embedding": {
+          "val": 0.8623,
+          "test": 0.833
+        },
+        "patch mean": {
+          "val": 0.8786,
+          "test": 0.8634
+        },
+        "patch max": {
+          "val": 0.6047,
+          "test": 0.6754
+        },
+        "patch top-10%": {
+          "val": 0.7745,
+          "test": 0.7922
+        },
+        "centred patch mean": {
+          "val": 0.8259,
+          "test": 0.7974
+        },
+        "centred patch max": {
+          "val": 0.3675,
+          "test": 0.3516
+        },
+        "centred patch top-10%": {
+          "val": 0.461,
+          "test": 0.4681
+        }
+      },
+      "picked_on_val": "patch mean",
+      "same_place_recall@1": 0.1382,
+      "same_place_recall@5": 0.2573,
+      "seconds": 572.6
+    },
+    "DINOv2 ViT-S/14": {
+      "grid": 16,
+      "variants": {
+        "whole-tile embedding": {
+          "val": 0.7399,
+          "test": 0.7271
+        },
+        "patch mean": {
+          "val": 0.8356,
+          "test": 0.8237
+        },
+        "patch max": {
+          "val": 0.8217,
+          "test": 0.8121
+        },
+        "patch top-10%": {
+          "val": 0.8813,
+          "test": 0.8709
+        },
+        "centred patch mean": {
+          "val": 0.8749,
+          "test": 0.8572
+        },
+        "centred patch max": {
+          "val": 0.5376,
+          "test": 0.544
+        },
+        "centred patch top-10%": {
+          "val": 0.7602,
+          "test": 0.7756
+        }
+      },
+      "picked_on_val": "patch top-10%",
+      "same_place_recall@1": 0.1953,
+      "same_place_recall@5": 0.3296,
+      "seconds": 202.8
+    },
+    "DINOv2 ViT-B/14": {
+      "grid": 16,
+      "variants": {
+        "whole-tile embedding": {
+          "val": 0.764,
+          "test": 0.7589
+        },
+        "patch mean": {
+          "val": 0.8352,
+          "test": 0.833
+        },
+        "patch max": {
+          "val": 0.8082,
+          "test": 0.8038
+        },
+        "patch top-10%": {
+          "val": 0.8958,
+          "test": 0.879
+        },
+        "centred patch mean": {
+          "val": 0.8603,
+          "test": 0.843
+        },
+        "centred patch max": {
+          "val": 0.5203,
+          "test": 0.5091
+        },
+        "centred patch top-10%": {
+          "val": 0.731,
+          "test": 0.7364
+        }
+      },
+      "picked_on_val": "patch top-10%",
+      "same_place_recall@1": 0.209,
+      "same_place_recall@5": 0.3423,
+      "seconds": 742.3
+    }
+  },
+  "tile_reference": {
+    "pixel difference (raw)": {
+      "val": 0.7457,
+      "test": 0.6979
+    },
+    "pixel difference (brightness matched)": {
+      "val": 0.7361,
+      "test": 0.6871
+    }
+  },
+  "best_model_on_val": "RemoteCLIP ViT-B/32",
+  "pixel": {
+    "Pixel difference + Otsu": {
+      "precision": 0.0572,
+      "recall": 0.3662,
+      "f1": 0.0989,
+      "iou": 0.052,
+      "fpr_pct": 32.43
+    },
+    "Change Vector Analysis": {
+      "precision": 0.0791,
+      "recall": 0.0777,
+      "f1": 0.0784,
+      "iou": 0.0408,
+      "fpr_pct": 4.852
+    },
+    "SSIM differencing": {
+      "precision": 0.0528,
+      "recall": 0.9896,
+      "f1": 0.1002,
+      "iou": 0.0527,
+      "fpr_pct": 95.347
+    },
+    "Ours, brightness matching (thr 80)": {
+      "precision": 0.1344,
+      "recall": 0.2019,
+      "f1": 0.1614,
+      "iou": 0.0878,
+      "fpr_pct": 6.98
+    },
+    "Ours, all three removal steps (thr 60)": {
+      "precision": 0.1453,
+      "recall": 0.2491,
+      "f1": 0.1836,
+      "iou": 0.1011,
+      "fpr_pct": 7.863
+    },
+    "Patch heat map alone (top 10%)": {
+      "precision": 0.2642,
+      "recall": 0.6039,
+      "f1": 0.3676,
+      "iou": 0.2252,
+      "fpr_pct": 9.027
+    },
+    "Ours, brightness + patch heat (q 0.8)": {
+      "precision": 0.2264,
+      "recall": 0.1695,
+      "f1": 0.1939,
+      "iou": 0.1073,
+      "fpr_pct": 3.11
+    }
+  },
+  "picked_threshold_brightness": 80,
+  "heat": {
+    "model": "RemoteCLIP ViT-B/32",
+    "heat_quantile": 0.9,
+    "combined_quantile": 0.8
+  },
+  "examples": {
+    "good": {
+      "name": "test_104",
+      "f1": 0.731
+    },
+    "median": {
+      "name": "test_126",
+      "f1": 0.124
+    },
+    "bad": {
+      "name": "test_108",
+      "f1": 0.0
+    }
+  },
+  "runtime_s": 2030.7
+}

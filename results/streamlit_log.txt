@@ -1,0 +1,63 @@
+2026-10-11 21:54:43.132 Uvicorn server started on localhost:8501
+
+  You can now view your Streamlit app in your browser.
+
+  URL: http://localhost:8501
+
+Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\streamlit\web\server\starlette\starlette_websocket.py", line 516, in _websocket_endpoint
+    data = await websocket.receive_bytes()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\websockets.py", line 131, in receive_bytes
+    raise WebSocketDisconnected('WebSocket is not connected. Need to call "accept" first.')
+starlette.websockets.WebSocketDisconnected: WebSocket is not connected. Need to call "accept" first.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\uvicorn\protocols\websockets\websockets_sansio_impl.py", line 409, in run_asgi
+    result = await self.app(self.scope, self.receive, self.send)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\middleware\errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\streamlit\web\server\starlette\starlette_path_security_middleware.py", line 145, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\middleware\sessions.py", line 91, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\streamlit\web\server\starlette\starlette_gzip_middleware.py", line 220, in __call__
+    await self._gzip_app(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\middleware\gzip.py", line 62, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\routing.py", line 697, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\routing.py", line 356, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\routing.py", line 84, in app
+    await wrap_app_handling_exceptions(app, session)(scope, receive, send)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\routing.py", line 82, in app
+    await func(session)
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\streamlit\web\server\starlette\starlette_websocket.py", line 524, in _websocket_endpoint
+    await websocket.close()
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\websockets.py", line 187, in close
+    await self.send({"type": "websocket.close", "code": code, "reason": reason or ""})
+  File "C:\Users\subha\Desktop\projects\Computer Vision\env\libs\starlette\websockets.py", line 104, in send
+    raise WebSocketDisconnected('Cannot call "send" once a close message has been sent.')
+starlette.websockets.WebSocketDisconnected: Cannot call "send" once a close message has been sent.

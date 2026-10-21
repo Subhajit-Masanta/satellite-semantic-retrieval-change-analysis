@@ -1,0 +1,68 @@
+{
+  "3 bands, no matching": {
+    "percentile": 97,
+    "test": {
+      "precision": 0.4138,
+      "recall": 0.2402,
+      "f1": 0.3039,
+      "iou": 0.1792,
+      "fpr_pct": 1.855
+    },
+    "train_f1": 0.282
+  },
+  "3 bands, brightness matched": {
+    "percentile": 97,
+    "test": {
+      "precision": 0.4265,
+      "recall": 0.2476,
+      "f1": 0.3133,
+      "iou": 0.1857,
+      "fpr_pct": 1.815
+    },
+    "train_f1": 0.3062
+  },
+  "4 bands, no matching": {
+    "percentile": 97,
+    "test": {
+      "precision": 0.425,
+      "recall": 0.2467,
+      "f1": 0.3122,
+      "iou": 0.1849,
+      "fpr_pct": 1.819
+    },
+    "train_f1": 0.2827
+  },
+  "4 bands, brightness matched": {
+    "percentile": 97,
+    "test": {
+      "precision": 0.4398,
+      "recall": 0.2553,
+      "f1": 0.3231,
+      "iou": 0.1927,
+      "fpr_pct": 1.772
+    },
+    "train_f1": 0.3082
+  },
+  "13 bands, no matching": {
+    "percentile": 98,
+    "test": {
+      "precision": 0.4619,
+      "recall": 0.1788,
+      "f1": 0.2578,
+      "iou": 0.148,
+      "fpr_pct": 1.135
+    },
+    "train_f1": 0.2879
+  },
+  "13 bands, brightness matched": {
+    "percentile": 97,
+    "test": {
+      "precision": 0.4597,
+      "recall": 0.2669,
+      "f1": 0.3377,
+      "iou": 0.2032,
+      "fpr_pct": 1.709
+    },
+    "train_f1": 0.3339
+  }
+}

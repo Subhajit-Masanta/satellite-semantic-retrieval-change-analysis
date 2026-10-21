@@ -1,0 +1,25 @@
+======================================================================
+SPECTRAL INDEX CHANGE ON OSCD
+======================================================================
+
+[1] Index change scores, top p% of pixels per image (p picked on TRAIN)
+   NDBI up (built-up index)               top 10%  TEST P=0.098 R=0.063 F1=0.077 IoU=0.040 FPR=3.15%  (train F1=0.108)
+   NDVI down (vegetation lost)            top  7%  TEST P=0.221 R=0.119 F1=0.154 IoU=0.084 FPR=2.29%  (train F1=0.118)
+   Built score (NDBI up and NDVI down)    top 10%  TEST P=0.145 R=0.106 F1=0.122 IoU=0.065 FPR=3.41%  (train F1=0.106)
+   Any index moved (max of the three)     top  5%  TEST P=0.334 R=0.137 F1=0.194 IoU=0.107 FPR=1.49%  (train F1=0.176)
+   best on TRAIN: Any index moved (max of the three)
+   for reference on the same test cities: CVA 3 bands F1 0.353, ours 13 bands F1 0.338
+   13-band mask and index mask, either: P=0.398 R=0.330 F1=0.361 FPR=2.73%
+   13-band mask and index mask, both  : P=0.459 R=0.073 F1=0.126 FPR=0.47%
+
+[2] Which type do we give to the pixels OSCD marks as changed? (TEST cities)
+   type                                 inside labelled change    on unchanged pixels
+   no change                                            77.8%                  84.0%
+   built-up or bare ground gained                        9.3%                   7.0%
+   vegetation lost                                       4.9%                   2.1%
+   vegetation gained                                     4.2%                   6.2%
+   water gained                                          3.3%                   0.3%
+   water lost                                            0.5%                   0.5%
+   'built-up gained' label used as a detector: P=0.068 R=0.093 F1=0.078 FPR=6.99%
+
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\indices_results.json

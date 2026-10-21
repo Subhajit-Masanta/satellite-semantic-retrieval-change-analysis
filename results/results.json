@@ -1,0 +1,1886 @@
+{
+  "tile_px": 64,
+  "changed_tile_frac": 0.05,
+  "inventory": [
+    {
+      "city": "aguasclaras",
+      "split": "train",
+      "height": 471,
+      "width": 525,
+      "date_1": "2015-09-16",
+      "date_2": "2017-10-15",
+      "changed_pct": 1.64,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          471.0,
+          525.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -48.0498,
+          -15.8596,
+          -48.0016,
+          -15.8164
+        ]
+      }
+    },
+    {
+      "city": "bercy",
+      "split": "train",
+      "height": 395,
+      "width": 360,
+      "date_1": "2016-11-30",
+      "date_2": "2017-08-29",
+      "changed_pct": 0.74,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          395.0,
+          360.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          2.3593,
+          48.8207,
+          2.4012,
+          48.8666
+        ]
+      }
+    },
+    {
+      "city": "bordeaux",
+      "split": "train",
+      "height": 517,
+      "width": 461,
+      "date_1": "2016-05-04",
+      "date_2": "2017-10-26",
+      "changed_pct": 1.0,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          517.0,
+          461.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -0.601,
+          44.8106,
+          -0.5509,
+          44.8668
+        ]
+      }
+    },
+    {
+      "city": "nantes",
+      "split": "train",
+      "height": 522,
+      "width": 582,
+      "date_1": "2015-08-21",
+      "date_2": "2017-10-14",
+      "changed_pct": 1.14,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          522.0,
+          582.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -1.5774,
+          47.1756,
+          -1.5122,
+          47.2341
+        ]
+      }
+    },
+    {
+      "city": "paris",
+      "split": "train",
+      "height": 408,
+      "width": 390,
+      "date_1": "2016-11-30",
+      "date_2": "2017-11-07",
+      "changed_pct": 0.29,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          408.0,
+          390.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          2.3101,
+          48.7976,
+          2.3555,
+          48.8451
+        ]
+      }
+    },
+    {
+      "city": "rennes",
+      "split": "train",
+      "height": 339,
+      "width": 563,
+      "date_1": "2015-08-21",
+      "date_2": "2017-06-21",
+      "changed_pct": 2.58,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          339.0,
+          563.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -1.6852,
+          48.0938,
+          -1.621,
+          48.1325
+        ]
+      }
+    },
+    {
+      "city": "saclay_e",
+      "split": "train",
+      "height": 639,
+      "width": 688,
+      "date_1": "2016-03-15",
+      "date_2": "2017-08-29",
+      "changed_pct": 0.99,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          639.0,
+          688.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          2.2174,
+          48.6668,
+          2.2965,
+          48.7403
+        ]
+      }
+    },
+    {
+      "city": "abudhabi",
+      "split": "train",
+      "height": 799,
+      "width": 785,
+      "date_1": "2016-01-20",
+      "date_2": "2018-03-28",
+      "changed_pct": 3.76,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          799.0,
+          785.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          54.5403,
+          24.2914,
+          54.6141,
+          24.3665
+        ]
+      }
+    },
+    {
+      "city": "cupertino",
+      "split": "train",
+      "height": 1015,
+      "width": 788,
+      "date_1": "2015-09-18",
+      "date_2": "2018-03-26",
+      "changed_pct": 2.37,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          1015.0,
+          788.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -122.0537,
+          37.2976,
+          -121.9733,
+          37.4013
+        ]
+      }
+    },
+    {
+      "city": "pisa",
+      "split": "train",
+      "height": 776,
+      "width": 718,
+      "date_1": "2015-07-04",
+      "date_2": "2018-02-11",
+      "changed_pct": 1.64,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          776.0,
+          718.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          10.363,
+          43.6748,
+          10.4403,
+          43.7583
+        ]
+      }
+    },
+    {
+      "city": "beihai",
+      "split": "train",
+      "height": 902,
+      "width": 772,
+      "date_1": "2016-12-09",
+      "date_2": "2018-03-09",
+      "changed_pct": 2.49,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          902.0,
+          772.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          109.4839,
+          21.5317,
+          109.556,
+          21.6159
+        ]
+      }
+    },
+    {
+      "city": "hongkong",
+      "split": "train",
+      "height": 695,
+      "width": 540,
+      "date_1": "2016-09-27",
+      "date_2": "2018-03-23",
+      "changed_pct": 3.56,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          695.0,
+          540.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          114.2281,
+          22.2764,
+          114.2786,
+          22.3413
+        ]
+      }
+    },
+    {
+      "city": "beirut",
+      "split": "train",
+      "height": 1180,
+      "width": 1070,
+      "date_1": "2015-08-20",
+      "date_2": "2017-10-03",
+      "changed_pct": 2.69,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          1180.0,
+          1070.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          35.4618,
+          33.8014,
+          35.5677,
+          33.9181
+        ]
+      }
+    },
+    {
+      "city": "mumbai",
+      "split": "train",
+      "height": 858,
+      "width": 557,
+      "date_1": "2015-11-30",
+      "date_2": "2018-03-19",
+      "changed_pct": 2.56,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          858.0,
+          557.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          72.9017,
+          19.0256,
+          72.9533,
+          19.1053
+        ]
+      }
+    },
+    {
+      "city": "brasilia",
+      "split": "test",
+      "height": 433,
+      "width": 469,
+      "date_1": "2015-09-16",
+      "date_2": "2017-10-17",
+      "changed_pct": 2.58,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          433.0,
+          469.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -47.9077,
+          -15.7665,
+          -47.8646,
+          -15.7267
+        ]
+      }
+    },
+    {
+      "city": "montpellier",
+      "split": "test",
+      "height": 426,
+      "width": 451,
+      "date_1": "2015-08-12",
+      "date_2": "2017-10-30",
+      "changed_pct": 6.79,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          426.0,
+          451.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          3.879,
+          43.5778,
+          3.9278,
+          43.6239
+        ]
+      }
+    },
+    {
+      "city": "norcia",
+      "split": "test",
+      "height": 241,
+      "width": 385,
+      "date_1": "2015-07-11",
+      "date_2": "2017-10-18",
+      "changed_pct": 1.32,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          241.0,
+          385.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          13.0721,
+          42.7808,
+          13.1137,
+          42.8069
+        ]
+      }
+    },
+    {
+      "city": "rio",
+      "split": "test",
+      "height": 353,
+      "width": 426,
+      "date_1": "2016-04-24",
+      "date_2": "2017-10-11",
+      "changed_pct": 5.69,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          353.0,
+          426.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -43.4034,
+          -22.9846,
+          -43.3633,
+          -22.9514
+        ]
+      }
+    },
+    {
+      "city": "saclay_w",
+      "split": "test",
+      "height": 639,
+      "width": 688,
+      "date_1": "2016-03-15",
+      "date_2": "2017-08-29",
+      "changed_pct": 1.14,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          639.0,
+          688.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          2.1384,
+          48.6668,
+          2.2174,
+          48.7403
+        ]
+      }
+    },
+    {
+      "city": "valencia",
+      "split": "test",
+      "height": 458,
+      "width": 476,
+      "date_1": "2016-07-30",
+      "date_2": "2017-11-07",
+      "changed_pct": 0.44,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          458.0,
+          476.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -0.4461,
+          39.4817,
+          -0.3971,
+          39.5287
+        ]
+      }
+    },
+    {
+      "city": "dubai",
+      "split": "test",
+      "height": 774,
+      "width": 634,
+      "date_1": "2015-12-11",
+      "date_2": "2018-03-30",
+      "changed_pct": 9.92,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          774.0,
+          634.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          55.1938,
+          25.0004,
+          55.2538,
+          25.0738
+        ]
+      }
+    },
+    {
+      "city": "lasvegas",
+      "split": "test",
+      "height": 824,
+      "width": 716,
+      "date_1": "2015-08-20",
+      "date_2": "2018-02-05",
+      "changed_pct": 7.67,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          824.0,
+          716.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          -115.2723,
+          35.9827,
+          -115.2004,
+          36.0655
+        ]
+      }
+    },
+    {
+      "city": "milano",
+      "split": "test",
+      "height": 545,
+      "width": 558,
+      "date_1": "2016-12-28",
+      "date_2": "2018-01-22",
+      "changed_pct": 0.8,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          545.0,
+          558.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          9.1449,
+          45.4729,
+          9.2065,
+          45.533
+        ]
+      }
+    },
+    {
+      "city": "chongqing",
+      "split": "test",
+      "height": 730,
+      "width": 544,
+      "date_1": "2017-04-14",
+      "date_2": "2018-04-02",
+      "changed_pct": 7.21,
+      "geo": {
+        "crs": null,
+        "bounds": [
+          0.0,
+          730.0,
+          544.0,
+          0.0
+        ],
+        "dtype": "uint16",
+        "driver": "GTiff",
+        "footprint_lonlat": [
+          106.2697,
+          29.3792,
+          106.3223,
+          29.4498
+        ]
+      }
+    }
+  ],
+  "dataset": {
+    "n_cities": 24,
+    "total_pixels": 9595514,
+    "changed_pixels": 308267,
+    "changed_pct": 3.213
+  },
+  "n_tiles": 4278,
+  "example_metadata": {
+    "tile_id": "aguasclaras_d1_y0_x0",
+    "city": "aguasclaras",
+    "split": "train",
+    "date_slot": 1,
+    "date": "2015-09-16",
+    "sensor": "Sentinel-2 MSI",
+    "gsd_m": 10,
+    "x": 0,
+    "y": 0,
+    "tile_px": 64,
+    "changed_frac": 0.0002,
+    "water": false,
+    "vegetation": false,
+    "builtup": false
+  },
+  "prevalence": {
+    "water": 0.0785,
+    "vegetation": 0.011,
+    "builtup": 0.2712
+  },
+  "system": {
+    "remoteclip": {
+      "n_tiles": 4278,
+      "dim": 512,
+      "backend": "numpy",
+      "build_time_s": 0.0,
+      "storage_mb": 8.761,
+      "model": "RemoteCLIP ViT-B/32",
+      "model_licence": "Apache-2.0",
+      "embed_time_s": 168.9,
+      "tiles_per_s": 25.3,
+      "query_latency_ms": 0.322
+    },
+    "openclip": {
+      "n_tiles": 4278,
+      "dim": 512,
+      "backend": "numpy",
+      "build_time_s": 0.0,
+      "storage_mb": 8.761,
+      "model": "OpenCLIP ViT-B/32 (laion2b_s34b_b79k)",
+      "model_licence": "MIT",
+      "embed_time_s": 172.2,
+      "tiles_per_s": 24.8,
+      "query_latency_ms": 0.324
+    }
+  },
+  "retrieval": {
+    "openclip": {
+      "water": {
+        "p5": 0.0,
+        "p10": 0.1,
+        "p20": 0.1,
+        "ap": 0.1043,
+        "n_relevant": 336,
+        "top10": [
+          2869,
+          2043,
+          1800,
+          2870,
+          3379,
+          3215,
+          198,
+          2141,
+          2119,
+          3144
+        ]
+      },
+      "vegetation": {
+        "p5": 0.2,
+        "p10": 0.1,
+        "p20": 0.1,
+        "ap": 0.0586,
+        "n_relevant": 47,
+        "top10": [
+          1688,
+          729,
+          1824,
+          1690,
+          2017,
+          755,
+          1444,
+          1666,
+          695,
+          1870
+        ]
+      },
+      "builtup": {
+        "p5": 0.8,
+        "p10": 0.8,
+        "p20": 0.55,
+        "ap": 0.3107,
+        "n_relevant": 1160,
+        "top10": [
+          130,
+          2504,
+          2469,
+          2505,
+          2288,
+          2321,
+          2475,
+          2295,
+          128,
+          3759
+        ]
+      },
+      "mAP": 0.1579
+    },
+    "remoteclip": {
+      "water": {
+        "p5": 0.0,
+        "p10": 0.1,
+        "p20": 0.05,
+        "ap": 0.105,
+        "n_relevant": 336,
+        "top10": [
+          2132,
+          3335,
+          2112,
+          2053,
+          3199,
+          2959,
+          1906,
+          3235,
+          363,
+          2066
+        ]
+      },
+      "vegetation": {
+        "p5": 0.2,
+        "p10": 0.1,
+        "p20": 0.05,
+        "ap": 0.0419,
+        "n_relevant": 47,
+        "top10": [
+          1970,
+          1888,
+          1778,
+          1734,
+          749,
+          1716,
+          1776,
+          1982,
+          755,
+          1732
+        ]
+      },
+      "builtup": {
+        "p5": 0.0,
+        "p10": 0.0,
+        "p20": 0.0,
+        "ap": 0.2647,
+        "n_relevant": 1160,
+        "top10": [
+          1387,
+          310,
+          1307,
+          574,
+          326,
+          3399,
+          1243,
+          1370,
+          549,
+          1178
+        ]
+      },
+      "mAP": 0.1372
+    },
+    "random": {
+      "water": {
+        "p10": 0.05,
+        "ap": 0.0797
+      },
+      "vegetation": {
+        "p10": 0.015,
+        "ap": 0.0128
+      },
+      "builtup": {
+        "p10": 0.27,
+        "ap": 0.2707
+      },
+      "mAP": 0.1211
+    }
+  },
+  "cross_date": {
+    "openclip": {
+      "recall@1": 0.4544,
+      "recall@5": 0.6199,
+      "recall@10": 0.677
+    },
+    "remoteclip": {
+      "recall@1": 0.4614,
+      "recall@5": 0.6082,
+      "recall@10": 0.6676
+    },
+    "n_candidates": 2139
+  },
+  "tile_change": {
+    "n_tiles": 2139,
+    "n_changed": 375,
+    "changed_share": 0.1753,
+    "methods": {
+      "pixel difference (raw)": {
+        "auc": 0.6264,
+        "ap": 0.2213
+      },
+      "pixel difference (normalised)": {
+        "auc": 0.6501,
+        "ap": 0.2408
+      },
+      "embedding distance (openclip)": {
+        "auc": 0.5991,
+        "ap": 0.219
+      },
+      "embedding distance (remoteclip)": {
+        "auc": 0.5353,
+        "ap": 0.1704
+      }
+    },
+    "score_order": [
+      "pixel difference (raw)",
+      "pixel difference (normalised)",
+      "embedding distance (openclip)",
+      "embedding distance (remoteclip)"
+    ]
+  },
+  "threshold_sweep": {
+    "False": {
+      "20": 0.0715,
+      "30": 0.0973,
+      "40": 0.1319,
+      "50": 0.1651,
+      "60": 0.1946,
+      "80": 0.2251
+    },
+    "True": {
+      "20": 0.1468,
+      "30": 0.1808,
+      "40": 0.2043,
+      "50": 0.2035,
+      "60": 0.1862,
+      "80": 0.1332
+    }
+  },
+  "picked_threshold": {
+    "no_suppression": 80,
+    "suppression": 40
+  },
+  "picked_tau": 0.0497,
+  "pixel": {
+    "test": {
+      "Pixel difference + Otsu": {
+        "precision": 0.1517,
+        "recall": 0.5279,
+        "f1": 0.2356,
+        "iou": 0.1335,
+        "fpr_pct": 16.093,
+        "time_s": 0.02,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.0492,
+            "recall": 0.6196,
+            "f1": 0.0911,
+            "iou": 0.0477
+          },
+          "montpellier": {
+            "precision": 0.3049,
+            "recall": 0.6488,
+            "f1": 0.4149,
+            "iou": 0.2617
+          },
+          "norcia": {
+            "precision": 0.0274,
+            "recall": 0.5689,
+            "f1": 0.0524,
+            "iou": 0.0269
+          },
+          "rio": {
+            "precision": 0.2425,
+            "recall": 0.474,
+            "f1": 0.3208,
+            "iou": 0.1911
+          },
+          "saclay_w": {
+            "precision": 0.0184,
+            "recall": 0.3982,
+            "f1": 0.0352,
+            "iou": 0.0179
+          },
+          "valencia": {
+            "precision": 0.0055,
+            "recall": 0.4902,
+            "f1": 0.011,
+            "iou": 0.0055
+          },
+          "dubai": {
+            "precision": 0.3294,
+            "recall": 0.4792,
+            "f1": 0.3904,
+            "iou": 0.2426
+          },
+          "lasvegas": {
+            "precision": 0.541,
+            "recall": 0.6148,
+            "f1": 0.5755,
+            "iou": 0.404
+          },
+          "milano": {
+            "precision": 0.031,
+            "recall": 0.7172,
+            "f1": 0.0595,
+            "iou": 0.0307
+          },
+          "chongqing": {
+            "precision": 0.2672,
+            "recall": 0.4236,
+            "f1": 0.3277,
+            "iou": 0.1959
+          }
+        }
+      },
+      "Change Vector Analysis": {
+        "precision": 0.3587,
+        "recall": 0.347,
+        "f1": 0.3528,
+        "iou": 0.2142,
+        "fpr_pct": 3.381,
+        "time_s": 0.12,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.1709,
+            "recall": 0.331,
+            "f1": 0.2254,
+            "iou": 0.127
+          },
+          "montpellier": {
+            "precision": 0.6031,
+            "recall": 0.4438,
+            "f1": 0.5114,
+            "iou": 0.3435
+          },
+          "norcia": {
+            "precision": 0.0457,
+            "recall": 0.1728,
+            "f1": 0.0723,
+            "iou": 0.0375
+          },
+          "rio": {
+            "precision": 0.3518,
+            "recall": 0.3093,
+            "f1": 0.3292,
+            "iou": 0.197
+          },
+          "saclay_w": {
+            "precision": 0.0205,
+            "recall": 0.0897,
+            "f1": 0.0333,
+            "iou": 0.0169
+          },
+          "valencia": {
+            "precision": 0.016,
+            "recall": 0.1796,
+            "f1": 0.0293,
+            "iou": 0.0149
+          },
+          "dubai": {
+            "precision": 0.5009,
+            "recall": 0.2524,
+            "f1": 0.3357,
+            "iou": 0.2017
+          },
+          "lasvegas": {
+            "precision": 0.744,
+            "recall": 0.4848,
+            "f1": 0.5871,
+            "iou": 0.4155
+          },
+          "milano": {
+            "precision": 0.0877,
+            "recall": 0.5511,
+            "f1": 0.1513,
+            "iou": 0.0818
+          },
+          "chongqing": {
+            "precision": 0.4344,
+            "recall": 0.3012,
+            "f1": 0.3558,
+            "iou": 0.2164
+          }
+        }
+      },
+      "SSIM differencing": {
+        "precision": 0.1003,
+        "recall": 0.9094,
+        "f1": 0.1807,
+        "iou": 0.0993,
+        "fpr_pct": 44.437,
+        "time_s": 0.16,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.062,
+            "recall": 0.8277,
+            "f1": 0.1153,
+            "iou": 0.0612
+          },
+          "montpellier": {
+            "precision": 0.1831,
+            "recall": 0.9462,
+            "f1": 0.3068,
+            "iou": 0.1812
+          },
+          "norcia": {
+            "precision": 0.0196,
+            "recall": 0.859,
+            "f1": 0.0383,
+            "iou": 0.0195
+          },
+          "rio": {
+            "precision": 0.15,
+            "recall": 0.7706,
+            "f1": 0.2511,
+            "iou": 0.1436
+          },
+          "saclay_w": {
+            "precision": 0.0117,
+            "recall": 0.993,
+            "f1": 0.0231,
+            "iou": 0.0117
+          },
+          "valencia": {
+            "precision": 0.0043,
+            "recall": 0.8411,
+            "f1": 0.0085,
+            "iou": 0.0043
+          },
+          "dubai": {
+            "precision": 0.2021,
+            "recall": 0.8911,
+            "f1": 0.3295,
+            "iou": 0.1973
+          },
+          "lasvegas": {
+            "precision": 0.3105,
+            "recall": 0.9527,
+            "f1": 0.4684,
+            "iou": 0.3058
+          },
+          "milano": {
+            "precision": 0.1126,
+            "recall": 0.783,
+            "f1": 0.1968,
+            "iou": 0.1092
+          },
+          "chongqing": {
+            "precision": 0.119,
+            "recall": 0.9119,
+            "f1": 0.2105,
+            "iou": 0.1176
+          }
+        }
+      },
+      "Ours, no suppression": {
+        "precision": 0.2582,
+        "recall": 0.2865,
+        "f1": 0.2716,
+        "iou": 0.1571,
+        "fpr_pct": 4.487,
+        "time_s": 0.03,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.3934,
+            "recall": 0.2314,
+            "f1": 0.2914,
+            "iou": 0.1706
+          },
+          "montpellier": {
+            "precision": 0.7711,
+            "recall": 0.4234,
+            "f1": 0.5466,
+            "iou": 0.3761
+          },
+          "norcia": {
+            "precision": 0.0196,
+            "recall": 0.1964,
+            "f1": 0.0357,
+            "iou": 0.0182
+          },
+          "rio": {
+            "precision": 0.6274,
+            "recall": 0.1434,
+            "f1": 0.2334,
+            "iou": 0.1321
+          },
+          "saclay_w": {
+            "precision": 0.0134,
+            "recall": 0.1961,
+            "f1": 0.0251,
+            "iou": 0.0127
+          },
+          "valencia": {
+            "precision": 0.0085,
+            "recall": 0.2291,
+            "f1": 0.0164,
+            "iou": 0.0083
+          },
+          "dubai": {
+            "precision": 0.5931,
+            "recall": 0.1273,
+            "f1": 0.2096,
+            "iou": 0.1171
+          },
+          "lasvegas": {
+            "precision": 0.7725,
+            "recall": 0.5393,
+            "f1": 0.6352,
+            "iou": 0.4654
+          },
+          "milano": {
+            "precision": 0.3489,
+            "recall": 0.1761,
+            "f1": 0.2341,
+            "iou": 0.1325
+          },
+          "chongqing": {
+            "precision": 0.5415,
+            "recall": 0.1789,
+            "f1": 0.2689,
+            "iou": 0.1554
+          }
+        }
+      },
+      "Ours, with suppression": {
+        "precision": 0.2288,
+        "recall": 0.3372,
+        "f1": 0.2726,
+        "iou": 0.1578,
+        "fpr_pct": 6.193,
+        "time_s": 0.53,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.6066,
+            "recall": 0.0841,
+            "f1": 0.1478,
+            "iou": 0.0798
+          },
+          "montpellier": {
+            "precision": 0.5942,
+            "recall": 0.6138,
+            "f1": 0.6038,
+            "iou": 0.4325
+          },
+          "norcia": {
+            "precision": 0.0294,
+            "recall": 0.5273,
+            "f1": 0.0557,
+            "iou": 0.0287
+          },
+          "rio": {
+            "precision": 0.5167,
+            "recall": 0.2424,
+            "f1": 0.33,
+            "iou": 0.1976
+          },
+          "saclay_w": {
+            "precision": 0.0215,
+            "recall": 0.502,
+            "f1": 0.0412,
+            "iou": 0.021
+          },
+          "valencia": {
+            "precision": 0.0041,
+            "recall": 0.0402,
+            "f1": 0.0075,
+            "iou": 0.0037
+          },
+          "dubai": {
+            "precision": 0.4976,
+            "recall": 0.2252,
+            "f1": 0.31,
+            "iou": 0.1835
+          },
+          "lasvegas": {
+            "precision": 0.6893,
+            "recall": 0.4567,
+            "f1": 0.5494,
+            "iou": 0.3787
+          },
+          "milano": {
+            "precision": 0.0819,
+            "recall": 0.081,
+            "f1": 0.0814,
+            "iou": 0.0425
+          },
+          "chongqing": {
+            "precision": 0.6193,
+            "recall": 0.2819,
+            "f1": 0.3874,
+            "iou": 0.2402
+          }
+        }
+      },
+      "Ours, suppression + embedding gate": {
+        "precision": 0.2539,
+        "recall": 0.2886,
+        "f1": 0.2702,
+        "iou": 0.1562,
+        "fpr_pct": 4.62,
+        "time_s": 0.54,
+        "per_city": {
+          "brasilia": {
+            "precision": 0.6343,
+            "recall": 0.0486,
+            "f1": 0.0904,
+            "iou": 0.0473
+          },
+          "montpellier": {
+            "precision": 0.607,
+            "recall": 0.5246,
+            "f1": 0.5628,
+            "iou": 0.3916
+          },
+          "norcia": {
+            "precision": 0.0232,
+            "recall": 0.3187,
+            "f1": 0.0432,
+            "iou": 0.0221
+          },
+          "rio": {
+            "precision": 0.4835,
+            "recall": 0.1801,
+            "f1": 0.2624,
+            "iou": 0.151
+          },
+          "saclay_w": {
+            "precision": 0.0291,
+            "recall": 0.502,
+            "f1": 0.055,
+            "iou": 0.0283
+          },
+          "valencia": {
+            "precision": 0.0048,
+            "recall": 0.0402,
+            "f1": 0.0086,
+            "iou": 0.0043
+          },
+          "dubai": {
+            "precision": 0.5465,
+            "recall": 0.1639,
+            "f1": 0.2522,
+            "iou": 0.1443
+          },
+          "lasvegas": {
+            "precision": 0.7077,
+            "recall": 0.408,
+            "f1": 0.5176,
+            "iou": 0.3492
+          },
+          "milano": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "iou": 0.0
+          },
+          "chongqing": {
+            "precision": 0.6144,
+            "recall": 0.2745,
+            "f1": 0.3794,
+            "iou": 0.2341
+          }
+        }
+      }
+    },
+    "train": {
+      "Pixel difference + Otsu": {
+        "precision": 0.0762,
+        "recall": 0.5766,
+        "f1": 0.1346,
+        "iou": 0.0722,
+        "fpr_pct": 16.376,
+        "time_s": 0.05,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.0449,
+            "recall": 0.3553,
+            "f1": 0.0798,
+            "iou": 0.0415
+          },
+          "bercy": {
+            "precision": 0.0126,
+            "recall": 0.5669,
+            "f1": 0.0247,
+            "iou": 0.0125
+          },
+          "bordeaux": {
+            "precision": 0.0249,
+            "recall": 0.5088,
+            "f1": 0.0475,
+            "iou": 0.0244
+          },
+          "nantes": {
+            "precision": 0.0489,
+            "recall": 0.7654,
+            "f1": 0.0919,
+            "iou": 0.0482
+          },
+          "paris": {
+            "precision": 0.0371,
+            "recall": 0.7118,
+            "f1": 0.0706,
+            "iou": 0.0366
+          },
+          "rennes": {
+            "precision": 0.2287,
+            "recall": 0.664,
+            "f1": 0.3402,
+            "iou": 0.205
+          },
+          "saclay_e": {
+            "precision": 0.0178,
+            "recall": 0.46,
+            "f1": 0.0342,
+            "iou": 0.0174
+          },
+          "abudhabi": {
+            "precision": 0.0777,
+            "recall": 0.4834,
+            "f1": 0.1338,
+            "iou": 0.0717
+          },
+          "cupertino": {
+            "precision": 0.4018,
+            "recall": 0.5686,
+            "f1": 0.4708,
+            "iou": 0.3079
+          },
+          "pisa": {
+            "precision": 0.032,
+            "recall": 0.6143,
+            "f1": 0.0608,
+            "iou": 0.0314
+          },
+          "beihai": {
+            "precision": 0.0989,
+            "recall": 0.6677,
+            "f1": 0.1723,
+            "iou": 0.0943
+          },
+          "hongkong": {
+            "precision": 0.1763,
+            "recall": 0.5092,
+            "f1": 0.2619,
+            "iou": 0.1507
+          },
+          "beirut": {
+            "precision": 0.0909,
+            "recall": 0.6223,
+            "f1": 0.1587,
+            "iou": 0.0862
+          },
+          "mumbai": {
+            "precision": 0.0966,
+            "recall": 0.5935,
+            "f1": 0.1661,
+            "iou": 0.0906
+          }
+        }
+      },
+      "Change Vector Analysis": {
+        "precision": 0.1856,
+        "recall": 0.4054,
+        "f1": 0.2546,
+        "iou": 0.1459,
+        "fpr_pct": 4.168,
+        "time_s": 0.27,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.0699,
+            "recall": 0.213,
+            "f1": 0.1052,
+            "iou": 0.0555
+          },
+          "bercy": {
+            "precision": 0.045,
+            "recall": 0.3059,
+            "f1": 0.0785,
+            "iou": 0.0408
+          },
+          "bordeaux": {
+            "precision": 0.0468,
+            "recall": 0.2345,
+            "f1": 0.0781,
+            "iou": 0.0406
+          },
+          "nantes": {
+            "precision": 0.1335,
+            "recall": 0.588,
+            "f1": 0.2176,
+            "iou": 0.1221
+          },
+          "paris": {
+            "precision": 0.0402,
+            "recall": 0.6987,
+            "f1": 0.0761,
+            "iou": 0.0395
+          },
+          "rennes": {
+            "precision": 0.317,
+            "recall": 0.6133,
+            "f1": 0.418,
+            "iou": 0.2642
+          },
+          "saclay_e": {
+            "precision": 0.0257,
+            "recall": 0.1302,
+            "f1": 0.043,
+            "iou": 0.022
+          },
+          "abudhabi": {
+            "precision": 0.1389,
+            "recall": 0.1846,
+            "f1": 0.1585,
+            "iou": 0.0861
+          },
+          "cupertino": {
+            "precision": 0.3097,
+            "recall": 0.654,
+            "f1": 0.4204,
+            "iou": 0.2661
+          },
+          "pisa": {
+            "precision": 0.0928,
+            "recall": 0.283,
+            "f1": 0.1397,
+            "iou": 0.0751
+          },
+          "beihai": {
+            "precision": 0.2455,
+            "recall": 0.4935,
+            "f1": 0.3279,
+            "iou": 0.1961
+          },
+          "hongkong": {
+            "precision": 0.2601,
+            "recall": 0.3648,
+            "f1": 0.3037,
+            "iou": 0.179
+          },
+          "beirut": {
+            "precision": 0.2325,
+            "recall": 0.4329,
+            "f1": 0.3025,
+            "iou": 0.1782
+          },
+          "mumbai": {
+            "precision": 0.2245,
+            "recall": 0.4382,
+            "f1": 0.2969,
+            "iou": 0.1743
+          }
+        }
+      },
+      "SSIM differencing": {
+        "precision": 0.0396,
+        "recall": 0.8881,
+        "f1": 0.0758,
+        "iou": 0.0394,
+        "fpr_pct": 50.446,
+        "time_s": 0.34,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.0366,
+            "recall": 0.569,
+            "f1": 0.0688,
+            "iou": 0.0356
+          },
+          "bercy": {
+            "precision": 0.0101,
+            "recall": 0.8461,
+            "f1": 0.02,
+            "iou": 0.0101
+          },
+          "bordeaux": {
+            "precision": 0.0133,
+            "recall": 0.8517,
+            "f1": 0.0263,
+            "iou": 0.0133
+          },
+          "nantes": {
+            "precision": 0.0389,
+            "recall": 0.8834,
+            "f1": 0.0746,
+            "iou": 0.0387
+          },
+          "paris": {
+            "precision": 0.0256,
+            "recall": 0.8668,
+            "f1": 0.0497,
+            "iou": 0.0255
+          },
+          "rennes": {
+            "precision": 0.1502,
+            "recall": 0.7676,
+            "f1": 0.2513,
+            "iou": 0.1437
+          },
+          "saclay_e": {
+            "precision": 0.0097,
+            "recall": 0.9657,
+            "f1": 0.0192,
+            "iou": 0.0097
+          },
+          "abudhabi": {
+            "precision": 0.0476,
+            "recall": 0.9782,
+            "f1": 0.0909,
+            "iou": 0.0476
+          },
+          "cupertino": {
+            "precision": 0.1805,
+            "recall": 0.9077,
+            "f1": 0.3011,
+            "iou": 0.1772
+          },
+          "pisa": {
+            "precision": 0.0164,
+            "recall": 0.9024,
+            "f1": 0.0323,
+            "iou": 0.0164
+          },
+          "beihai": {
+            "precision": 0.0275,
+            "recall": 0.8707,
+            "f1": 0.0533,
+            "iou": 0.0274
+          },
+          "hongkong": {
+            "precision": 0.0536,
+            "recall": 0.9551,
+            "f1": 0.1015,
+            "iou": 0.0534
+          },
+          "beirut": {
+            "precision": 0.0634,
+            "recall": 0.8854,
+            "f1": 0.1183,
+            "iou": 0.0629
+          },
+          "mumbai": {
+            "precision": 0.0632,
+            "recall": 0.7715,
+            "f1": 0.1169,
+            "iou": 0.0621
+          }
+        }
+      },
+      "Ours, no suppression": {
+        "precision": 0.1807,
+        "recall": 0.2985,
+        "f1": 0.2251,
+        "iou": 0.1268,
+        "fpr_pct": 3.171,
+        "time_s": 0.06,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.2356,
+            "recall": 0.1139,
+            "f1": 0.1536,
+            "iou": 0.0832
+          },
+          "bercy": {
+            "precision": 0.0457,
+            "recall": 0.3509,
+            "f1": 0.0808,
+            "iou": 0.0421
+          },
+          "bordeaux": {
+            "precision": 0.0329,
+            "recall": 0.2441,
+            "f1": 0.058,
+            "iou": 0.0299
+          },
+          "nantes": {
+            "precision": 0.6506,
+            "recall": 0.4314,
+            "f1": 0.5188,
+            "iou": 0.3503
+          },
+          "paris": {
+            "precision": 0.034,
+            "recall": 0.3712,
+            "f1": 0.0624,
+            "iou": 0.0322
+          },
+          "rennes": {
+            "precision": 0.7188,
+            "recall": 0.3404,
+            "f1": 0.462,
+            "iou": 0.3004
+          },
+          "saclay_e": {
+            "precision": 0.0203,
+            "recall": 0.3056,
+            "f1": 0.0381,
+            "iou": 0.0194
+          },
+          "abudhabi": {
+            "precision": 0.3236,
+            "recall": 0.1458,
+            "f1": 0.201,
+            "iou": 0.1117
+          },
+          "cupertino": {
+            "precision": 0.8232,
+            "recall": 0.2909,
+            "f1": 0.4299,
+            "iou": 0.2738
+          },
+          "pisa": {
+            "precision": 0.0514,
+            "recall": 0.4539,
+            "f1": 0.0924,
+            "iou": 0.0484
+          },
+          "beihai": {
+            "precision": 0.5754,
+            "recall": 0.329,
+            "f1": 0.4186,
+            "iou": 0.2647
+          },
+          "hongkong": {
+            "precision": 0.3553,
+            "recall": 0.4272,
+            "f1": 0.3879,
+            "iou": 0.2406
+          },
+          "beirut": {
+            "precision": 0.8076,
+            "recall": 0.3011,
+            "f1": 0.4386,
+            "iou": 0.2809
+          },
+          "mumbai": {
+            "precision": 0.5139,
+            "recall": 0.3055,
+            "f1": 0.3832,
+            "iou": 0.237
+          }
+        }
+      },
+      "Ours, with suppression": {
+        "precision": 0.1497,
+        "recall": 0.3212,
+        "f1": 0.2043,
+        "iou": 0.1137,
+        "fpr_pct": 4.273,
+        "time_s": 1.14,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.5888,
+            "recall": 0.197,
+            "f1": 0.2952,
+            "iou": 0.1732
+          },
+          "bercy": {
+            "precision": 0.043,
+            "recall": 0.3595,
+            "f1": 0.0768,
+            "iou": 0.0399
+          },
+          "bordeaux": {
+            "precision": 0.0302,
+            "recall": 0.2672,
+            "f1": 0.0542,
+            "iou": 0.0279
+          },
+          "nantes": {
+            "precision": 0.0973,
+            "recall": 0.5329,
+            "f1": 0.1646,
+            "iou": 0.0897
+          },
+          "paris": {
+            "precision": 0.0004,
+            "recall": 0.0066,
+            "f1": 0.0008,
+            "iou": 0.0004
+          },
+          "rennes": {
+            "precision": 0.5951,
+            "recall": 0.458,
+            "f1": 0.5176,
+            "iou": 0.3492
+          },
+          "saclay_e": {
+            "precision": 0.0245,
+            "recall": 0.4478,
+            "f1": 0.0465,
+            "iou": 0.0238
+          },
+          "abudhabi": {
+            "precision": 0.2898,
+            "recall": 0.3811,
+            "f1": 0.3292,
+            "iou": 0.197
+          },
+          "cupertino": {
+            "precision": 0.8563,
+            "recall": 0.2751,
+            "f1": 0.4164,
+            "iou": 0.2629
+          },
+          "pisa": {
+            "precision": 0.0478,
+            "recall": 0.3564,
+            "f1": 0.0843,
+            "iou": 0.044
+          },
+          "beihai": {
+            "precision": 0.2674,
+            "recall": 0.2787,
+            "f1": 0.273,
+            "iou": 0.158
+          },
+          "hongkong": {
+            "precision": 0.1448,
+            "recall": 0.4389,
+            "f1": 0.2178,
+            "iou": 0.1222
+          },
+          "beirut": {
+            "precision": 0.9062,
+            "recall": 0.2609,
+            "f1": 0.4051,
+            "iou": 0.254
+          },
+          "mumbai": {
+            "precision": 0.5172,
+            "recall": 0.25,
+            "f1": 0.3371,
+            "iou": 0.2027
+          }
+        }
+      },
+      "Ours, suppression + embedding gate": {
+        "precision": 0.1557,
+        "recall": 0.2687,
+        "f1": 0.1972,
+        "iou": 0.1094,
+        "fpr_pct": 3.413,
+        "time_s": 1.11,
+        "per_city": {
+          "aguasclaras": {
+            "precision": 0.7961,
+            "recall": 0.1511,
+            "f1": 0.254,
+            "iou": 0.1455
+          },
+          "bercy": {
+            "precision": 0.0303,
+            "recall": 0.2275,
+            "f1": 0.0534,
+            "iou": 0.0275
+          },
+          "bordeaux": {
+            "precision": 0.0195,
+            "recall": 0.1571,
+            "f1": 0.0347,
+            "iou": 0.0177
+          },
+          "nantes": {
+            "precision": 0.1065,
+            "recall": 0.5306,
+            "f1": 0.1774,
+            "iou": 0.0974
+          },
+          "paris": {
+            "precision": 0.0004,
+            "recall": 0.0066,
+            "f1": 0.0008,
+            "iou": 0.0004
+          },
+          "rennes": {
+            "precision": 0.5983,
+            "recall": 0.2283,
+            "f1": 0.3305,
+            "iou": 0.198
+          },
+          "saclay_e": {
+            "precision": 0.0343,
+            "recall": 0.4307,
+            "f1": 0.0635,
+            "iou": 0.0328
+          },
+          "abudhabi": {
+            "precision": 0.2758,
+            "recall": 0.2594,
+            "f1": 0.2674,
+            "iou": 0.1543
+          },
+          "cupertino": {
+            "precision": 0.966,
+            "recall": 0.2502,
+            "f1": 0.3975,
+            "iou": 0.2481
+          },
+          "pisa": {
+            "precision": 0.0472,
+            "recall": 0.3363,
+            "f1": 0.0828,
+            "iou": 0.0432
+          },
+          "beihai": {
+            "precision": 0.2753,
+            "recall": 0.2777,
+            "f1": 0.2765,
+            "iou": 0.1604
+          },
+          "hongkong": {
+            "precision": 0.1915,
+            "recall": 0.3625,
+            "f1": 0.2506,
+            "iou": 0.1432
+          },
+          "beirut": {
+            "precision": 0.9297,
+            "recall": 0.2332,
+            "f1": 0.3728,
+            "iou": 0.2291
+          },
+          "mumbai": {
+            "precision": 0.4785,
+            "recall": 0.2073,
+            "f1": 0.2893,
+            "iou": 0.1691
+          }
+        }
+      }
+    }
+  },
+  "gate_c": {
+    "fpr_no_suppression_pct": 4.487,
+    "fpr_suppression_pct": 6.193,
+    "recall_no_suppression": 0.2865,
+    "recall_suppression": 0.3372,
+    "recall_retained": 1.177,
+    "false_alarm_half": "False",
+    "sensitivity_half": true
+  },
+  "total_runtime_s": 379.8
+}

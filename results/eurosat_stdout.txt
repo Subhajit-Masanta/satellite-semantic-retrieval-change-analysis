@@ -1,0 +1,61 @@
+======================================================================
+EUROSAT EXPERIMENT RUN
+======================================================================
+
+[1] Loading dataset
+   AnnualCrop              3000 patches in dataset, 3000 sampled
+   Forest                  3000 patches in dataset, 3000 sampled
+   HerbaceousVegetation    3000 patches in dataset, 3000 sampled
+   Highway                 2500 patches in dataset, 2500 sampled
+   Industrial              2500 patches in dataset, 2500 sampled
+   Pasture                 2000 patches in dataset, 2000 sampled
+   PermanentCrop           2500 patches in dataset, 2500 sampled
+   Residential             3000 patches in dataset, 3000 sampled
+   River                   2500 patches in dataset, 2500 sampled
+   SeaLake                 3000 patches in dataset, 3000 sampled
+   dataset has 27000 patches; we use 27000 (seed 0); patch size 64x64 px
+
+[2] openclip: embedding
+   27000 patches in 212s, dim 512
+[3] openclip: text search (one query per class)
+   query class             P@10  P@20  P@100     AP
+   AnnualCrop              0.50  0.45   0.46  0.364
+   Forest                  1.00  0.95   0.86  0.335
+   HerbaceousVegetation    0.00  0.00   0.08  0.207
+   Highway                 1.00  1.00   0.97  0.720
+   Industrial              1.00  1.00   1.00  0.912
+   Pasture                 0.70  0.70   0.52  0.324
+   PermanentCrop           0.70  0.70   0.50  0.422
+   Residential             0.90  0.80   0.78  0.574
+   River                   0.90  0.90   0.82  0.428
+   SeaLake                 0.20  0.10   0.04  0.076
+   mean P@10 = 0.690   mAP = 0.436   (random: 0.100)
+[4] openclip: zero-shot classification accuracy = 47.7%  (random: 10.0%)
+   per class: AnnualCrop:43%, Forest:15%, HerbaceousVegetation:1%, Highway:53%, Industrial:87%, Pasture:53%, PermanentCrop:56%, Residential:96%, River:31%, SeaLake:51%
+   with 5-template prompt ensemble: mAP = 0.443, zero-shot accuracy = 51.0%
+[5] openclip: image-to-image search, same class in top 10 = 91.5%, nearest neighbour same class = 94.2%  (random: 10.0%)
+
+[2] remoteclip: embedding
+WARNING:root:No pretrained weights loaded for model 'ViT-B-32'. Model initialized randomly.
+   27000 patches in 215s, dim 512
+[3] remoteclip: text search (one query per class)
+   query class             P@10  P@20  P@100     AP
+   AnnualCrop              0.10  0.10   0.17  0.238
+   Forest                  0.00  0.00   0.02  0.067
+   HerbaceousVegetation    0.00  0.10   0.08  0.128
+   Highway                 0.40  0.50   0.31  0.205
+   Industrial              0.80  0.90   0.91  0.563
+   Pasture                 0.60  0.65   0.56  0.259
+   PermanentCrop           0.90  0.90   0.76  0.310
+   Residential             0.30  0.40   0.41  0.495
+   River                   1.00  1.00   0.98  0.656
+   SeaLake                 0.40  0.20   0.19  0.125
+   mean P@10 = 0.450   mAP = 0.305   (random: 0.100)
+[4] remoteclip: zero-shot classification accuracy = 34.1%  (random: 10.0%)
+   per class: AnnualCrop:13%, Forest:2%, HerbaceousVegetation:59%, Highway:19%, Industrial:11%, Pasture:0%, PermanentCrop:23%, Residential:38%, River:80%, SeaLake:85%
+   with 5-template prompt ensemble: mAP = 0.326, zero-shot accuracy = 33.2%
+[5] remoteclip: image-to-image search, same class in top 10 = 90.3%, nearest neighbour same class = 93.1%  (random: 10.0%)
+
+Total runtime: 507.0 s
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\eurosat_results.json
+Figures: eurosat_ap.png, eurosat_grid.png, eurosat_confusion.png

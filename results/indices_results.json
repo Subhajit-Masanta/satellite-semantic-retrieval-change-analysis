@@ -1,0 +1,112 @@
+{
+  "scores": {
+    "NDBI up (built-up index)": {
+      "top_percent": 10,
+      "test": {
+        "precision": 0.0982,
+        "recall": 0.0628,
+        "f1": 0.0766,
+        "iou": 0.0398,
+        "fpr_pct": 3.146
+      },
+      "train": {
+        "precision": 0.0882,
+        "recall": 0.1407,
+        "f1": 0.1084,
+        "iou": 0.0573,
+        "fpr_pct": 3.408
+      }
+    },
+    "NDVI down (vegetation lost)": {
+      "top_percent": 7,
+      "test": {
+        "precision": 0.2205,
+        "recall": 0.1189,
+        "f1": 0.1544,
+        "iou": 0.0837,
+        "fpr_pct": 2.291
+      },
+      "train": {
+        "precision": 0.1159,
+        "recall": 0.1196,
+        "f1": 0.1177,
+        "iou": 0.0625,
+        "fpr_pct": 2.138
+      }
+    },
+    "Built score (NDBI up and NDVI down)": {
+      "top_percent": 10,
+      "test": {
+        "precision": 0.1449,
+        "recall": 0.106,
+        "f1": 0.1224,
+        "iou": 0.0652,
+        "fpr_pct": 3.408
+      },
+      "train": {
+        "precision": 0.0858,
+        "recall": 0.1403,
+        "f1": 0.1065,
+        "iou": 0.0563,
+        "fpr_pct": 3.501
+      }
+    },
+    "Any index moved (max of the three)": {
+      "top_percent": 5,
+      "test": {
+        "precision": 0.3335,
+        "recall": 0.1367,
+        "f1": 0.194,
+        "iou": 0.1074,
+        "fpr_pct": 1.489
+      },
+      "train": {
+        "precision": 0.1863,
+        "recall": 0.1676,
+        "f1": 0.1765,
+        "iou": 0.0968,
+        "fpr_pct": 1.714
+      }
+    }
+  },
+  "picked_on_train": "Any index moved (max of the three)",
+  "with_13band": {
+    "either": {
+      "precision": 0.3976,
+      "recall": 0.3303,
+      "f1": 0.3609,
+      "iou": 0.2202,
+      "fpr_pct": 2.728
+    },
+    "both": {
+      "precision": 0.459,
+      "recall": 0.0733,
+      "f1": 0.1264,
+      "iou": 0.0674,
+      "fpr_pct": 0.471
+    }
+  },
+  "types_inside_ground_truth": {
+    "no change": 77.81,
+    "built-up or bare ground gained": 9.28,
+    "vegetation lost": 4.92,
+    "vegetation gained": 4.24,
+    "water gained": 3.28,
+    "water lost": 0.47
+  },
+  "types_outside_ground_truth": {
+    "no change": 83.97,
+    "built-up or bare ground gained": 6.99,
+    "vegetation lost": 2.11,
+    "vegetation gained": 6.18,
+    "water gained": 0.27,
+    "water lost": 0.48
+  },
+  "type1_as_detector": {
+    "precision": 0.0675,
+    "recall": 0.0928,
+    "f1": 0.0782,
+    "iou": 0.0407,
+    "fpr_pct": 6.986
+  }
+}

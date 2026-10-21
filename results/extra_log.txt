@@ -1,0 +1,42 @@
+======================================================================
+OSCD FOLLOW-UP ANALYSIS
+======================================================================
+
+[A] Embedding distance vs size of the change (64 px tiles)
+   changed tiles are those with       n    pixel difference (raw)  pixel difference (normal  embedding distance (open  embedding distance (remo
+   >=   0.0% of the tile changed    1134                     0.540                     0.555                     0.490                     0.438
+   >=   5.0% of the tile changed     375                     0.617                     0.643                     0.574                     0.487
+   >=  15.0% of the tile changed     130                     0.691                     0.740                     0.616                     0.538
+   >=  30.0% of the tile changed      37                     0.748                     0.840                     0.698                     0.614
+   >=  50.0% of the tile changed       6                     0.819                     0.904                     0.768                     0.670
+
+[B] Gate C at matched thresholds, TEST cities
+    thr | FPR% off  FPR% on | Rec off  Rec on  kept | Prec off  Prec on | F1 off  F1 on
+     20 |    62.65    17.72 |   0.784   0.668   85% |    0.064    0.171 |  0.118  0.272
+     30 |    43.73     9.80 |   0.672   0.484   72% |    0.077    0.212 |  0.139  0.295
+     40 |    24.38     6.19 |   0.575   0.337   59% |    0.114    0.229 |  0.190  0.273
+     50 |    14.43     4.40 |   0.489   0.234   48% |    0.156    0.225 |  0.236  0.229
+     60 |     9.54     3.35 |   0.410   0.169   41% |    0.190    0.216 |  0.259  0.190
+     80 |     4.49     1.95 |   0.286   0.080   28% |    0.258    0.182 |  0.272  0.111
+   both halves pass at thresholds: ['20']
+
+   which part of suppression matters (threshold 40, TEST):
+   nothing                        P=0.114 R=0.575 F1=0.190 FPR=24.38%
+   brightness matching only       P=0.242 R=0.518 F1=0.330 FPR=8.82%
+   + cloud/shadow mask            P=0.240 R=0.503 F1=0.325 FPR=8.69%
+   + remove small specks (full)   P=0.229 R=0.337 F1=0.273 FPR=6.19%
+   % of each test city removed by the cloud/shadow mask: {'brasilia': 21.52, 'montpellier': 0.0, 'norcia': 12.98, 'rio': 34.83, 'saclay_w': 0.0, 'valencia': 0.0, 'dubai': 0.0, 'lasvegas': 0.0, 'milano': 0.0, 'chongqing': 8.91}
+
+[C] Tile-size ablation: 128 px tiles
+   990 tiles of 128x128 px (495 locations)
+   openclip   mAP=0.147 {'water': (0.0, 0.149), 'vegetation': (0.0, 0.0258), 'builtup': (0.2, 0.266)} recall@1=0.756 change AUC=0.559
+   remoteclip mAP=0.120 {'water': (0.1, 0.0864), 'vegetation': (0.0, 0.0283), 'builtup': (0.0, 0.2442)} recall@1=0.628 change AUC=0.552
+   random mAP would be about 0.115 (tag prevalence {'water': 0.0798, 'vegetation': 0.0071, 'builtup': 0.2586})
+
+Saved C:\Users\subha\Desktop\projects\Computer Vision\results\extra_results.json
+[D] Ours with brightness matching only (no cloud mask, no speck removal)
+   threshold sweep on TRAIN: 20:0.130, 30:0.182, 40:0.232, 50:0.273, 60:0.291, 80:0.273  -> picked 60
+   TEST  P=0.278 R=0.332 F1=0.302 IoU=0.178 FPR=4.69%
+   TRAIN P=0.231 R=0.393 F1=0.291 IoU=0.170 FPR=3.08%
+   per test city F1: brasilia:0.22, montpellier:0.57, norcia:0.07, rio:0.32, saclay_w:0.04, valencia:0.03, dubai:0.33, lasvegas:0.60, milano:0.29, chongqing:0.35
+   CVA per test city F1:  brasilia:0.23, montpellier:0.51, norcia:0.07, rio:0.33, saclay_w:0.03, valencia:0.03, dubai:0.34, lasvegas:0.59, milano:0.15, chongqing:0.36

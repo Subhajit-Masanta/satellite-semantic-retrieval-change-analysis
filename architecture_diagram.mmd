@@ -1,0 +1,70 @@
+%% Architecture diagram for:
+%% Semantic Retrieval and Multi-Temporal Change Analysis of Satellite Imagery
+%% Using a Shared Foundation-Model Embedding Space
+%% BCSE407L Computer Vision RIL | SIH26227
+%%
+%% HOW TO RENDER: paste this whole file into https://mermaid.live
+%% then Export > PNG (use a transparent or white background, 2x scale)
+%% Save the result next to this file and drop it into the slide deck.
+
+flowchart TD
+    IN[["🛰️ Satellite Archive<br/>GeoTIFF / COG tile pairs (t1, t2)"]]
+
+    subgraph S1 ["Stage 1 &amp; 2 — Ingestion, Embedding &amp; Indexing (Person A)"]
+        ING["Ingestion &amp; Tiling<br/><small>rasterio · geo-metadata · provenance</small>"]
+        EMB["Frozen Encoder<br/><small>RemoteCLIP / CLIP — inference only</small>"]
+        IDX[("Shared FAISS Index<br/><small>one vector per tile per date</small>")]
+        ING --> EMB --> IDX
+    end
+
+    subgraph S3 ["Stage 3 — Semantic Retrieval (Person B)"]
+        TXT["Free-text query<br/><small>'newly built structures near a river'</small>"]
+        IMG["Image-to-image search"]
+        RANK["Cosine ranking + metadata filters<br/><small>AOI · date range · sensor</small>"]
+        CLU["Clustering / site discovery<br/><small>stretch goal — PS 2.2.4</small>"]
+        TXT --> RANK
+        IMG --> RANK
+        RANK --> CLU
+    end
+
+    subgraph S4 ["Stage 4 &amp; 5 — Change Analysis &amp; Suppression (Person C)"]
+        DELTA["Change signal in the SAME space<br/><small>Δ = cosine distance (v_t1, v_t2)</small>"]
+        MASK["Pixel-level refinement → change mask"]
+        TYPE["Change typing<br/><small>construction · clearance · water · vegetation</small>"]
+        SUP["False-alarm suppression<br/><small>cloud/shadow mask · radiometric norm · confidence</small>"]
+        DELTA --> MASK --> TYPE --> SUP
+    end
+
+    subgraph S6 ["Stage 6 — Evaluation &amp; Visualisation (Person D)"]
+        RMET["Retrieval metrics<br/><small>Precision@k · mAP</small>"]
+        CMET["Change metrics<br/><small>Precision · Recall · F1 · IoU</small>"]
+        STRESS["Confound stress test<br/><small>false-positive rate — the novelty metric</small>"]
+        SYS["System report<br/><small>build time · latency · storage · hardware</small>"]
+    end
+
+    OUT[["📊 Ranked Results + Change Maps + Metrics"]]
+
+    IN --> ING
+    IDX -->|"shared embeddings"| RANK
+    IDX -->|"shared embeddings"| DELTA
+
+    RANK --> RMET
+    CLU --> RMET
+    SUP --> CMET
+    SUP --> STRESS
+    IDX --> SYS
+
+    RMET --> OUT
+    CMET --> OUT
+    STRESS --> OUT
+    SYS --> OUT
+
+    classDef stage fill:#2b7bba,stroke:#1a4d75,stroke-width:1px,color:#ffffff;
+    classDef leaf fill:#eef2f6,stroke:#9fb3c8,stroke-width:1px,color:#1f2d3d;
+    classDef endpoint fill:#2d3b4a,stroke:#16202b,stroke-width:1px,color:#ffffff;
+    classDef store fill:#f4a742,stroke:#b87a1d,stroke-width:1px,color:#20160a;
+
+    class ING,EMB,RANK,DELTA,MASK,SUP stage;
+    class TXT,IMG,CLU,TYPE,RMET,CMET,STRESS,SYS leaf;
+    class IDX store;
+    class IN,OUT endpoint;
