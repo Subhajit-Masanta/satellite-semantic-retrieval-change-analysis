@@ -18,7 +18,7 @@ from src import change_types as CT  # noqa: E402
 from src import time_series as TS  # noqa: E402
 from src import clustering as CL  # noqa: E402
 
-st.set_page_config(page_title="Satellite Search & Change", page_icon="🛰️", layout="wide")
+st.set_page_config(page_title="Satellite Search & Change", layout="wide")
 
 
 # ------------------------------------------------------------------ loading
@@ -55,8 +55,13 @@ def tile_img(m, size=160):
     return cv2.resize(rgb(t), (size, size), interpolation=interp)
 
 
+def site_label(k):
+    s = SITES[k]
+    return f"{s['name']} · {s['country']} · {core.res_label(s['gsd'])}"
+
+
 def caption(m, score=None):
-    c = f"{m['site_name'].split(',')[0]} | {m['date']}"
+    c = f"{m['site_name'].split(',')[0]} | {core.res_label(m['gsd_m'])} | {m['date']}"
     if m.get("lonlat"):
         c += f" | {m['lonlat'][1]:.3f}N {m['lonlat'][0]:.3f}E"
     if score is not None:
@@ -74,7 +79,9 @@ def show_hits(hits, meta, cols=5):
         for c, (i, s) in zip(cs, row):
             c.image(tile_img(meta[i]), caption=caption(meta[i], s), width="stretch")
     with st.expander("Result details (source scene of every tile)"):
-        st.dataframe([{"rank": r + 1, "site": meta[i]["site_name"], "date": meta[i]["date"],
+        st.dataframe([{"rank": r + 1, "site": meta[i]["site_name"],
+                       "country": meta[i].get("country", "-"),
+                       "resolution": core.res_label(meta[i]["gsd_m"]), "date": meta[i]["date"],
                        "scene": meta[i]["scene"], "tile x,y": f"{meta[i]['x']},{meta[i]['y']}",
                        "lon,lat": str(meta[i].get("lonlat") or "-"), "sensor": meta[i]["sensor"],
                        "score": round(s, 4)} for r, (i, s) in enumerate(hits)],
@@ -90,29 +97,36 @@ SITES = get_sites()
 collections = sorted({m["collection"] for m in META})
 
 # ----------------------------------------------------------------- sidebar
-st.sidebar.title("🛰️ Satellite Search & Change")
+st.sidebar.title("Satellite Search & Change")
 st.sidebar.caption("BCSE407L project demo")
-pick_coll = st.sidebar.multiselect("Image collection", collections, default=collections[:1])
-site_keys = [k for k, s in SITES.items() if s["collection"] in pick_coll]
-pick_sites = st.sidebar.multiselect("Sites (empty = all)", site_keys,
-                                    format_func=lambda k: SITES[k]["name"])
+res_opts = sorted({s["gsd"] for s in SITES.values()}, reverse=True)
+pick_res = st.sidebar.multiselect("Resolution (ground size of one pixel)", res_opts,
+                                  default=res_opts[:1], format_func=core.res_label)
+coll_opts = sorted({s["collection"] for s in SITES.values() if s["gsd"] in pick_res})
+pick_coll = st.sidebar.multiselect("Image collection", coll_opts, default=coll_opts)
+country_opts = sorted({s["country"] for s in SITES.values() if s["collection"] in pick_coll})
+pick_country = st.sidebar.multiselect("Country (empty = all)", country_opts)
+site_keys = [k for k, s in SITES.items() if s["collection"] in pick_coll
+             and (not pick_country or s["country"] in pick_country)]
+pick_sites = st.sidebar.multiselect("City / location (empty = all)", site_keys,
+                                    format_func=site_label)
 which = st.sidebar.radio("Which date", ["Both dates", "Earlier date", "Later date"], index=0)
 topk = st.sidebar.slider("Number of results", 5, 30, 10, step=5)
 st.sidebar.divider()
 st.sidebar.caption(f"Index: {INFO['n_vectors']:,} tiles from {INFO['n_sites']} sites, "
-                   f"Sentinel-2 tiles are 640 m wide, LEVIR-CD tiles 128 m. "
+                   f"Sentinel-2 tiles are 640 m wide, LEVIR-CD and SYSU-CD tiles 128 m. "
                    f"Model: {INFO['model']}, used as it is, "
                    "nothing trained.")
 
-keep = np.array([(m["collection"] in pick_coll)
+keep = np.array([m["site"] in site_keys                 # only sites whose images are on disk
                  and (not pick_sites or m["site"] in pick_sites)
                  and (which == "Both dates" or (which == "Earlier date") == (m["slot"] == 1))
                  for m in META])
 
 st.title("Search satellite images by meaning and see what changed")
-tab_text, tab_img, tab_change, tab_years, tab_cluster, tab_about = st.tabs(
-    ["🔎 Text search", "🖼️ Image search", "🏗️ Change between two dates",
-     "📅 Change over years", "🗺️ Discover clusters", "ℹ️ About"])
+tab_text, tab_img, tab_change, tab_gps, tab_years, tab_cluster, tab_about = st.tabs(
+    ["Text search", "Image search", "Change between two dates", "Search by GPS",
+     "Change over years", "Discover clusters", "About"])
 
 # ------------------------------------------------------------- text search
 with tab_text:
@@ -132,7 +146,7 @@ with tab_img:
     st.write("Pick one tile. The app finds other tiles that look like it.")
     all_keys = site_keys or list(SITES)
     c1, c2, c3 = st.columns([2, 1, 1])
-    skey = c1.selectbox("Site", all_keys, format_func=lambda k: SITES[k]["name"], key="img_site")
+    skey = c1.selectbox("Site", all_keys, format_func=site_label, key="img_site")
     slot = c2.radio("Date", [1, 2], horizontal=True,
                     format_func=lambda s: SITES[skey]["date1"] if s == 1 else SITES[skey]["date2"])
     rows = [i for i, m in enumerate(META) if m["site"] == skey and m["slot"] == slot]
@@ -154,10 +168,12 @@ with tab_img:
 # ------------------------------------------------------------------ change
 with tab_change:
     all_keys = site_keys or list(SITES)
-    ckey = st.selectbox("Site", all_keys, format_func=lambda k: SITES[k]["name"], key="chg_site")
+    ckey = st.selectbox("Site", all_keys, format_func=site_label, key="chg_site")
     site = SITES[ckey]
     d = get_site_data(ckey)
     h, w = d["img1"].shape[:2]
+    st.caption(f"Location: {site['place']}, {site['country']} · {core.res_label(site['gsd'])} per pixel · "
+               f"{site['sensor']} · image {w * site['gsd'] / 1000:.2f} × {h * site['gsd'] / 1000:.2f} km")
     c1, c2 = st.columns(2)
     c1.image(rgb(d["img1"]), caption=f"Earlier: {site['date1']}  ({site['scene1']})",
              width="stretch")
@@ -210,6 +226,85 @@ with tab_change:
                    f"- whole tile embedding distance: {l['embedding_distance']:.3f}\n"
                    f"- pixels flagged in this tile: {100 * share:.1f}%\n"
                    f"- source: {site['scene1']} → {site['scene2']}" + truth)
+
+# -------------------------------------------------------------- GPS search
+with tab_gps:
+    COV = {k: v for k, v in core.coverage(LOCS).items() if k in SITES}
+    if not COV:
+        st.info("No site in this index has GPS coordinates. Rebuild it:  python demo/build_index.py")
+    else:
+        st.write("Type a latitude and longitude. It works only inside the areas we have images "
+                 "for (table and map below). LEVIR-CD and SYSU-CD publish no coordinates, so "
+                 "they cannot be searched by GPS.")
+        c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+        lat = c1.number_input("Latitude (°N)", -90.0, 90.0, 12.9692, 0.001, format="%.4f")
+        lon = c2.number_input("Longitude (°E)", -180.0, 180.0, 79.1559, 0.001, format="%.4f")
+        rad = c3.slider("Radius (km)", 0.5, 5.0, 1.0, 0.5)
+        jump = c4.selectbox("...or go to the centre of a site", [None] + sorted(COV, key=site_label),
+                            format_func=lambda k: "(use the numbers I typed)" if k is None
+                            else site_label(k))
+        if jump:
+            lat, lon = COV[jump]["lat"], COV[jump]["lon"]
+        locs_ok = [l if l["site"] in SITES else {} for l in LOCS]
+        near, nearest = core.gps_lookup(locs_ok, lat, lon, rad)
+        ni, nkm = nearest
+        ns_key = LOCS[ni]["site"]
+        ns = SITES[ns_key]
+        half_km = ns["tile"] * ns["gsd"] / 1000 * 0.71           # centre to tile corner
+        if nkm > half_km:
+            st.error(f"No images at {lat:.4f} °N, {lon:.4f} °E. The nearest images are "
+                     f"**{site_label(ns_key)}**, {nkm:.1f} km away. Pick a point inside one "
+                     "of the areas listed below.")
+        else:
+            st.success(f"{lat:.4f} °N, {lon:.4f} °E is inside **{ns['name']}**, "
+                       f"{ns['country']} · {core.res_label(ns['gsd'])} per pixel · {ns['sensor']} · "
+                       f"{ns['date1']} → {ns['date2']}")
+            d = get_site_data(ns_key)
+            T = ns["tile"]
+            mine = [(i, km) for i, km in near if LOCS[i]["site"] == ns_key]
+            pic = rgb(d["img2"]).copy()
+            for i, _ in mine:
+                l = LOCS[i]
+                cv2.rectangle(pic, (l["x"], l["y"]), (l["x"] + T, l["y"] + T), (255, 210, 0), 1)
+            if d["geo"]:
+                px = core.lonlat_to_px(d["geo"], lon, lat)
+                cv2.circle(pic, px, max(2, int(rad * 1000 / ns["gsd"])), (255, 40, 40), 2)
+                cv2.drawMarker(pic, px, (255, 40, 40), cv2.MARKER_CROSS, 18, 2)
+            st.image(pic, caption=f"Later image ({ns['date2']}): red = your point and {rad:g} km "
+                                  f"circle, yellow = the {len(mine)} tiles inside it",
+                     width="stretch")
+            st.subheader("Tiles at this point, both dates (most changed first)")
+            mine.sort(key=lambda t: -LOCS[t[0]]["patch_score"])
+            for i, km in mine[:8]:
+                l = LOCS[i]
+                y, x = l["y"], l["x"]
+                t1 = cv2.resize(rgb(d["img1"][y:y + T, x:x + T]), (160, 160), interpolation=cv2.INTER_NEAREST)
+                t2 = cv2.resize(rgb(d["img2"][y:y + T, x:x + T]), (160, 160), interpolation=cv2.INTER_NEAREST)
+                a, b, c = st.columns([1, 1, 3])
+                a.image(t1, caption=ns["date1"])
+                b.image(t2, caption=ns["date2"])
+                c.markdown(f"**{l['lonlat'][1]:.4f} °N, {l['lonlat'][0]:.4f} °E** "
+                           f"({km:.2f} km from your point)\n\n"
+                           f"- patch feature change score: **{l['patch_score']:.3f}**\n"
+                           f"- whole tile embedding distance: {l['embedding_distance']:.3f}\n"
+                           f"- tile size: {T * ns['gsd']:.0f} m × {T * ns['gsd']:.0f} m")
+
+        st.subheader("Where we have images (GPS searchable)")
+        import pandas as pd
+        rows = [{"site": SITES[k]["name"], "country": SITES[k]["country"],
+                 "resolution": core.res_label(SITES[k]["gsd"]),
+                 "dates": f"{SITES[k]['date1']} → {SITES[k]['date2']}",
+                 "latitude": f"{v['lat_min']:.3f} to {v['lat_max']:.3f}",
+                 "longitude": f"{v['lon_min']:.3f} to {v['lon_max']:.3f}"}
+                for k, v in sorted(COV.items(), key=lambda kv: site_label(kv[0]))]
+        st.dataframe(rows, hide_index=True, width="stretch")
+        pts = pd.DataFrame([{"lat": v["lat"], "lon": v["lon"], "color": "#1f77b4", "size": 4000}
+                            for v in COV.values()]
+                           + [{"lat": lat, "lon": lon, "color": "#e8282899", "size": 9000}])
+        st.map(pts, latitude="lat", longitude="lon", color="color", size="size")
+        st.caption("Blue = site centres, red = your point. The map background needs internet; "
+                   "the search itself works offline.")
+
 
 # -------------------------------------------------------- change over years
 @st.cache_data(show_spinner="Working through the yearly images...", max_entries=12)
@@ -366,7 +461,7 @@ with tab_cluster:
                 for col, gi in zip(cols, thumb_indices):
                     mi = META[gi]
                     img = tile_img(mi, size=120)
-                    border = "exemplar ★" if gi == ex_global else mi["date"]
+                    border = "exemplar" if gi == ex_global else mi["date"]
                     col.image(img, caption=f"{mi['site_name'].split(',')[0]}\n{border}",
                               width="stretch")
 
@@ -383,7 +478,7 @@ with tab_about:
     st.markdown(f"""
 ### What this demo does
 - Every image is cut into tiles: 64 px for Sentinel-2 (640 m on the ground) and 256 px for
-  LEVIR-CD (128 m on the ground).
+  LEVIR-CD and SYSU-CD (128 m on the ground).
 - One pre-trained model, **{INFO['model']}**, turns each tile into numbers. We did not train it.
 - The same numbers are stored once and used for **search** and for **change**.
 

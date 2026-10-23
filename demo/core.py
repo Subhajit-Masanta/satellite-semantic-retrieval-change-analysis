@@ -17,6 +17,29 @@ INDEX_DIR = ROOT / "demo_index"
 TILE = 64            # Sentinel-2 sites (10 m per pixel)
 LEVIR_TILE = 256     # LEVIR-CD sites (0.5 m per pixel)
 LEVIR_N = 14         # how many LEVIR-CD pairs to show in the demo
+SYSU_DIR = ROOT / "data" / "SYSU-CD"   # 256 px pairs at 0.5 m, same tile size as LEVIR-CD
+
+# OSCD folder name -> (place, country). OSCD tiles also get real GPS from the
+# original georeferenced bands; LEVIR-CD and SYSU-CD publish no coordinates.
+OSCD_PLACES = {
+    "abudhabi": ("Abu Dhabi", "UAE"), "aguasclaras": ("Aguas Claras, Brasilia", "Brazil"),
+    "beihai": ("Beihai", "China"), "beirut": ("Beirut", "Lebanon"),
+    "bercy": ("Bercy, Paris", "France"), "bordeaux": ("Bordeaux", "France"),
+    "brasilia": ("Brasilia", "Brazil"), "chongqing": ("Chongqing", "China"),
+    "cupertino": ("Cupertino, California", "USA"), "dubai": ("Dubai", "UAE"),
+    "hongkong": ("Hong Kong", "China"), "lasvegas": ("Las Vegas, Nevada", "USA"),
+    "milano": ("Milan", "Italy"), "montpellier": ("Montpellier", "France"),
+    "mumbai": ("Mumbai", "India"), "nantes": ("Nantes", "France"),
+    "norcia": ("Norcia", "Italy"), "paris": ("Paris", "France"), "pisa": ("Pisa", "Italy"),
+    "rennes": ("Rennes", "France"), "rio": ("Rio de Janeiro", "Brazil"),
+    "saclay_e": ("Saclay east, Paris region", "France"),
+    "saclay_w": ("Saclay west, Paris region", "France"), "valencia": ("Valencia", "Spain"),
+}
+
+
+def res_label(gsd):
+    """Resolution as shown in the app, e.g. '10 m' or '0.5 m'."""
+    return f"{gsd:g} m"
 MODEL_NAME, MODEL_TAG = "ViT-B-32", "laion2b_s34b_b79k"
 CLIP_MEAN = (0.48145466, 0.4578275, 0.40821073)
 CLIP_STD = (0.26862954, 0.26130258, 0.27577711)
@@ -42,7 +65,8 @@ def list_sites():
         sites.append({"key": m["site"], "name": m["name"], "collection": "India (Sentinel-2)",
                       "dir": str(d.parent), "date1": m["t1"]["date"], "date2": m["t2"]["date"],
                       "scene1": m["t1"]["scene"], "scene2": m["t2"]["scene"], "meta": m,
-                      "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI"})
+                      "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI",
+                      "place": m["name"], "country": "India", "gps": True})
     for d in sorted((ROOT / "data" / "OSCD").rglob("imgs_1_rect")):
         city = d.parent
         dates = {}
@@ -51,18 +75,37 @@ def list_sites():
                 if ":" in line:
                     k, v = [x.strip() for x in line.split(":", 1)]
                     dates[k] = f"{v[:4]}-{v[4:6]}-{v[6:8]}" if len(v) == 8 else v
-        sites.append({"key": "oscd_" + city.name, "name": f"{city.name} (OSCD)",
+        place, country = OSCD_PLACES.get(city.name, (city.name, "?"))
+        sites.append({"key": "oscd_" + city.name, "name": f"{place} (OSCD)",
                       "collection": "OSCD (Sentinel-2)", "dir": str(city),
                       "date1": dates.get("date_1", "?"), "date2": dates.get("date_2", "?"),
                       "scene1": city.name + "/imgs_1_rect", "scene2": city.name + "/imgs_2_rect",
-                      "meta": None, "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI"})
+                      "meta": None, "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI",
+                      "place": place, "country": country, "gps": True})
     for name in levir_pick():
         sites.append({"key": "levir_" + name, "name": f"LEVIR-CD {name.replace('_', ' ')}",
                       "collection": "LEVIR-CD (0.5 m)", "dir": str(levir_root()),
                       "date1": "earlier", "date2": "later", "scene1": f"A/{name}.png",
                       "scene2": f"B/{name}.png", "meta": None, "file": name + ".png",
-                      "tile": LEVIR_TILE, "gsd": 0.5, "sensor": "Google Earth (LEVIR-CD)"})
+                      "tile": LEVIR_TILE, "gsd": 0.5, "sensor": "Google Earth (LEVIR-CD)",
+                      "place": "Austin area, Texas (exact spot not published)", "country": "USA",
+                      "gps": False})
+    for name in sysu_pick():
+        sites.append({"key": "sysu_" + name, "name": f"SYSU-CD Hong Kong {name.replace('_', ' ')}",
+                      "collection": "SYSU-CD (0.5 m)", "dir": str(SYSU_DIR),
+                      "date1": "2007", "date2": "2014", "scene1": f"A/{name}.png",
+                      "scene2": f"B/{name}.png", "meta": None, "file": name + ".png",
+                      "tile": LEVIR_TILE, "gsd": 0.5, "sensor": "Aerial (SYSU-CD)",
+                      "place": "Hong Kong (exact spot not published)", "country": "China",
+                      "gps": False})
     return sites
+
+
+def sysu_pick():
+    """SYSU-CD test pairs written by experiments/run_sysu.py (a fixed choice
+    by label, not by score)."""
+    keep = SYSU_DIR / "demo_pick.json"
+    return json.loads(keep.read_text()) if keep.exists() else []
 
 
 def levir_root():
@@ -98,7 +141,7 @@ def load_site(site):
     label (or None), geo (rasterio transform + crs, or None)."""
     d = Path(site["dir"])
     geo, label = None, None
-    if site["collection"].startswith("LEVIR"):
+    if site.get("file"):                      # PNG pairs: LEVIR-CD and SYSU-CD
         i1 = cv2.imread(str(d / "A" / site["file"]))
         i2 = cv2.imread(str(d / "B" / site["file"]))
         l = cv2.imread(str(d / "label" / site["file"]), cv2.IMREAD_GRAYSCALE)
@@ -120,6 +163,7 @@ def load_site(site):
             h = min(x.shape[0] for x in arrs); w = min(x.shape[1] for x in arrs)
             return np.stack([x[:h, :w] for x in arrs]).astype(np.float32)
         a, b = rd(1), rd(2)
+        geo = _oscd_geo(d, a.shape[1:])
         for p in (ROOT / "data" / "OSCD").rglob("cm.png"):
             if p.parent.parent.name == d.name:
                 label = (cv2.imread(str(p), cv2.IMREAD_GRAYSCALE) > 127).astype(np.uint8) * 255
@@ -130,6 +174,20 @@ def load_site(site):
         label = label[:h, :w]
     s1, s2 = _stretch(a[:3], b[:3])           # B,G,R -> already BGR order
     return {"img1": s1, "img2": s2, "b1": a, "b2": b, "label": label, "geo": geo}
+
+
+def _oscd_geo(city_dir, shape):
+    """The *_rect bands have no coordinates, but the original imgs_1 bands of
+    the same size do. Returns the geo dict, or None if no size match."""
+    try:
+        import rasterio
+        for f in sorted((Path(city_dir) / "imgs_1").glob("*B02.tif")):
+            with rasterio.open(f) as ds:
+                if ds.crs and (ds.height, ds.width) == tuple(shape):
+                    return {"transform": ds.transform, "crs": str(ds.crs)}
+    except Exception:                                    # noqa: BLE001
+        pass
+    return None
 
 
 def tile_grid(h, w, tile=TILE):
@@ -213,6 +271,7 @@ def build_index(progress=print):
                                          (2, e2, site["date2"], site["scene2"])):
                 vecs.append(e[j])
                 meta.append({"site": site["key"], "site_name": site["name"],
+                             "place": site["place"], "country": site["country"],
                              "collection": site["collection"], "slot": slot, "date": date,
                              "scene": scene, "y": y, "x": x, "loc": len(loc_meta),
                              "lonlat": ll, "sensor": site["sensor"], "gsd_m": site["gsd"],
@@ -251,6 +310,43 @@ def search(vectors, query_vec, keep, k):
     scores = np.where(keep, scores, -np.inf)
     order = np.argsort(-scores)[:k]
     return [(int(i), float(scores[i])) for i in order if np.isfinite(scores[i])]
+
+
+def lonlat_to_px(geo, lon, lat):
+    """Inverse of tile_lonlat: image column, row of a lon/lat point."""
+    from rasterio.warp import transform
+    X, Y = transform("EPSG:4326", geo["crs"], [lon], [lat])
+    col, row = ~geo["transform"] * (X[0], Y[0])
+    return int(round(col)), int(round(row))
+
+
+def coverage(locs):
+    """Per site with GPS: the lat/lon box of its tile centres and its centre."""
+    box = {}
+    for l in locs:
+        if l.get("lonlat"):
+            lon, lat = l["lonlat"]
+            b = box.setdefault(l["site"], [lat, lat, lon, lon])
+            b[0], b[1] = min(b[0], lat), max(b[1], lat)
+            b[2], b[3] = min(b[2], lon), max(b[3], lon)
+    return {k: {"lat_min": b[0], "lat_max": b[1], "lon_min": b[2], "lon_max": b[3],
+                "lat": (b[0] + b[1]) / 2, "lon": (b[2] + b[3]) / 2} for k, b in box.items()}
+
+
+def gps_lookup(locs, lat, lon, radius_km):
+    """Tiles whose centre lies within radius_km of (lat, lon), nearest first,
+    plus the nearest tile overall as (loc index, km)."""
+    pts = [i for i, l in enumerate(locs) if l.get("lonlat")]
+    if not pts:
+        return [], None
+    ll = np.array([locs[i]["lonlat"] for i in pts], np.float64)       # lon, lat
+    p1, p2 = np.radians(lat), np.radians(ll[:, 1])
+    a = (np.sin((p2 - p1) / 2) ** 2
+         + np.cos(p1) * np.cos(p2) * np.sin(np.radians(ll[:, 0] - lon) / 2) ** 2)
+    km = 2 * 6371.0 * np.arcsin(np.sqrt(a))
+    order = np.argsort(km)
+    return ([(pts[j], float(km[j])) for j in order if km[j] <= radius_km],
+            (pts[order[0]], float(km[order[0]])))
 
 
 # ---------------------------------------------------------------- change

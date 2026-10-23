@@ -1,4 +1,4 @@
-# 🛰️ Semantic Retrieval and Multi-Temporal Change Analysis of Satellite Imagery
+# Semantic Retrieval and Multi-Temporal Change Analysis of Satellite Imagery
 ### Using a Shared Foundation-Model Embedding Space
 
 **BCSE407L – Computer Vision | Research Integrated Learning (RIL)**
@@ -134,7 +134,7 @@ LEVIR-CD). Indian Sentinel-2 and ISRO imagery are qualitative only.
 
 ## What we do not claim
 
-| ❌ Not this | ✅ This |
+| Not this | This |
 |---|---|
 | We built the Army's intelligence system | A research prototype of the core CV capabilities of PS SIH26227 |
 | We invented a new detector | Frozen pretrained encoders; the contribution is the shared-space coupling and the honest evaluation |

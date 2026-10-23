@@ -1,0 +1,167 @@
+{
+ "tile_px": 256,
+ "changed_if_fraction_at_least": 0.05,
+ "prompts": [
+  "a satellite image of buildings",
+  "a satellite image of houses",
+  "a satellite image of residential buildings",
+  "an aerial image of new houses",
+  "a satellite image of a dense residential area with roofs",
+  "an aerial image of rooftops"
+ ],
+ "tiles": {
+  "val": 1024,
+  "test": 2048,
+  "test_changed": 575
+ },
+ "OpenCLIP ViT-B/32": {
+  "per_prompt": {
+   "a satellite image of buildings": {
+    "plain": {
+     "val": 0.6358,
+     "test": 0.6898
+    },
+    "vs_bare_land": {
+     "val": 0.8807,
+     "test": 0.8906
+    }
+   },
+   "a satellite image of houses": {
+    "plain": {
+     "val": 0.8036,
+     "test": 0.8165
+    },
+    "vs_bare_land": {
+     "val": 0.9302,
+     "test": 0.9314
+    }
+   },
+   "a satellite image of residential buildings": {
+    "plain": {
+     "val": 0.8575,
+     "test": 0.8522
+    },
+    "vs_bare_land": {
+     "val": 0.933,
+     "test": 0.928
+    }
+   },
+   "an aerial image of new houses": {
+    "plain": {
+     "val": 0.8827,
+     "test": 0.8746
+    },
+    "vs_bare_land": {
+     "val": 0.9147,
+     "test": 0.9024
+    }
+   },
+   "a satellite image of a dense residential area with roofs": {
+    "plain": {
+     "val": 0.885,
+     "test": 0.8852
+    },
+    "vs_bare_land": {
+     "val": 0.9488,
+     "test": 0.9457
+    }
+   },
+   "an aerial image of rooftops": {
+    "plain": {
+     "val": 0.8871,
+     "test": 0.9138
+    },
+    "vs_bare_land": {
+     "val": 0.9241,
+     "test": 0.925
+    }
+   }
+  },
+  "picked_on_val": {
+   "prompt": "a satellite image of a dense residential area with roofs",
+   "variant": "vs_bare_land"
+  },
+  "picked_test_auc": 0.9457,
+  "picked_test_precision@50": 1.0,
+  "image_only_whole_tile_auc": {
+   "val": 0.8646,
+   "test": 0.8347
+  }
+ },
+ "RemoteCLIP ViT-B/32": {
+  "per_prompt": {
+   "a satellite image of buildings": {
+    "plain": {
+     "val": 0.668,
+     "test": 0.6215
+    },
+    "vs_bare_land": {
+     "val": 0.8309,
+     "test": 0.8009
+    }
+   },
+   "a satellite image of houses": {
+    "plain": {
+     "val": 0.8012,
+     "test": 0.7533
+    },
+    "vs_bare_land": {
+     "val": 0.8785,
+     "test": 0.8537
+    }
+   },
+   "a satellite image of residential buildings": {
+    "plain": {
+     "val": 0.841,
+     "test": 0.8147
+    },
+    "vs_bare_land": {
+     "val": 0.891,
+     "test": 0.873
+    }
+   },
+   "an aerial image of new houses": {
+    "plain": {
+     "val": 0.7893,
+     "test": 0.7798
+    },
+    "vs_bare_land": {
+     "val": 0.8844,
+     "test": 0.8674
+    }
+   },
+   "a satellite image of a dense residential area with roofs": {
+    "plain": {
+     "val": 0.8715,
+     "test": 0.8596
+    },
+    "vs_bare_land": {
+     "val": 0.89,
+     "test": 0.886
+    }
+   },
+   "an aerial image of rooftops": {
+    "plain": {
+     "val": 0.7097,
+     "test": 0.7148
+    },
+    "vs_bare_land": {
+     "val": 0.8387,
+     "test": 0.8421
+    }
+   }
+  },
+  "picked_on_val": {
+   "prompt": "a satellite image of residential buildings",
+   "variant": "vs_bare_land"
+  },
+  "picked_test_auc": 0.873,
+  "picked_test_precision@50": 1.0,
+  "image_only_whole_tile_auc": {
+   "val": 0.8692,
+   "test": 0.823
+  }
+ },
+ "random_precision": 0.2808,
+ "runtime_s": 126.7
+}
