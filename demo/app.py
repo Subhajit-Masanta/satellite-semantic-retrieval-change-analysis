@@ -12,7 +12,9 @@ import numpy as np
 import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import importlib  # noqa: E402
 import core  # noqa: E402
+core = importlib.reload(core)   # a hot update on Streamlit Cloud otherwise keeps the old core.py
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src import change_types as CT  # noqa: E402
 from src import time_series as TS  # noqa: E402
