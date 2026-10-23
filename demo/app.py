@@ -61,13 +61,23 @@ def rgb(img):
     return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 
-def tile_img(m, size=160):
-    d = get_site_data(m["site"])
-    img = d["img1"] if m["slot"] == 1 else d["img2"]
-    T = m.get("tile", core.TILE)
-    t = img[m["y"]:m["y"] + T, m["x"]:m["x"] + T]
+def fit(img, longest=1400):
+    """Shrink only for display, so big scenes (ISRO 5 m) do not slow the browser."""
+    h, w = img.shape[:2]
+    s = longest / max(h, w)
+    return img if s >= 1 else cv2.resize(img, (int(w * s), int(h * s)), interpolation=cv2.INTER_AREA)
+
+
+@st.cache_data(show_spinner=False, max_entries=5000)
+def _tile(site, slot, y, x, T, size, v):
+    d = get_site_data(site)
+    img = d["img1"] if slot == 1 else d["img2"]
     interp = cv2.INTER_NEAREST if T < size else cv2.INTER_AREA
-    return cv2.resize(rgb(t), (size, size), interpolation=interp)
+    return cv2.resize(rgb(img[y:y + T, x:x + T]), (size, size), interpolation=interp)
+
+
+def tile_img(m, size=160):
+    return _tile(m["site"], m["slot"], m["y"], m["x"], m.get("tile", core.TILE), size, CORE_V)
 
 
 def site_label(k):
@@ -116,7 +126,7 @@ st.sidebar.title("Satellite Search & Change")
 st.sidebar.caption("BCSE407L project demo")
 res_opts = sorted({s["gsd"] for s in SITES.values()}, reverse=True)
 pick_res = st.sidebar.multiselect("Resolution (ground size of one pixel)", res_opts,
-                                  default=res_opts[:1], format_func=core.res_label)
+                                  default=res_opts, format_func=core.res_label)
 coll_opts = sorted({s["collection"] for s in SITES.values() if s["gsd"] in pick_res})
 pick_coll = st.sidebar.multiselect("Image collection", coll_opts, default=coll_opts)
 country_opts = sorted({s["country"] for s in SITES.values() if s["collection"] in pick_coll})
@@ -139,9 +149,12 @@ keep = np.array([m["site"] in site_keys                 # only sites whose image
                  for m in META])
 
 st.title("Search satellite images by meaning and see what changed")
-tab_map, tab_text, tab_check, tab_img, tab_change, tab_gps, tab_years, tab_cluster, tab_about = st.tabs(
-    ["Map of all data", "Text search", "Check the search (EuroSAT)", "Image search",
-     "Change between two dates", "Search by GPS", "Change over years", "Discover clusters", "About"])
+# Only the chosen section runs (st.tabs would compute every tab on every click,
+# which is slow with the large ISRO scene).
+SECTIONS = ["Map of all data", "Text search", "Check the search (EuroSAT)", "Image search",
+            "Change between two dates", "Search by GPS", "Change over years", "Discover clusters", "About"]
+PAGE = st.radio("Section", SECTIONS, horizontal=True, label_visibility="collapsed", key="section")
+st.divider()
 
 # --------------------------------------------------------------------- map
 RES_COLOURS = {10.0: [31, 119, 180], 5.0: [44, 160, 44], 0.5: [230, 110, 20]}
@@ -189,7 +202,7 @@ def all_places():
     return rows
 
 
-with tab_map:
+if PAGE == "Map of all data":
     import pydeck as pdk
     PLACES = all_places()
     st.write("Every place in this project. Hover over a marker for its details; zoom in to see "
@@ -204,24 +217,32 @@ with tab_map:
     a, b, c, d = st.columns(4)
     a.metric("Places", len(shown))
     b.metric("Countries", len({r["country"] for r in shown}))
-    c.metric("Resolutions", ", ".join(core.res_label(g) for g in sorted({r["gsd"] for r in shown},
-                                                                        reverse=True)) or "-")
-    d.metric("Tiles per date", f"{sum(r['tiles'] for r in shown):,}")
+    c.metric("Sharpest pixel", core.res_label(min(r["gsd"] for r in shown)) if shown else "-")
+    d.metric("Image tiles and patches", f"{sum(r['tiles'] for r in shown):,}")
     tip = {"html": "<b>{name}</b><br/>{country} &middot; {dataset}<br/>Resolution: {resolution} "
                    "per pixel<br/>Dates: {dates}<br/>Tiles: {tiles}<br/>GPS search: {gps}<br/>"
-                   "Images on this website: {here}",
+                   "Images available here: {here}",
            "style": {"fontSize": "13px"}}
     boxes = [dict(r, fill=r["color"] + [50]) for r in shown if r["box"]]
     layers = [
-        pdk.Layer("PolygonLayer", boxes, get_polygon="box", get_fill_color="fill",
+        pdk.Layer("PolygonLayer", boxes, id="boxes", get_polygon="box", get_fill_color="fill",
                   get_line_color="color", line_width_min_pixels=1, pickable=True),
-        pdk.Layer("ScatterplotLayer", shown, get_position="[lon, lat]", get_fill_color="color",
-                  get_line_color=[255, 255, 255], stroked=True, line_width_min_pixels=1,
-                  get_radius=4000, radius_min_pixels=5, radius_max_pixels=14, pickable=True),
+        pdk.Layer("ScatterplotLayer", shown, id="places", get_position="[lon, lat]",
+                  get_fill_color="color", get_line_color=[255, 255, 255], stroked=True,
+                  line_width_min_pixels=1, get_radius=4000, radius_min_pixels=6,
+                  radius_max_pixels=14, pickable=True),
     ]
-    st.pydeck_chart(pdk.Deck(layers=layers, tooltip=tip, map_style=None,
-                             initial_view_state=pdk.ViewState(latitude=22, longitude=40, zoom=1.2)),
-                    height=520)
+    event = st.pydeck_chart(pdk.Deck(layers=layers, tooltip=tip, map_style=None,
+                                     initial_view_state=pdk.ViewState(latitude=20, longitude=15, zoom=0.9)),
+                            height=520, on_select="rerun", selection_mode="single-object", key="map")
+    picked = [o for objs in (event.selection.objects or {}).values() for o in objs] if event else []
+    if picked:
+        r = picked[0]
+        st.info(f"**{r['name']}** · {r['country']} · {r['dataset']} · {r['resolution']} per pixel · "
+                f"dates {r['dates']} · {r['tiles']:,} tiles · GPS search: {r['gps']} · "
+                f"images available here: {r['here']}")
+    else:
+        st.caption("Click a marker (or hover over it) to see its details.")
     st.caption("Colour = resolution: " + ", ".join(
         f"{['blue', 'green', 'orange'][i]} = {core.res_label(g)}"
         for i, g in enumerate(RES_COLOURS) if any(r['gsd'] == g for r in PLACES))
@@ -229,12 +250,12 @@ with tab_map:
           "their region. The map background needs internet.")
     st.dataframe([{"place": r["name"], "country": r["country"], "dataset": r["dataset"],
                    "resolution": r["resolution"], "dates": r["dates"], "tiles": r["tiles"],
-                   "GPS search": r["gps"], "images on this website": r["here"]}
+                   "GPS search": r["gps"], "images available here": r["here"]}
                   for r in sorted(shown, key=lambda r: (-r["gsd"], r["dataset"], r["name"]))],
                  hide_index=True, width="stretch")
 
 # ------------------------------------------------------------- text search
-with tab_text:
+if PAGE == "Text search":
     st.write("Type what you are looking for. The tiles are ranked by how well they match.")
     examples = ["an airport runway", "a river", "dense city buildings", "farm fields",
                 "bare land under construction", "a lake or sea"]
@@ -259,7 +280,7 @@ def framed(img, ok, size=110):
                               value=(40, 170, 60) if ok else (220, 40, 40))
 
 
-with tab_check:
+if PAGE == "Check the search (EuroSAT)":
     ES = get_eurosat(CORE_V)
     if ES is None:
         st.info("No EuroSAT patches or EuroSAT index found. Run:  python demo/build_index.py")
@@ -297,7 +318,7 @@ with tab_check:
 
 
 # ------------------------------------------------------------ image search
-with tab_img:
+if PAGE == "Image search":
     st.write("Pick one tile. The app finds other tiles that look like it.")
     all_keys = site_keys or list(SITES)
     c1, c2, c3 = st.columns([2, 1, 1])
@@ -314,14 +335,14 @@ with tab_img:
     cv2.rectangle(img, (m["x"], m["y"]), (m["x"] + T, m["y"] + T), (255, 40, 40),
                   3 if T == core.TILE else 6)
     a, b = st.columns([2, 1])
-    a.image(img, caption="The picked tile is marked in red", width="stretch")
+    a.image(fit(img), caption="The picked tile is marked in red", width="stretch")
     b.image(tile_img(m, 256), caption="Query tile: " + caption(m))
     keep_q = keep.copy(); keep_q[qi] = False
     st.subheader("Most similar tiles")
     show_hits(core.search(V, V[qi], keep_q, topk), META)
 
 # ------------------------------------------------------------------ change
-with tab_change:
+if PAGE == "Change between two dates":
     all_keys = site_keys or list(SITES)
     ckey = st.selectbox("Site", all_keys, format_func=site_label, key="chg_site")
     site = SITES[ckey]
@@ -330,9 +351,9 @@ with tab_change:
     st.caption(f"Location: {site['place']}, {site['country']} · {core.res_label(site['gsd'])} per pixel · "
                f"{site['sensor']} · image {w * site['gsd'] / 1000:.2f} × {h * site['gsd'] / 1000:.2f} km")
     c1, c2 = st.columns(2)
-    c1.image(rgb(d["img1"]), caption=f"Earlier: {site['date1']}  ({site['scene1']})",
+    c1.image(fit(rgb(d["img1"])), caption=f"Earlier: {site['date1']}  ({site['scene1']})",
              width="stretch")
-    c2.image(rgb(d["img2"]), caption=f"Later: {site['date2']}  ({site['scene2']})",
+    c2.image(fit(rgb(d["img2"])), caption=f"Later: {site['date2']}  ({site['scene2']})",
              width="stretch")
 
     st.subheader("Where did it change?")
@@ -347,12 +368,12 @@ with tab_change:
     pix = rgb(d["img2"]).copy()
     pix[mask > 0] = (255, 40, 40)
     c1, c2 = st.columns(2)
-    c1.image(over, caption="Patch feature heat map (bright = model sees a different place)",
+    c1.image(fit(over), caption="Patch feature heat map (bright = model sees a different place)",
              width="stretch")
-    c2.image(pix, caption=f"Pixel change after brightness matching, red = top {pct:.1f}% of pixels",
+    c2.image(fit(pix), caption=f"Pixel change after brightness matching, red = top {pct:.1f}% of pixels",
              width="stretch")
     if d["label"] is not None:
-        st.image(d["label"], caption="Ground truth change mask from the dataset", width=420)
+        st.image(fit(d["label"]), caption="Ground truth change mask from the dataset", width=420)
 
     st.subheader("Review list: the most changed tiles")
     T = site["tile"]
@@ -383,7 +404,7 @@ with tab_change:
                    f"- source: {site['scene1']} → {site['scene2']}" + truth)
 
 # -------------------------------------------------------------- GPS search
-with tab_gps:
+if PAGE == "Search by GPS":
     COV = {k: v for k, v in core.coverage(LOCS).items() if k in SITES}
     if not COV:
         st.info("No site in this index has GPS coordinates. Rebuild it:  python demo/build_index.py")
@@ -435,7 +456,7 @@ with tab_gps:
                 px = core.lonlat_to_px(d["geo"], lon, lat)
                 cv2.circle(pic, px, max(2, int(rad * 1000 / ns["gsd"])), (255, 40, 40), 2)
                 cv2.drawMarker(pic, px, (255, 40, 40), cv2.MARKER_CROSS, 18, 2)
-            st.image(pic, caption=f"Later image ({ns['date2']}): red = your point and {rad:g} km "
+            st.image(fit(pic), caption=f"Later image ({ns['date2']}): red = your point and {rad:g} km "
                                   f"circle, yellow = the {len(mine)} tiles inside it",
                      width="stretch")
             st.subheader("Tiles at this point, both dates (most changed first)")
@@ -490,7 +511,7 @@ def get_years(site_dir):
     return years, pics, two, last, first_year, types, TS.series_info(site_dir)
 
 
-with tab_years:
+if PAGE == "Change over years":
     ysites = [k for k, v in SITES.items()
               if v["collection"].startswith("India") and (Path(v["dir"]) / "series").is_dir()]
     if not ysites:
@@ -576,7 +597,7 @@ def get_clusters(collection, n_clusters):
     return {"rows": rows, "labels": labels, "summary": summary}
 
 
-with tab_cluster:
+if PAGE == "Discover clusters":
     st.write(
         "Tiles are grouped by visual similarity using K-means on the same "
         "embedding vectors used for search. "
@@ -639,7 +660,7 @@ with tab_cluster:
 
 
 # ------------------------------------------------------------------- about
-with tab_about:
+if PAGE == "About":
     st.markdown(f"""
 ### What this demo does
 - Every image is cut into tiles: 64 px for Sentinel-2 (640 m on the ground) and 256 px for
