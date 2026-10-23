@@ -1,0 +1,45 @@
+{
+  "site": "zojila_tunnel_ladakh",
+  "name": "Zojila tunnel works, Baltal, Jammu and Kashmir / Ladakh",
+  "country": "India",
+  "months": [
+    "08-01",
+    "09-30"
+  ],
+  "lon": 75.41,
+  "lat": 34.25,
+  "bbox_lonlat": [
+    75.375,
+    34.215,
+    75.445,
+    34.285
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    534510,
+    3786060,
+    540990,
+    3793850
+  ],
+  "height": 779,
+  "width": 648,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2A_43SET_20190910_1_L2A",
+    "date": "2019-09-10",
+    "cloud_pct": 0.007392
+  },
+  "t2": {
+    "scene": "S2A_43SET_20250930_0_L2A",
+    "date": "2025-09-30",
+    "cloud_pct": 2.611584
+  }
+}

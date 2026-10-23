@@ -1,0 +1,23 @@
+[
+  {
+    "scene": "S2B_44RLU_20191118_1_L2A",
+    "date": "2019-11-18",
+    "cloud_pct": 0.100225,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2A_44RLU_20191024_1_L2A",
+    "date": "2019-10-24",
+    "cloud_pct": 2.051426,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2A_44RLU_20191014_1_L2A",
+    "date": "2019-10-14",
+    "cloud_pct": 11.657374,
+    "offset_removed": 0,
+    "usable_pct": 97.8
+  }
+]

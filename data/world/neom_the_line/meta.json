@@ -1,0 +1,45 @@
+{
+  "site": "neom_the_line",
+  "name": "NEOM The Line works, Tabuk Province",
+  "country": "Saudi Arabia",
+  "months": [
+    "01-01",
+    "03-31"
+  ],
+  "lon": 35.2,
+  "lat": 28.1,
+  "bbox_lonlat": [
+    35.165000000000006,
+    28.065,
+    35.235,
+    28.135
+  ],
+  "crs": "EPSG:32636",
+  "bounds_utm": [
+    712630,
+    3106290,
+    719650,
+    3114180
+  ],
+  "height": 789,
+  "width": 702,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_36RYS_20190205_0_L2A",
+    "date": "2019-02-05",
+    "cloud_pct": 0.017648
+  },
+  "t2": {
+    "scene": "S2B_36RYS_20250315_0_L2A",
+    "date": "2025-03-15",
+    "cloud_pct": 0.002016
+  }
+}

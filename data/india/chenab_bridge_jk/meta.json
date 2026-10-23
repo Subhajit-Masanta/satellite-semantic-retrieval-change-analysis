@@ -1,0 +1,45 @@
+{
+  "site": "chenab_bridge_jk",
+  "name": "Chenab rail bridge, Reasi, Jammu and Kashmir",
+  "country": "India",
+  "months": [
+    "10-01",
+    "12-31"
+  ],
+  "lon": 74.8815,
+  "lat": 33.1508,
+  "bbox_lonlat": [
+    74.8465,
+    33.1158,
+    74.9165,
+    33.18579999999999
+  ],
+  "crs": "EPSG:32643",
+  "bounds_utm": [
+    485680,
+    3664130,
+    492220,
+    3671900
+  ],
+  "height": 777,
+  "width": 654,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_43SDS_20191204_1_L2A",
+    "date": "2019-12-04",
+    "cloud_pct": 0.010597
+  },
+  "t2": {
+    "scene": "S2C_43SDS_20251117_0_L2A",
+    "date": "2025-11-17",
+    "cloud_pct": 0.000462
+  }
+}

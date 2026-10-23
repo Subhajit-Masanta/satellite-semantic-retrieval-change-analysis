@@ -1,0 +1,45 @@
+{
+  "site": "nusantara_ikn",
+  "name": "Nusantara new capital (IKN), East Kalimantan",
+  "country": "Indonesia",
+  "months": [
+    "05-01",
+    "10-31"
+  ],
+  "lon": 116.7,
+  "lat": -0.97,
+  "bbox_lonlat": [
+    116.665,
+    -1.005,
+    116.735,
+    -0.9349999999999999
+  ],
+  "crs": "EPSG:32750",
+  "bounds_utm": [
+    462730,
+    9888920,
+    470520,
+    9896650
+  ],
+  "height": 773,
+  "width": 779,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_50MMD_20190816_0_L2A",
+    "date": "2019-08-16",
+    "cloud_pct": 5.26468
+  },
+  "t2": {
+    "scene": "S2B_50MMD_20250526_0_L2A",
+    "date": "2025-05-26",
+    "cloud_pct": 20.532793
+  }
+}

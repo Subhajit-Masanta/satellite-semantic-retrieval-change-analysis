@@ -1,0 +1,45 @@
+{
+  "site": "egypt_new_capital",
+  "name": "New Administrative Capital, east of Cairo",
+  "country": "Egypt",
+  "months": [
+    "01-01",
+    "03-31"
+  ],
+  "lon": 31.72,
+  "lat": 30.02,
+  "bbox_lonlat": [
+    31.685,
+    29.985,
+    31.755,
+    30.055
+  ],
+  "crs": "EPSG:32636",
+  "bounds_utm": [
+    373150,
+    3317780,
+    379980,
+    3325610
+  ],
+  "height": 783,
+  "width": 683,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_36RUU_20190208_0_L2A",
+    "date": "2019-02-08",
+    "cloud_pct": 0.32411
+  },
+  "t2": {
+    "scene": "S2A_36RUU_20250102_0_L2A",
+    "date": "2025-01-02",
+    "cloud_pct": 0.001805
+  }
+}

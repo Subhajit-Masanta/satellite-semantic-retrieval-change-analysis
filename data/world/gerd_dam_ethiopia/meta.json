@@ -1,0 +1,45 @@
+{
+  "site": "gerd_dam_ethiopia",
+  "name": "Grand Ethiopian Renaissance Dam and reservoir",
+  "country": "Ethiopia",
+  "months": [
+    "01-01",
+    "03-31"
+  ],
+  "lon": 35.093,
+  "lat": 11.215,
+  "bbox_lonlat": [
+    35.05800000000001,
+    11.18,
+    35.128,
+    11.25
+  ],
+  "crs": "EPSG:32636",
+  "bounds_utm": [
+    724680,
+    1236670,
+    732380,
+    1244460
+  ],
+  "height": 779,
+  "width": 770,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_36PYT_20190331_1_L2A",
+    "date": "2019-03-31",
+    "cloud_pct": 3.6e-05
+  },
+  "t2": {
+    "scene": "S2A_36PYT_20250103_0_L2A",
+    "date": "2025-01-03",
+    "cloud_pct": 1.3e-05
+  }
+}

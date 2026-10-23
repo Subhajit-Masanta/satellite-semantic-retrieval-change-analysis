@@ -1,6 +1,7 @@
-"""Download a YEARLY image series for every Indian site (no account needed).
+"""Download a YEARLY image series for every demo site (no account needed).
 
-    run.bat demo\\fetch_series.py
+    run.bat demo\\fetch_series.py              (all sites)
+    run.bat demo\\fetch_series.py key1 key2    (only these sites)
 
 For each site and each year 2019-2025 we take up to three clear Sentinel-2
 scenes from the dry season (January to April) and combine them into one
@@ -25,7 +26,7 @@ from rasterio.enums import Resampling
 from rasterio.windows import from_bounds
 
 ROOT = Path(__file__).resolve().parents[1]
-INDIA = ROOT / "data" / "india"
+SITE_DIRS = (ROOT / "data" / "india", ROOT / "data" / "world")
 STAC = "https://earth-search.aws.element84.com/v1/search"
 YEARS = list(range(2019, 2026))
 PER_YEAR = 3
@@ -37,8 +38,10 @@ ENV = dict(AWS_NO_SIGN_REQUEST="YES", GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
 
 def scenes_for(meta, year):
     grid = "MGRS-" + meta["t1"]["scene"].split("_")[1]
+    # the site's own season (fetch_india.py), else January to April
+    m0, m1 = meta.get("months", ["01-01", "04-30"])
     body = {"collections": ["sentinel-2-l2a"], "bbox": meta["bbox_lonlat"],
-            "datetime": f"{year}-01-01T00:00:00Z/{year}-04-30T23:59:59Z",
+            "datetime": f"{year}-{m0}T00:00:00Z/{year}-{m1}T23:59:59Z",
             "query": {"eo:cloud_cover": {"lt": 20}, "grid:code": {"eq": grid}}, "limit": 100}
     feats = requests.post(STAC, json=body, timeout=90).json().get("features", [])
     feats.sort(key=lambda f: f["properties"].get("eo:cloud_cover", 99))
@@ -118,16 +121,22 @@ def one(job):
         return f"{meta['site']} {year}: FAILED {type(exc).__name__}: {str(exc)[:110]}"
 
 
+def site_metas():
+    only = set(sys.argv[1:])
+    return [m for d in SITE_DIRS for m in sorted(d.glob("*/meta.json"))
+            if not only or m.parent.name in only]
+
+
 def main():
     jobs = []
-    for mfile in sorted(INDIA.glob("*/meta.json")):
+    for mfile in site_metas():
         meta = json.loads(mfile.read_text())
         jobs += [(mfile.parent, meta, y) for y in YEARS]
     print(f"{len(jobs)} site-years to fetch")
     with ThreadPoolExecutor(max_workers=8) as pool:
         for msg in pool.map(one, jobs):
             print(msg, flush=True)
-    for mfile in sorted(INDIA.glob("*/meta.json")):
+    for mfile in site_metas():
         d = mfile.parent / "series"
         years = {p.stem: json.loads(p.read_text()) for p in sorted(d.glob("20*.json"))}
         (d / "series.json").write_text(json.dumps(years, indent=2))

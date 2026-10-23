@@ -68,13 +68,15 @@ def _stretch(a, b):
 def list_sites():
     """Every site folder that is on disk, India first then OSCD cities."""
     sites = []
-    for d in sorted((ROOT / "data" / "india").glob("*/meta.json")):
+    sentinel = [(d, "India (Sentinel-2)") for d in sorted((ROOT / "data" / "india").glob("*/meta.json"))]
+    sentinel += [(d, "World (Sentinel-2)") for d in sorted((ROOT / "data" / "world").glob("*/meta.json"))]
+    for d, coll in sentinel:
         m = json.loads(d.read_text())
-        sites.append({"key": m["site"], "name": m["name"], "collection": "India (Sentinel-2)",
+        sites.append({"key": m["site"], "name": m["name"], "collection": coll,
                       "dir": str(d.parent), "date1": m["t1"]["date"], "date2": m["t2"]["date"],
                       "scene1": m["t1"]["scene"], "scene2": m["t2"]["scene"], "meta": m,
                       "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI",
-                      "place": m["name"], "country": "India", "gps": True})
+                      "place": m["name"], "country": m.get("country", "India"), "gps": True})
     for d in sorted((ROOT / "data" / "isro").glob("*/meta.json")):
         # bands are green, red, NIR: shown as B,G,R this is standard false colour
         m = json.loads(d.read_text())
@@ -171,7 +173,7 @@ def load_site(site):
                 "b1": np.transpose(i1, (2, 0, 1)).astype(np.float32),
                 "b2": np.transpose(i2, (2, 0, 1)).astype(np.float32),
                 "label": (l > 127).astype(np.uint8) * 255, "geo": None}
-    if site["collection"].startswith(("India", "ISRO")):
+    if site["collection"].startswith(("India", "World", "ISRO")):
         import rasterio
         with rasterio.open(d / "t1.tif") as ds:
             a = ds.read().astype(np.float32)

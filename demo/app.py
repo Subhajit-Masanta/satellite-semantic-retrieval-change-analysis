@@ -295,9 +295,18 @@ if PAGE == "Check the search (EuroSAT)":
         q = c2.text_input("Search text (you can change it)", value=core.EUROSAT_PROMPTS.get(cls, cls),
                           key=f"es_q_{cls}")
         k = c3.slider("Results shown", 10, 50, 20, 10, key="es_k")
-        scores = EV @ get_model().text("a satellite image of " + q.strip())
+        qv = get_model().text("a satellite image of " + q.strip())
+        target = cls
+        if q.strip() != core.EUROSAT_PROMPTS.get(cls, cls):
+            # own text: judge against the class whose prompt is closest to it
+            cv = {c: get_model().text("a satellite image of " + core.EUROSAT_PROMPTS.get(c, c)) for c in classes}
+            target = max(classes, key=lambda c: float(cv[c] @ qv))
+            if target != cls:
+                st.info(f'Your text "{q.strip()}" is closest to the class **{target}**, so the results '
+                        f"are marked against {target}.")
+        scores = EV @ qv
         order = np.argsort(-scores)
-        truth = np.array([c == cls for _, c in EF])
+        truth = np.array([c == target for _, c in EF])
         hit = truth[order]
         ap = float((np.cumsum(hit) / np.arange(1, len(hit) + 1))[hit].mean()) if hit.any() else 0.0
         a, b, c, d = st.columns(4)
@@ -308,12 +317,12 @@ if PAGE == "Check the search (EuroSAT)":
         cols = st.columns(10)
         for r, i in enumerate(order[:k]):
             p, true_cls = EF[i]
-            ok = true_cls == cls
+            ok = true_cls == target
             cols[r % 10].image(framed(cv2.imread(str(EBASE / p)), ok),
                                caption=f"{r + 1}. " + ("correct" if ok else f"wrong: {true_cls}"))
         st.caption(f"Searched {len(EF):,} labelled EuroSAT patches (10 m Sentinel-2, 64 x 64 px, "
                    f"{len(classes)} classes). Average precision rewards putting all {int(truth.sum()):,} "
-                   f"{cls} patches near the top. Across all 10 classes our measured mean is 0.44 "
+                   f"{target} patches near the top. Across all 10 classes our measured mean is 0.44 "
                    "(random 0.10).")
 
 
@@ -513,12 +522,14 @@ def get_years(site_dir):
 
 if PAGE == "Change over years":
     ysites = [k for k, v in SITES.items()
-              if v["collection"].startswith("India") and (Path(v["dir"]) / "series").is_dir()]
+              if v["collection"].startswith(("India", "World")) and (Path(v["dir"]) / "series").is_dir()]
     if not ysites:
         st.info("No yearly series on disk. Run:  run.bat demo\\fetch_series.py")
     else:
         st.write("One cloud-free image per year (2019 to 2025), each made from three clear "
-                 "Sentinel-2 scenes of the dry season. Move the slider to go through the years.")
+                 "Sentinel-2 scenes from the same season each year (January to April, or the "
+                 "snow-free / dry months for mountain and tropical sites). Move the slider to go "
+                 "through the years.")
         ykey = st.selectbox("Site", ysites, format_func=lambda k: SITES[k]["name"], key="yr_site",
                             index=ysites.index("jewar_airport_up") if "jewar_airport_up" in ysites else 0)
         years, pics, two, last, first_year, types, info = get_years(SITES[ykey]["dir"])
@@ -685,7 +696,8 @@ A person should check the review list.
 ### Data
 | Collection | Resolution | Places | Ground truth |
 |---|---|---|---|
-| India sites: Copernicus Sentinel-2 L2A, early 2019 and early 2025, plus one image per year | 10 m | 10 sites in India | none (shown, not scored) |
+| India sites: Copernicus Sentinel-2 L2A, 2019 and 2025 in the same season, plus one image per year | 10 m | 13 sites in India | none (shown, not scored) |
+| World sites: same source and method (NEOM, Egypt's new capital, Nusantara, the GERD dam) | 10 m | 4 sites outside India | none (shown, not scored) |
 | ISRO LISS-IV (ResourceSat-2/2A, Bhoonidhi open data), 21 Mar 2023 and 4 Jan 2026, false colour | 5 m | VIT, Katpadi and Vellore town | none (shown, not scored) |
 | OSCD: Onera Satellite Change Detection | 10 m | 24 cities in 13 countries | change masks |
 | EuroSAT: 27,000 labelled patches | 10 m | Europe | land-cover classes |

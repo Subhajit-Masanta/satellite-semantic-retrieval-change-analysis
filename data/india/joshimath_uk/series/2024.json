@@ -1,0 +1,23 @@
+[
+  {
+    "scene": "S2A_44RLU_20241116_0_L2A",
+    "date": "2024-11-16",
+    "cloud_pct": 0.009784,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2B_44RLU_20241101_0_L2A",
+    "date": "2024-11-01",
+    "cloud_pct": 0.976463,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  },
+  {
+    "scene": "S2B_44RLU_20241012_0_L2A",
+    "date": "2024-10-12",
+    "cloud_pct": 1.137,
+    "offset_removed": 0,
+    "usable_pct": 100.0
+  }
+]

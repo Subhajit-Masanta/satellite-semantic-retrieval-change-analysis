@@ -1,0 +1,45 @@
+{
+  "site": "joshimath_uk",
+  "name": "Joshimath town, Uttarakhand",
+  "country": "India",
+  "months": [
+    "10-01",
+    "11-20"
+  ],
+  "lon": 79.565,
+  "lat": 30.555,
+  "bbox_lonlat": [
+    79.53,
+    30.52,
+    79.6,
+    30.59
+  ],
+  "crs": "EPSG:32644",
+  "bounds_utm": [
+    358960,
+    3377240,
+    365770,
+    3385090
+  ],
+  "height": 785,
+  "width": 681,
+  "gsd_m": 10,
+  "sensor": "Sentinel-2 MSI (L2A)",
+  "bands": [
+    "blue",
+    "green",
+    "red",
+    "nir"
+  ],
+  "source": "Copernicus Sentinel-2, AWS open data COG mirror",
+  "t1": {
+    "scene": "S2B_44RLU_20191118_1_L2A",
+    "date": "2019-11-18",
+    "cloud_pct": 0.100225
+  },
+  "t2": {
+    "scene": "S2C_44RLU_20251111_0_L2A",
+    "date": "2025-11-11",
+    "cloud_pct": 0.000116
+  }
+}
