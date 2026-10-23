@@ -34,14 +34,27 @@ def get_index():
     return core.load_index()
 
 
+# Cached results depend on core.py, so its modified time is part of the cache
+# key: after an update the old cached site list is not reused.
+CORE_V = Path(core.__file__).stat().st_mtime
+
+
 @st.cache_data(show_spinner=False)
-def get_sites():
+def _sites(v):
     return {s["key"]: s for s in core.list_sites()}
 
 
 @st.cache_data(show_spinner="Reading the images...", max_entries=6)
-def get_site_data(key):
+def _site_data(key, v):
     return core.load_site(get_sites()[key])
+
+
+def get_sites():
+    return _sites(CORE_V)
+
+
+def get_site_data(key):
+    return _site_data(key, CORE_V)
 
 
 def rgb(img):
