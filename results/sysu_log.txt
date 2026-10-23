@@ -1,0 +1,38 @@
+======================================================================
+SYSU-CD EXPERIMENT RUN
+======================================================================
+   val: 2667 pairs, 21.6% of pixels changed, 1936 tiles count as changed
+   test: 4000 pairs, 23.6% of pixels changed, 3032 tiles count as changed
+   demo: wrote 9 test pairs to data/SYSU-CD/A, B, label
+
+[1] Tile-level change signal (AUC; pick on VAL, report on TEST)
+   CLIP ViT-B/32        (325s)  same place found first: 7.8% of 4000
+      whole-tile embedding     AUC val=0.529 test=0.619
+      patch mean               AUC val=0.648 test=0.727  <- picked on val
+      patch max                AUC val=0.557 test=0.606
+      patch top-10%            AUC val=0.616 test=0.683
+      centred patch mean       AUC val=0.609 test=0.685
+      centred patch max        AUC val=0.499 test=0.516
+      centred patch top-10%    AUC val=0.563 test=0.590
+   RemoteCLIP ViT-B/32  (317s)  same place found first: 2.0% of 4000
+      whole-tile embedding     AUC val=0.667 test=0.578
+      patch mean               AUC val=0.798 test=0.756  <- picked on val
+      patch max                AUC val=0.612 test=0.646
+      patch top-10%            AUC val=0.691 test=0.714
+      centred patch mean       AUC val=0.669 test=0.694
+      centred patch max        AUC val=0.498 test=0.533
+      centred patch top-10%    AUC val=0.584 test=0.618
+   reference: pixel difference (raw)                 AUC val=0.707 test=0.704
+   reference: pixel difference (brightness matched)  AUC val=0.662 test=0.636
+
+[2] Text query change: sim(date 2, query) - sim(date 1, query)
+   OpenCLIP ViT-B/32: picked 'a satellite image of a city with buildings and roads' (vs_bare_land) val 0.602 test 0.589  P@50 0.94
+   RemoteCLIP ViT-B/32: picked 'a satellite image of a city with buildings and roads' (plain) val 0.589 test 0.565  P@50 0.94
+
+[3] Pixel-level change maps (thresholds picked on VAL)
+   Pixel difference + Otsu                  P=0.405 R=0.457 F1=0.429 IoU=0.273 FPR=20.70%
+   Change Vector Analysis                   P=0.464 R=0.098 F1=0.162 IoU=0.088 FPR=3.51%
+   Ours, brightness matching (thr 20)       P=0.327 R=0.630 F1=0.431 IoU=0.275 FPR=39.99%
+   Ours, patch heat map (RemoteCLIP ViT-B/32) P=0.530 R=0.639 F1=0.579 IoU=0.408 FPR=17.50%
+
+saved results/sysu_results.json  (1989s)

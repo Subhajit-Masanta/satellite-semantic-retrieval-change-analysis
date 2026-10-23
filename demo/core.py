@@ -18,6 +18,7 @@ TILE = 64            # Sentinel-2 sites (10 m per pixel)
 LEVIR_TILE = 256     # LEVIR-CD sites (0.5 m per pixel)
 LEVIR_N = 14         # how many LEVIR-CD pairs to show in the demo
 SYSU_DIR = ROOT / "data" / "SYSU-CD"   # 256 px pairs at 0.5 m, same tile size as LEVIR-CD
+WEB_DIR = ROOT / "demo_data"           # small copies for the website (demo/make_web_data.py)
 
 # OSCD folder name -> (place, country). OSCD tiles also get real GPS from the
 # original georeferenced bands; LEVIR-CD and SYSU-CD publish no coordinates.
@@ -34,6 +35,13 @@ OSCD_PLACES = {
     "rennes": ("Rennes", "France"), "rio": ("Rio de Janeiro", "Brazil"),
     "saclay_e": ("Saclay east, Paris region", "France"),
     "saclay_w": ("Saclay west, Paris region", "France"), "valencia": ("Valencia", "Spain"),
+}
+
+
+# Collections that publish no coordinates: one approximate marker per region.
+REGION_CENTRES = {
+    "LEVIR-CD (0.5 m)": ("Austin area, Texas", "USA", 30.27, -97.74),
+    "SYSU-CD (0.5 m)": ("Hong Kong", "China", 22.32, 114.17),
 }
 
 
@@ -67,8 +75,22 @@ def list_sites():
                       "scene1": m["t1"]["scene"], "scene2": m["t2"]["scene"], "meta": m,
                       "tile": TILE, "gsd": 10.0, "sensor": "Sentinel-2 MSI",
                       "place": m["name"], "country": "India", "gps": True})
-    for d in sorted((ROOT / "data" / "OSCD").rglob("imgs_1_rect")):
+    for d in sorted((ROOT / "data" / "isro").glob("*/meta.json")):
+        # bands are green, red, NIR: shown as B,G,R this is standard false colour
+        m = json.loads(d.read_text())
+        sites.append({"key": m["site"], "name": m["name"], "collection": "ISRO LISS-IV (5 m)",
+                      "dir": str(d.parent), "date1": m["t1"]["date"], "date2": m["t2"]["date"],
+                      "scene1": m["t1"]["scene"], "scene2": m["t2"]["scene"], "meta": m,
+                      "tile": TILE, "gsd": float(m["gsd_m"]), "sensor": m["sensor"],
+                      "place": m["name"], "country": "India", "gps": True})
+    # full OSCD in data/ (local), or the 6-city copy in demo_data/ (website)
+    seen = set()
+    oscd = [d for base in (ROOT / "data" / "OSCD", WEB_DIR / "OSCD") for d in sorted(base.rglob("imgs_1_rect"))]
+    for d in oscd:
         city = d.parent
+        if city.name in seen:
+            continue
+        seen.add(city.name)
         dates = {}
         if (city / "dates.txt").exists():
             for line in (city / "dates.txt").read_text().splitlines():
@@ -149,7 +171,7 @@ def load_site(site):
                 "b1": np.transpose(i1, (2, 0, 1)).astype(np.float32),
                 "b2": np.transpose(i2, (2, 0, 1)).astype(np.float32),
                 "label": (l > 127).astype(np.uint8) * 255, "geo": None}
-    if site["collection"].startswith("India"):
+    if site["collection"].startswith(("India", "ISRO")):
         import rasterio
         with rasterio.open(d / "t1.tif") as ds:
             a = ds.read().astype(np.float32)
@@ -164,8 +186,9 @@ def load_site(site):
             return np.stack([x[:h, :w] for x in arrs]).astype(np.float32)
         a, b = rd(1), rd(2)
         geo = _oscd_geo(d, a.shape[1:])
-        for p in (ROOT / "data" / "OSCD").rglob("cm.png"):
-            if p.parent.parent.name == d.name:
+        cms = [d / "cm" / "cm.png"] + list((ROOT / "data" / "OSCD").rglob("cm.png"))
+        for p in cms:
+            if p.exists() and p.parent.parent.name == d.name:
                 label = (cv2.imread(str(p), cv2.IMREAD_GRAYSCALE) > 127).astype(np.uint8) * 255
                 break
     h, w = min(a.shape[1], b.shape[1]), min(a.shape[2], b.shape[2])
@@ -282,6 +305,7 @@ def build_index(progress=print):
             heats.append(heat[j].reshape(g, g))
         progress(f"[{si + 1}/{len(sites)}] {site['name']}: {len(grid)} tiles x 2 dates")
     INDEX_DIR.mkdir(exist_ok=True)
+    n_eurosat = build_eurosat(clip, progress)
     np.save(INDEX_DIR / "vectors.npy", np.stack(vecs).astype(np.float32))
     np.save(INDEX_DIR / "heat.npy", np.stack(heats).astype(np.float32))
     (INDEX_DIR / "meta.json").write_text(json.dumps(meta))
@@ -290,7 +314,7 @@ def build_index(progress=print):
         "model": f"OpenCLIP {MODEL_NAME} ({MODEL_TAG})", "licence": "MIT",
         "source": "https://github.com/mlfoundations/open_clip",
         "tile_px": TILE, "levir_tile_px": LEVIR_TILE, "n_vectors": len(vecs),
-        "n_sites": len(sites)}, indent=2))
+        "n_sites": len(sites), "n_eurosat_patches": n_eurosat}, indent=2))
     progress(f"index saved: {len(vecs)} tile vectors, {len(loc_meta)} places, {len(sites)} sites")
     return len(vecs)
 
@@ -302,6 +326,55 @@ def load_index():
     locs = json.loads((INDEX_DIR / "locations.json").read_text())
     info = json.loads((INDEX_DIR / "model.json").read_text())
     return v, heat, meta, locs, info
+
+
+# ------------------------------------------------------------- EuroSAT
+EUROSAT_DIRS = (ROOT / "data" / "EuroSAT" / "2750", WEB_DIR / "EuroSAT")
+# the prompts after tuning on half of EuroSAT (results/eurosat_prompt_tuning_results.json)
+EUROSAT_PROMPTS = {
+    "AnnualCrop": "annual crop land", "Forest": "a forest",
+    "HerbaceousVegetation": "scrubland and grass", "Highway": "a highway or road",
+    "Industrial": "industrial buildings", "Pasture": "pasture land",
+    "PermanentCrop": "permanent crop land", "Residential": "residential buildings",
+    "River": "a river", "SeaLake": "deep blue water, sea or lake",
+}
+
+
+def eurosat_files():
+    """(base dir, [(relative path, class)]) from the full set if it is on disk,
+    else from the website copy."""
+    for base in EUROSAT_DIRS:
+        if base.is_dir():
+            return base, [(f"{p.parent.name}/{p.name}", p.parent.name)
+                          for p in sorted(base.glob("*/*.jpg"))]
+    return None, []
+
+
+def build_eurosat(clip, progress=print):
+    base, files = eurosat_files()
+    if not files:
+        return 0
+    vecs = []
+    for i in range(0, len(files), 256):
+        batch = np.stack([cv2.imread(str(base / f)) for f, _ in files[i:i + 256]])
+        vecs.append(clip.images(batch)[0])
+    np.save(INDEX_DIR / "eurosat_vectors.npy", np.concatenate(vecs).astype(np.float16))
+    (INDEX_DIR / "eurosat_meta.json").write_text(json.dumps(files))
+    progress(f"EuroSAT: {len(files)} labelled patches")
+    return len(files)
+
+
+def load_eurosat():
+    """-> (vectors, [(path, class)], base dir) for the patches whose image is
+    on disk, or None."""
+    f = INDEX_DIR / "eurosat_vectors.npy"
+    base, _ = eurosat_files()
+    if not f.exists() or base is None:
+        return None
+    v = np.load(f).astype(np.float32)
+    files = json.loads((INDEX_DIR / "eurosat_meta.json").read_text())
+    keep = [i for i, (p, _) in enumerate(files) if (base / p).exists()]
+    return v[keep], [files[i] for i in keep], base
 
 
 def search(vectors, query_vec, keep, k):

@@ -35,6 +35,9 @@ made on train/tune splits and reported on held-out data.
 | EuroSAT prompt rewording for 2 weak classes (tuned on 50%, scored on the other 50%) | OpenCLIP mAP 0.438 → 0.444; RemoteCLIP 0.306 → 0.336 | Small gain (mostly SeaLake) |
 | Text search, OSCD (formula tags) | mAP 0.16 (random 0.12) | Barely |
 | Tile-level change from embeddings, **LEVIR-CD 0.5 m** | AUC 0.82 whole tile, **0.92** patch features (pixel diff 0.70) | Works |
+| Text-query change on **LEVIR-CD** (score = rise in similarity to "dense residential area with roofs", prompt picked on val) | test AUC **0.946**, top 50 all correct (OpenCLIP) | Works when the change type is known |
+| Tile-level change, **SYSU-CD 0.5 m** (Hong Kong, mixed change types, 4,000 test pairs) | AUC 0.76 patch features (RemoteCLIP), pixel diff 0.70; text query 0.59 | Works, smaller margin |
+| Pixel-exact maps, **SYSU-CD** | patch heat map F1 **0.58** vs pixel diff 0.43, CVA 0.16 | Best of the methods tried |
 | Tile-level change from embeddings, **OSCD 10 m** | AUC 0.56 whole tile, 0.70 patch features (pixel diff 0.64) | Weak |
 | Ensembling CLIP / RemoteCLIP / DINOv2 patch scores (OSCD) | test AUC 0.70–0.74 for every combination | No reliable gain |
 | Pixel-exact change maps | best F1 0.35 OSCD (CVA baseline), 0.37 LEVIR-CD | Weak |
@@ -65,13 +68,21 @@ python demo/build_index.py                       # once; builds demo_index/ (nee
 streamlit run demo/app.py --global.developmentMode false
 ```
 Windows: double-click `run_demo.bat` (uses the project-local `env/` libraries, if you have them).
-Tabs: text search · image search · change between two dates · change over years (India) ·
-discover clusters · about. Best demo: **Change over years → Jewar airport**, slide 2019 → 2025.
+Tabs: map of all data · text search · check the search (EuroSAT, results marked right/wrong) ·
+image search · change between two dates · search by GPS · change over years (India) ·
+discover clusters · about. Sidebar filters: resolution, collection, country, city.
+
+Local runs use every image in `data/`. The deployed site has no `data/`, so it reads the
+small copies in `demo_data/` (6 OSCD cities, 200 EuroSAT patches per class), made by
+`python demo/make_web_data.py`.
+
+Best demo: **Change over years → Jewar airport**, slide 2019 → 2025.
 
 ### Experiments
 `run.bat <script>` (or `python <script>` with libraries installed):
 `experiments/run_oscd.py`, `extra_analysis.py`, `run_oscd_v2.py`, `run_eurosat.py`,
-`run_levir.py`, `run_indices.py`, `run_series.py`, `make_figures.py`.
+`run_levir.py`, `run_levir_text.py`, `run_sysu.py`, `run_indices.py`, `run_series.py`,
+`make_figures.py`.
 
 ## Data
 
@@ -82,8 +93,9 @@ Not in the repo (see `.gitignore`). `python download_data.py` prints sources and
 | OSCD (24 Sentinel-2 pairs, 10 m) | change + search tests | https://rcdaudt.github.io/oscd/ · mirror https://huggingface.co/datasets/blanchon/OSCD_MSI |
 | EuroSAT (27,000 patches) | text-search scoring | https://github.com/phelber/EuroSAT |
 | LEVIR-CD (0.5 m building change) | change where it works best | https://justchenhao.github.io/LEVIR/ |
+| SYSU-CD (Hong Kong 2007 vs 2014, 0.5 m, mixed change) | change test, demo | https://huggingface.co/datasets/ericyu/SYSU_CD (val + test parquet only) |
 | Indian Sentinel-2 L2A (10 sites + Vellore, VIT, 2019–2025) | qualitative demo | read by `demo/fetch_india.py` and `demo/fetch_series.py` from the AWS open-data mirror via https://earth-search.aws.element84.com/v1/search (no account) |
-| ISRO Bhoonidhi, Resourcesat-2/2A LISS-IV (5 m) | qualitative demo, in progress | https://bhoonidhi.nrsc.gov.in/ (free account; `demo/fetch_bhoonidhi.py` uses the API) |
+| ISRO Bhoonidhi, Resourcesat-2/2A LISS-IV (5 m), VIT pair 21 Mar 2023 vs 4 Jan 2026 (path 101, sub-scene D) | qualitative demo | https://bhoonidhi.nrsc.gov.in/ (free account; `demo/fetch_bhoonidhi.py` uses the API) |
 
 `demo/fetch_bhoonidhi.py` reads your login from the environment variables
 `BHOONIDHI_USER` and `BHOONIDHI_PASS`. **Never commit credentials.** Scenes marked

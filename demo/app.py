@@ -139,9 +139,99 @@ keep = np.array([m["site"] in site_keys                 # only sites whose image
                  for m in META])
 
 st.title("Search satellite images by meaning and see what changed")
-tab_text, tab_img, tab_change, tab_gps, tab_years, tab_cluster, tab_about = st.tabs(
-    ["Text search", "Image search", "Change between two dates", "Search by GPS",
-     "Change over years", "Discover clusters", "About"])
+tab_map, tab_text, tab_check, tab_img, tab_change, tab_gps, tab_years, tab_cluster, tab_about = st.tabs(
+    ["Map of all data", "Text search", "Check the search (EuroSAT)", "Image search",
+     "Change between two dates", "Search by GPS", "Change over years", "Discover clusters", "About"])
+
+# --------------------------------------------------------------------- map
+RES_COLOURS = {10.0: [31, 119, 180], 5.0: [44, 160, 44], 0.5: [230, 110, 20]}
+
+
+def all_places():
+    """One row per place in the index (India, OSCD) plus one approximate row
+    per collection without coordinates (LEVIR-CD, SYSU-CD)."""
+    cov = core.coverage(LOCS)
+    sites, regions = {}, {}
+    for m in META:
+        s = sites.setdefault(m["site"], {"name": m["site_name"], "collection": m["collection"],
+                                         "gsd": m["gsd_m"], "dates": {}, "tiles": 0,
+                                         "country": m.get("country")})
+        s["dates"][m["slot"]] = m["date"]
+        s["tiles"] += m["slot"] == 1
+    rows = []
+    for key, s in sites.items():
+        country = s["country"] or SITES.get(key, {}).get("country", "?")
+        row = {"dataset": s["collection"].split(" (")[0], "resolution": core.res_label(s["gsd"]),
+               "gsd": s["gsd"], "tiles": s["tiles"], "here": "yes" if key in SITES else "no",
+               "dates": f"{s['dates'].get(1, '?')} to {s['dates'].get(2, '?')}"}
+        if key in cov:
+            c = cov[key]
+            rows.append(dict(row, name=s["name"], country=country, lat=c["lat"], lon=c["lon"],
+                             gps="yes", box=[[c["lon_min"], c["lat_min"]], [c["lon_max"], c["lat_min"]],
+                                             [c["lon_max"], c["lat_max"]], [c["lon_min"], c["lat_max"]]]))
+        elif s["collection"] in core.REGION_CENTRES:
+            r = regions.setdefault(s["collection"], dict(row, pairs=0, tiles=0, here="no"))
+            r["pairs"] += 1
+            r["tiles"] += s["tiles"]
+            r["here"] = "yes" if (key in SITES or r["here"] == "yes") else "no"
+    for coll, r in regions.items():
+        place, country, lat, lon = core.REGION_CENTRES[coll]
+        rows.append(dict(r, name=f"{place} ({r.pop('pairs')} image pairs, exact spots not published)",
+                         country=country, lat=lat, lon=lon, gps="no, region only", box=None))
+    if INFO.get("n_eurosat_patches"):
+        rows.append({"name": f"Europe, 34 countries ({INFO['n_eurosat_patches']:,} labelled patches, "
+                             "exact spots not published)", "country": "Europe", "dataset": "EuroSAT",
+                     "resolution": "10 m", "gsd": 10.0, "tiles": INFO["n_eurosat_patches"],
+                     "here": "yes" if core.eurosat_files()[0] else "no", "dates": "2015 to 2017",
+                     "lat": 50.0, "lon": 10.0, "gps": "no, region only", "box": None})
+    for r in rows:
+        r["color"] = RES_COLOURS.get(r["gsd"], [120, 120, 120])
+    return rows
+
+
+with tab_map:
+    import pydeck as pdk
+    PLACES = all_places()
+    st.write("Every place in this project. Hover over a marker for its details; zoom in to see "
+             "the exact area covered by each GPS site.")
+    c1, c2 = st.columns(2)
+    m_res = c1.multiselect("Resolution", sorted({r["gsd"] for r in PLACES}, reverse=True),
+                           default=sorted({r["gsd"] for r in PLACES}, reverse=True),
+                           format_func=core.res_label, key="map_res")
+    m_ds = c2.multiselect("Dataset", sorted({r["dataset"] for r in PLACES}),
+                          default=sorted({r["dataset"] for r in PLACES}), key="map_ds")
+    shown = [r for r in PLACES if r["gsd"] in m_res and r["dataset"] in m_ds]
+    a, b, c, d = st.columns(4)
+    a.metric("Places", len(shown))
+    b.metric("Countries", len({r["country"] for r in shown}))
+    c.metric("Resolutions", ", ".join(core.res_label(g) for g in sorted({r["gsd"] for r in shown},
+                                                                        reverse=True)) or "-")
+    d.metric("Tiles per date", f"{sum(r['tiles'] for r in shown):,}")
+    tip = {"html": "<b>{name}</b><br/>{country} &middot; {dataset}<br/>Resolution: {resolution} "
+                   "per pixel<br/>Dates: {dates}<br/>Tiles: {tiles}<br/>GPS search: {gps}<br/>"
+                   "Images on this website: {here}",
+           "style": {"fontSize": "13px"}}
+    boxes = [dict(r, fill=r["color"] + [50]) for r in shown if r["box"]]
+    layers = [
+        pdk.Layer("PolygonLayer", boxes, get_polygon="box", get_fill_color="fill",
+                  get_line_color="color", line_width_min_pixels=1, pickable=True),
+        pdk.Layer("ScatterplotLayer", shown, get_position="[lon, lat]", get_fill_color="color",
+                  get_line_color=[255, 255, 255], stroked=True, line_width_min_pixels=1,
+                  get_radius=4000, radius_min_pixels=5, radius_max_pixels=14, pickable=True),
+    ]
+    st.pydeck_chart(pdk.Deck(layers=layers, tooltip=tip, map_style=None,
+                             initial_view_state=pdk.ViewState(latitude=22, longitude=40, zoom=1.2)),
+                    height=520)
+    st.caption("Colour = resolution: " + ", ".join(
+        f"{['blue', 'green', 'orange'][i]} = {core.res_label(g)}"
+        for i, g in enumerate(RES_COLOURS) if any(r['gsd'] == g for r in PLACES))
+        + ". LEVIR-CD and SYSU-CD do not publish exact locations, so they have one marker at "
+          "their region. The map background needs internet.")
+    st.dataframe([{"place": r["name"], "country": r["country"], "dataset": r["dataset"],
+                   "resolution": r["resolution"], "dates": r["dates"], "tiles": r["tiles"],
+                   "GPS search": r["gps"], "images on this website": r["here"]}
+                  for r in sorted(shown, key=lambda r: (-r["gsd"], r["dataset"], r["name"]))],
+                 hide_index=True, width="stretch")
 
 # ------------------------------------------------------------- text search
 with tab_text:
@@ -155,6 +245,56 @@ with tab_text:
         hits = core.search(V, vec, keep, topk)
         st.caption(f"{int(keep.sum()):,} tiles searched")
         show_hits(hits, META)
+
+# ------------------------------------------- check the search on EuroSAT
+@st.cache_data(show_spinner="Loading the EuroSAT check set...")
+def get_eurosat(v):
+    return core.load_eurosat()
+
+
+def framed(img, ok, size=110):
+    """Patch with a green (correct) or red (wrong) frame; RGB in, RGB out."""
+    t = cv2.resize(rgb(img), (size, size), interpolation=cv2.INTER_NEAREST)
+    return cv2.copyMakeBorder(t, 6, 6, 6, 6, cv2.BORDER_CONSTANT,
+                              value=(40, 170, 60) if ok else (220, 40, 40))
+
+
+with tab_check:
+    ES = get_eurosat(CORE_V)
+    if ES is None:
+        st.info("No EuroSAT patches or EuroSAT index found. Run:  python demo/build_index.py")
+    else:
+        EV, EF, EBASE = ES
+        classes = sorted({c for _, c in EF})
+        st.write("Here every patch has a label made by people, so each search result can be "
+                 "marked right or wrong. Pick a land-cover class: the app searches with the text "
+                 "on the right and frames each result green (correct class) or red (wrong).")
+        c1, c2, c3 = st.columns([1, 2, 1])
+        cls = c1.selectbox("Class to find", classes, index=classes.index("Forest") if "Forest" in classes else 0)
+        q = c2.text_input("Search text (you can change it)", value=core.EUROSAT_PROMPTS.get(cls, cls),
+                          key=f"es_q_{cls}")
+        k = c3.slider("Results shown", 10, 50, 20, 10, key="es_k")
+        scores = EV @ get_model().text("a satellite image of " + q.strip())
+        order = np.argsort(-scores)
+        truth = np.array([c == cls for _, c in EF])
+        hit = truth[order]
+        ap = float((np.cumsum(hit) / np.arange(1, len(hit) + 1))[hit].mean()) if hit.any() else 0.0
+        a, b, c, d = st.columns(4)
+        a.metric(f"Correct in the top {k}", f"{int(hit[:k].sum())} / {k}")
+        b.metric("Correct in the top 10", f"{int(hit[:10].sum())} / 10")
+        c.metric("Average precision (all patches)", f"{ap:.2f}")
+        d.metric("Random guess would get", f"{truth.mean():.2f}")
+        cols = st.columns(10)
+        for r, i in enumerate(order[:k]):
+            p, true_cls = EF[i]
+            ok = true_cls == cls
+            cols[r % 10].image(framed(cv2.imread(str(EBASE / p)), ok),
+                               caption=f"{r + 1}. " + ("correct" if ok else f"wrong: {true_cls}"))
+        st.caption(f"Searched {len(EF):,} labelled EuroSAT patches (10 m Sentinel-2, 64 x 64 px, "
+                   f"{len(classes)} classes). Average precision rewards putting all {int(truth.sum()):,} "
+                   f"{cls} patches near the top. Across all 10 classes our measured mean is 0.44 "
+                   "(random 0.10).")
+
 
 # ------------------------------------------------------------ image search
 with tab_img:
@@ -262,15 +402,25 @@ with tab_gps:
             lat, lon = COV[jump]["lat"], COV[jump]["lon"]
         locs_ok = [l if l["site"] in SITES else {} for l in LOCS]
         near, nearest = core.gps_lookup(locs_ok, lat, lon, rad)
-        ni, nkm = nearest
-        ns_key = LOCS[ni]["site"]
-        ns = SITES[ns_key]
-        half_km = ns["tile"] * ns["gsd"] / 1000 * 0.71           # centre to tile corner
-        if nkm > half_km:
+        # every image set that has a tile over the point (centre to tile corner), sharpest first
+        cover = []
+        for i, km in near:
+            k = LOCS[i]["site"]
+            if km <= SITES[k]["tile"] * SITES[k]["gsd"] / 1000 * 0.71 and k not in cover:
+                cover.append(k)
+        cover.sort(key=lambda k: SITES[k]["gsd"])
+        if not cover:
+            ni, nkm = nearest
             st.error(f"No images at {lat:.4f} °N, {lon:.4f} °E. The nearest images are "
-                     f"**{site_label(ns_key)}**, {nkm:.1f} km away. Pick a point inside one "
-                     "of the areas listed below.")
+                     f"**{site_label(LOCS[ni]['site'])}**, {nkm:.1f} km away. Pick a point inside "
+                     "one of the areas listed below.")
         else:
+            ns_key = cover[0]
+            if len(cover) > 1:
+                ns_key = st.radio(f"{len(cover)} image sets cover this point", cover, horizontal=True,
+                                  format_func=lambda k: f"{site_label(k)} ({SITES[k]['date1']} → "
+                                                        f"{SITES[k]['date2']})")
+            ns = SITES[ns_key]
             st.success(f"{lat:.4f} °N, {lon:.4f} °E is inside **{ns['name']}**, "
                        f"{ns['country']} · {core.res_label(ns['gsd'])} per pixel · {ns['sensor']} · "
                        f"{ns['date1']} → {ns['date2']}")
@@ -502,19 +652,26 @@ with tab_about:
 |---|---|
 | Image search, same place at another date (OSCD) | correct tile first 46% of the time (random 0.05%) |
 | Text search on EuroSAT (27,000 labelled patches) | 69% of the first 10 results correct |
-| Finding changed tiles on LEVIR-CD (0.5 m images) | AUC 0.92 |
+| Finding changed tiles on LEVIR-CD (0.5 m, new buildings) | AUC 0.92; typing "residential area with roofs" 0.95 |
+| Finding changed tiles on SYSU-CD (0.5 m, mixed change) | AUC 0.76 (pixel difference 0.70); text query only 0.59 |
 | Finding changed tiles on OSCD (10 m images) | AUC 0.70, weak |
-| Exact shape of the change | weak on both datasets |
+| Exact shape of the change | weak on OSCD (F1 0.35) and LEVIR-CD (0.37); best method on SYSU-CD (F1 0.58) |
 
 The images in this demo are 10 m Sentinel-2, which is the hard case for change. So the
 heat map is rough, and the pixel change map also reacts to crops, water level and haze.
 A person should check the review list.
 
 ### Data
-- **India sites**: Copernicus Sentinel-2 L2A, early 2019 and early 2025, read from the public
-  AWS open data mirror. Bands used: blue, green, red, near infrared.
-- **OSCD**: Onera Satellite Change Detection dataset (24 city pairs with change masks).
-- **LEVIR-CD**: 14 test pairs at 0.5 m per pixel with building change masks. These are the
-  sharp images where the change idea works best.
+| Collection | Resolution | Places | Ground truth |
+|---|---|---|---|
+| India sites: Copernicus Sentinel-2 L2A, early 2019 and early 2025, plus one image per year | 10 m | 10 sites in India | none (shown, not scored) |
+| ISRO LISS-IV (ResourceSat-2/2A, Bhoonidhi open data), 21 Mar 2023 and 4 Jan 2026, false colour | 5 m | VIT, Katpadi and Vellore town | none (shown, not scored) |
+| OSCD: Onera Satellite Change Detection | 10 m | 24 cities in 13 countries | change masks |
+| EuroSAT: 27,000 labelled patches | 10 m | Europe | land-cover classes |
+| LEVIR-CD: building change pairs | 0.5 m | Austin area, Texas | change masks |
+| SYSU-CD: mixed change pairs, 2007 and 2014 | 0.5 m | Hong Kong | change masks |
+
+The website version carries a smaller copy (6 OSCD cities, 200 EuroSAT patches per class);
+the local version uses every image on disk.
 """)
     st.json(INFO)

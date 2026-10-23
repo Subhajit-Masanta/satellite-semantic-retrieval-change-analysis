@@ -23,3 +23,6 @@ temp_*.txt
 
 # files prepared for sharing
 share/
+
+# small copies for the deployed demo (demo/make_web_data.py) are kept in git
+!demo_data/**/*.tif

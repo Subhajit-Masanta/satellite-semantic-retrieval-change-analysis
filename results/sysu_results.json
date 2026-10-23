@@ -1,0 +1,359 @@
+{
+ "tile_px": 256,
+ "changed_if_fraction_at_least": 0.05,
+ "device": "cuda",
+ "val_files": [
+  "val-00000-of-00003-d66043eece2e3354.parquet",
+  "val-00002-of-00003-5ba1cd52c707cf86.parquet"
+ ],
+ "n_val": 2667,
+ "changed_pct_pixels_val": 21.558,
+ "changed_tiles_val": 1936,
+ "n_test": 4000,
+ "changed_pct_pixels_test": 23.583,
+ "changed_tiles_test": 3032,
+ "random_precision": 0.758,
+ "tile": {
+  "CLIP ViT-B/32": {
+   "variants": {
+    "whole-tile embedding": {
+     "val": 0.5294,
+     "test": 0.6192
+    },
+    "patch mean": {
+     "val": 0.648,
+     "test": 0.7269
+    },
+    "patch max": {
+     "val": 0.5573,
+     "test": 0.6064
+    },
+    "patch top-10%": {
+     "val": 0.6158,
+     "test": 0.6829
+    },
+    "centred patch mean": {
+     "val": 0.6094,
+     "test": 0.685
+    },
+    "centred patch max": {
+     "val": 0.4988,
+     "test": 0.5157
+    },
+    "centred patch top-10%": {
+     "val": 0.5626,
+     "test": 0.5898
+    }
+   },
+   "picked_on_val": "patch mean",
+   "same_place_recall@1": 0.078,
+   "same_place_recall@5": 0.2005,
+   "seconds": 324.5
+  },
+  "RemoteCLIP ViT-B/32": {
+   "variants": {
+    "whole-tile embedding": {
+     "val": 0.6672,
+     "test": 0.578
+    },
+    "patch mean": {
+     "val": 0.7985,
+     "test": 0.7563
+    },
+    "patch max": {
+     "val": 0.6123,
+     "test": 0.6461
+    },
+    "patch top-10%": {
+     "val": 0.6908,
+     "test": 0.7137
+    },
+    "centred patch mean": {
+     "val": 0.6688,
+     "test": 0.6939
+    },
+    "centred patch max": {
+     "val": 0.4976,
+     "test": 0.5329
+    },
+    "centred patch top-10%": {
+     "val": 0.584,
+     "test": 0.6178
+    }
+   },
+   "picked_on_val": "patch mean",
+   "same_place_recall@1": 0.02,
+   "same_place_recall@5": 0.059,
+   "seconds": 317.0
+  }
+ },
+ "best_model_on_val": "RemoteCLIP ViT-B/32",
+ "not_in_this_run": {
+  "CLIP ViT-B/16": "run 1 log: patch mean picked on val, AUC val 0.677 test 0.746, same place first 11.2%",
+  "DINOv2 ViT-S/14, ViT-B/14": "not run yet"
+ },
+ "tile_reference": {
+  "pixel difference (raw)": {
+   "val": 0.707,
+   "test": 0.7042
+  },
+  "pixel difference (brightness matched)": {
+   "val": 0.6624,
+   "test": 0.6364
+  }
+ },
+ "text": {
+  "OpenCLIP ViT-B/32": {
+   "per_prompt": {
+    "a satellite image of buildings": {
+     "plain": {
+      "val": 0.5034,
+      "test": 0.5361
+     },
+     "vs_bare_land": {
+      "val": 0.563,
+      "test": 0.5786
+     }
+    },
+    "a satellite image of houses": {
+     "plain": {
+      "val": 0.4508,
+      "test": 0.4759
+     },
+     "vs_bare_land": {
+      "val": 0.5121,
+      "test": 0.5118
+     }
+    },
+    "a satellite image of residential buildings": {
+     "plain": {
+      "val": 0.4944,
+      "test": 0.5249
+     },
+     "vs_bare_land": {
+      "val": 0.5614,
+      "test": 0.5666
+     }
+    },
+    "an aerial image of new houses": {
+     "plain": {
+      "val": 0.4583,
+      "test": 0.4802
+     },
+     "vs_bare_land": {
+      "val": 0.5236,
+      "test": 0.5347
+     }
+    },
+    "a satellite image of a dense residential area with roofs": {
+     "plain": {
+      "val": 0.4877,
+      "test": 0.5174
+     },
+     "vs_bare_land": {
+      "val": 0.5467,
+      "test": 0.5587
+     }
+    },
+    "an aerial image of rooftops": {
+     "plain": {
+      "val": 0.5108,
+      "test": 0.5086
+     },
+     "vs_bare_land": {
+      "val": 0.5651,
+      "test": 0.5591
+     }
+    },
+    "a satellite image of a new road": {
+     "plain": {
+      "val": 0.498,
+      "test": 0.5025
+     },
+     "vs_bare_land": {
+      "val": 0.5745,
+      "test": 0.5599
+     }
+    },
+    "a satellite image of a construction site": {
+     "plain": {
+      "val": 0.5343,
+      "test": 0.5737
+     },
+     "vs_bare_land": {
+      "val": 0.5766,
+      "test": 0.6067
+     }
+    },
+    "a satellite image of land reclaimed from the sea": {
+     "plain": {
+      "val": 0.4675,
+      "test": 0.4896
+     },
+     "vs_bare_land": {
+      "val": 0.5117,
+      "test": 0.5334
+     }
+    },
+    "a satellite image of a city with buildings and roads": {
+     "plain": {
+      "val": 0.5333,
+      "test": 0.5528
+     },
+     "vs_bare_land": {
+      "val": 0.602,
+      "test": 0.589
+     }
+    }
+   },
+   "picked_on_val": {
+    "prompt": "a satellite image of a city with buildings and roads",
+    "variant": "vs_bare_land"
+   },
+   "picked_test_auc": 0.589,
+   "picked_test_precision@50": 0.94
+  },
+  "RemoteCLIP ViT-B/32": {
+   "per_prompt": {
+    "a satellite image of buildings": {
+     "plain": {
+      "val": 0.5626,
+      "test": 0.5425
+     },
+     "vs_bare_land": {
+      "val": 0.5494,
+      "test": 0.5101
+     }
+    },
+    "a satellite image of houses": {
+     "plain": {
+      "val": 0.5522,
+      "test": 0.5285
+     },
+     "vs_bare_land": {
+      "val": 0.5382,
+      "test": 0.5008
+     }
+    },
+    "a satellite image of residential buildings": {
+     "plain": {
+      "val": 0.5449,
+      "test": 0.5333
+     },
+     "vs_bare_land": {
+      "val": 0.5302,
+      "test": 0.5009
+     }
+    },
+    "an aerial image of new houses": {
+     "plain": {
+      "val": 0.5649,
+      "test": 0.5359
+     },
+     "vs_bare_land": {
+      "val": 0.5558,
+      "test": 0.5115
+     }
+    },
+    "a satellite image of a dense residential area with roofs": {
+     "plain": {
+      "val": 0.5435,
+      "test": 0.5143
+     },
+     "vs_bare_land": {
+      "val": 0.5304,
+      "test": 0.4909
+     }
+    },
+    "an aerial image of rooftops": {
+     "plain": {
+      "val": 0.573,
+      "test": 0.5296
+     },
+     "vs_bare_land": {
+      "val": 0.5668,
+      "test": 0.5099
+     }
+    },
+    "a satellite image of a new road": {
+     "plain": {
+      "val": 0.5533,
+      "test": 0.5329
+     },
+     "vs_bare_land": {
+      "val": 0.5315,
+      "test": 0.497
+     }
+    },
+    "a satellite image of a construction site": {
+     "plain": {
+      "val": 0.5678,
+      "test": 0.5406
+     },
+     "vs_bare_land": {
+      "val": 0.5559,
+      "test": 0.5204
+     }
+    },
+    "a satellite image of land reclaimed from the sea": {
+     "plain": {
+      "val": 0.5443,
+      "test": 0.5415
+     },
+     "vs_bare_land": {
+      "val": 0.5362,
+      "test": 0.5205
+     }
+    },
+    "a satellite image of a city with buildings and roads": {
+     "plain": {
+      "val": 0.5891,
+      "test": 0.565
+     },
+     "vs_bare_land": {
+      "val": 0.576,
+      "test": 0.536
+     }
+    }
+   },
+   "picked_on_val": {
+    "prompt": "a satellite image of a city with buildings and roads",
+    "variant": "plain"
+   },
+   "picked_test_auc": 0.565,
+   "picked_test_precision@50": 0.94
+  }
+ },
+ "pixel": {
+  "Pixel difference + Otsu": {
+   "precision": 0.4051,
+   "recall": 0.4567,
+   "f1": 0.4293,
+   "iou": 0.2734,
+   "fpr_pct": 20.699
+  },
+  "Change Vector Analysis": {
+   "precision": 0.4638,
+   "recall": 0.0984,
+   "f1": 0.1623,
+   "iou": 0.0883,
+   "fpr_pct": 3.51
+  },
+  "Ours, brightness matching (thr 20)": {
+   "precision": 0.3273,
+   "recall": 0.6305,
+   "f1": 0.4309,
+   "iou": 0.2746,
+   "fpr_pct": 39.988
+  },
+  "Ours, patch heat map (RemoteCLIP ViT-B/32)": {
+   "precision": 0.5297,
+   "recall": 0.6387,
+   "f1": 0.5791,
+   "iou": 0.4076,
+   "fpr_pct": 17.497
+  }
+ },
+ "picked_threshold_brightness": 20,
+ "runtime_s": 1988.8
+}

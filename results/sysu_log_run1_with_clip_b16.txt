@@ -1,0 +1,32 @@
+======================================================================
+SYSU-CD EXPERIMENT RUN
+======================================================================
+   val: 2667 pairs, 21.6% of pixels changed, 1936 tiles count as changed
+   test: 4000 pairs, 23.6% of pixels changed, 3032 tiles count as changed
+   demo: wrote 9 test pairs to data/SYSU-CD/A, B, label
+
+[1] Tile-level change signal (AUC; pick on VAL, report on TEST)
+   CLIP ViT-B/32        (323s)  same place found first: 7.8% of 4000
+      whole-tile embedding     AUC val=0.529 test=0.619
+      patch mean               AUC val=0.648 test=0.727  <- picked on val
+      patch max                AUC val=0.557 test=0.606
+      patch top-10%            AUC val=0.616 test=0.683
+      centred patch mean       AUC val=0.609 test=0.685
+      centred patch max        AUC val=0.499 test=0.516
+      centred patch top-10%    AUC val=0.563 test=0.590
+   RemoteCLIP ViT-B/32  (320s)  same place found first: 2.0% of 4000
+      whole-tile embedding     AUC val=0.667 test=0.578
+      patch mean               AUC val=0.798 test=0.756  <- picked on val
+      patch max                AUC val=0.612 test=0.646
+      patch top-10%            AUC val=0.691 test=0.714
+      centred patch mean       AUC val=0.669 test=0.694
+      centred patch max        AUC val=0.498 test=0.533
+      centred patch top-10%    AUC val=0.584 test=0.618
+   CLIP ViT-B/16        (1232s)  same place found first: 11.2% of 4000
+      whole-tile embedding     AUC val=0.548 test=0.614
+      patch mean               AUC val=0.677 test=0.746  <- picked on val
+      patch max                AUC val=0.546 test=0.558
+      patch top-10%            AUC val=0.585 test=0.656
+      centred patch mean       AUC val=0.607 test=0.679
+      centred patch max        AUC val=0.430 test=0.450
+      centred patch top-10%    AUC val=0.480 test=0.543

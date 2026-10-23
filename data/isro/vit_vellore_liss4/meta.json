@@ -1,0 +1,40 @@
+{
+ "site": "vit_vellore_liss4",
+ "name": "VIT Vellore, Katpadi and Vellore town (ISRO LISS-IV)",
+ "lon": 79.155,
+ "lat": 12.955,
+ "bbox_lonlat": [
+  79.1,
+  12.9,
+  79.21,
+  13.01
+ ],
+ "crs": "PROJCS[\"WGS 84 / UTM zone 44N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.25722293287,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",81],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32644\"]]",
+ "height": 2451,
+ "width": 2405,
+ "gsd_m": 5,
+ "sensor": "ResourceSat-2/2A LISS-IV MX70 L2 (5.8 m, resampled to 5 m)",
+ "bands": [
+  "green",
+  "red",
+  "nir"
+ ],
+ "display": "standard false colour (vegetation shows red)",
+ "source": "ISRO NRSC Bhoonidhi open data",
+ "t1": {
+  "scene": "RAF21MAR2023032609010100064SSANSTUC00GTDD",
+  "date": "2023-03-21"
+ },
+ "t2": {
+  "scene": "R2F04JAN2026076342010100064SSANSTUC00GTDD",
+  "date": "2026-01-04"
+ },
+ "shift_corrected_px": [
+  1.37,
+  0.95
+ ],
+ "residual_shift_px": [
+  -0.17,
+  -0.04
+ ]
+}

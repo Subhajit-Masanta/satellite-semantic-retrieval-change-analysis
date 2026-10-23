@@ -4,6 +4,7 @@
   "source": "https://github.com/mlfoundations/open_clip",
   "tile_px": 64,
   "levir_tile_px": 256,
-  "n_vectors": 7366,
-  "n_sites": 48
+  "n_vectors": 10196,
+  "n_sites": 58,
+  "n_eurosat_patches": 27000
 }
